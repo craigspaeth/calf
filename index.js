@@ -1,10 +1,15 @@
 import Koa from 'koa'
-import d from 'debug'
+import _debug from 'debug'
+import mount from 'koa-mount'
+import client from './apps/client'
+import api from './apps/api'
 
-const debug = d('app')
-const app = new Koa()
-const { PORT } = process.env
+let debug = _debug('app')
+let app = new Koa()
+let { PORT } = process.env
 
-app.use(async ($) => $.body = 'Hello')
+
+app.use(mount('/api', api))
+app.use(mount('/', client))
 app.listen(PORT)
 debug(`Listening on ${PORT}`)

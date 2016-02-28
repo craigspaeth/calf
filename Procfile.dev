@@ -1,0 +1,3 @@
+web: npm run dev-server
+lint: npm run lint
+mongo: mongod
