@@ -1,13 +1,10 @@
 import React from 'react'
 import functional from 'react-functional'
-import Home from 'components/home'
 
-let { html, body, script } = React.DOM
+let { div } = React.DOM
 
 let render = (props) => (
-  html({},
-    body({}, Home(props)),
-    script({ src: 'client.js' }))
+  div({}, props.title)
 )
 
 export default (props) => React.createElement(functional({ render }), props)

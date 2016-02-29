@@ -13,3 +13,4 @@ node_modules
 .npm
 .node_repl_history
 .env
+.DS_STORE

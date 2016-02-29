@@ -1,9 +1,9 @@
 import Koa from 'koa'
-import convert from 'koa-convert'
 import graphqlHTTP from 'koa-graphql'
 import schema from './schema'
+import convert from 'koa-convert'
 
-const app = new Koa()
+let app = new Koa()
 
 app.use(convert(graphqlHTTP({ schema: schema, graphiql: true })))
 
