@@ -17,6 +17,9 @@ let render = (props) => (
         ].join(', ')
       })),
     body({}, Home(props),
+      script({ dangerouslySetInnerHTML: { __html: `
+        var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
+      ` }}),
       script({ src: 'client.js' })))
 )
 

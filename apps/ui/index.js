@@ -27,11 +27,17 @@ app.keys = [SESSION_SECRET]
 app.use(c(session(app)))
 app.use(kpassport.initialize())
 app.use(kpassport.session())
-app.use(c(get(PASSPORT_CALLBACK_PATH, (ctx, next) =>
-  kpassport.authenticate('auth0', {
-    successRedirect: '/',
-    failureRedirect: '/'
-  }))))
+app.use(c(get(PASSPORT_CALLBACK_PATH, (ctx, next) => {
+  return kpassport.authenticate('auth0', (user, info, status) => {
+    ctx.state.bootstrap = {}
+    ctx.state.bootstrap.USER = ctx.state.user = user
+    next()
+  })(ctx, next)
+})))
+app.use(c(get('/logout', (ctx) => {
+  ctx.logout()
+  ctx.redirect('/')
+})))
 
 // Browserify setup
 app.use(c(get('/client.js', c(browserify(
@@ -41,8 +47,13 @@ app.use(c(get('/client.js', c(browserify(
 
 // Render and error catcher
 app.use(async (ctx) => {
-  console.log(ctx.isAuthenticated())
-  ctx.body = renderToString(Layout({ title: 'Foo' }))
+  let title
+  if (ctx.state.user) {
+    title = `Hello ${ctx.state.user.displayName}`
+  } else {
+    title = `Plz log in`
+  }
+  ctx.body = renderToString(Layout({ title, bootstrap: ctx.state.bootstrap }))
 })
 app.use(async (ctx, next) => {
   try {
