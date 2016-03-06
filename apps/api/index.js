@@ -1,10 +1,23 @@
 import Koa from 'koa'
 import graphqlHTTP from 'koa-graphql'
 import schema from './schema'
-import convert from 'koa-convert'
+import c from 'koa-convert'
+import jwt from 'koa-jwt'
 
 let app = new Koa()
+let { AUTH0_SECRET, AUTH0_ID } = process.env
 
-app.use(convert(graphqlHTTP({ schema: schema, graphiql: true })))
+app.use(c(jwt({
+  secret: new Buffer(AUTH0_SECRET, 'base64'),
+  audience: AUTH0_ID
+})))
+app.use(async (ctx, next) => {
+  console.log('mooo', ctx.state)
+  return c(graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+    rootValue: ctx.state
+  }))(ctx, next)
+})
 
 export default app

@@ -13,9 +13,17 @@ let onClick = (props) => {
   })
 }
 
-let render = (props) => (
-  div({}, props.title,
-    button({ onClick: onClick.bind(null, props) }, 'Sign up'))
-)
+let render = (props) => {
+  if (props.user) {
+    return (
+      div({}, `Hello ${props.user.displayName}`)
+    )
+  } else {
+    return (
+      div({}, props.title,
+        button({ onClick: onClick.bind(null, props) }, 'Sign up'))
+    )
+  }
+}
 
 export default (props) => React.createElement(functional({ render }), props)

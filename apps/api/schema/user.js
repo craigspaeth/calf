@@ -20,12 +20,12 @@ let UserType = new GraphQLObjectType({
 let User = {
   type: UserType,
   args: {
-    id: {
-      description: 'ID of the user',
+    email: {
+      description: 'Email address of the user',
       type: new GraphQLNonNull(GraphQLString)
     }
   },
-  resolve: (root) => ({ id: 'bar' })
+  resolve: (root, opts, { rootValue: user }) => user
 }
 
 export default User
