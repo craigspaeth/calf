@@ -12,7 +12,6 @@ app.use(c(jwt({
   audience: AUTH0_ID
 })))
 app.use(async (ctx, next) => {
-  console.log('mooo', ctx.state)
   return c(graphqlHTTP({
     schema: schema,
     graphiql: true,
