@@ -54,10 +54,12 @@ app.use(async (ctx, next) => {
   if (!ctx.session.passport) return next()
   ctx.state.bootstrap = {}
   ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
-  ctx.state.user ? next() : ctx.redirect('/login')
+  next()
 })
+app.use(c(get('/', async (ctx, next) => {
+  if (!ctx.state.user) ctx.redirect('/login')
+})))
 app.use(c(get('/login', async (ctx, next) => {
-  if (ctx.state.user) ctx.redirect('/')
   ctx.body = renderToString(Layout({
     body: Login,
     bootstrap: ctx.state.bootstrap,
