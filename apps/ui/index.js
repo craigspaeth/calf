@@ -7,8 +7,8 @@ import Auth0Strategy from 'passport-auth0'
 import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
-import Home from 'components/home'
 import Login from 'components/login'
+import Home from 'components/home'
 import { renderToString } from 'react-dom/server'
 import { get } from 'koa-route'
 
@@ -56,9 +56,6 @@ app.use(async (ctx, next) => {
   ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
   next()
 })
-app.use(c(get('/', async (ctx, next) => {
-  if (!ctx.state.user) ctx.redirect('/login')
-})))
 app.use(c(get('/login', async (ctx, next) => {
   ctx.body = renderToString(Layout({
     body: Login,
@@ -66,10 +63,17 @@ app.use(c(get('/login', async (ctx, next) => {
     user: ctx.state.user
   }))
 })))
-app.use(async (ctx, next) => {
-  if (!ctx.state.user) return next()
-  ctx.body = `Hello ${ctx.state.user.displayName}`
-})
+app.use(c(get('/callback', async (ctx, next) => {
+  ctx.redirect('/')
+})))
+app.use(c(get('/', async (ctx, next) => {
+  if (!ctx.state.user) return ctx.redirect('/login')
+  ctx.body = renderToString(Layout({
+    body: Home,
+    bootstrap: ctx.state.bootstrap,
+    user: ctx.state.user
+  }))
+})))
 
 // Error handler
 app.use(async (ctx, next) => {

@@ -7,10 +7,10 @@ import jwt from 'koa-jwt'
 let app = new Koa()
 let { AUTH0_SECRET, AUTH0_ID } = process.env
 
-app.use(c(jwt({
-  secret: new Buffer(AUTH0_SECRET, 'base64'),
-  audience: AUTH0_ID
-})))
+// app.use(c(jwt({
+//   secret: new Buffer(AUTH0_SECRET, 'base64'),
+//   audience: AUTH0_ID
+// })))
 app.use(async (ctx, next) => {
   return c(graphqlHTTP({
     schema: schema,
