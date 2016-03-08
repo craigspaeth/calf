@@ -6,7 +6,6 @@ let PASSPORT_CALLBACK_PATH = process.env.PASSPORT_CALLBACK_PATH
 let APP_URL = process.env.APP_URL
 
 let componentDidMount = (props) => {
-  console.log(props.lock)
   props.lock.show({
     callbackURL: APP_URL + PASSPORT_CALLBACK_PATH,
     responseType: 'code',

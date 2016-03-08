@@ -18,3 +18,4 @@ Uses standard for linting, install the [Standard Format](https://packagecontrol.
 * Write sharify for Koa
 * Write efficient browserify-dev-middleware
 * Wrap `convert` middleware in big lib
+* Creat modeling lib that glues Joi + GraphQl.js

@@ -1,7 +1,7 @@
 import User from './user'
-import Campaign from './campaign'
-import Campaigns from './campaigns'
+import { Campaign, Campaigns, CampaignSave, CampaignDelete } from './campaign'
 import {
+  GraphQLString,
   GraphQLSchema,
   GraphQLObjectType
 } from 'graphql'
@@ -13,6 +13,13 @@ let schema = new GraphQLSchema({
       user: User,
       campaign: Campaign,
       campaigns: Campaigns
+    }
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'RootMutationType',
+    fields: {
+      saveCampaign: CampaignSave,
+      deleteCamapign: CampaignDelete
     }
   })
 })
