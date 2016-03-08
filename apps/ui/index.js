@@ -7,6 +7,8 @@ import Auth0Strategy from 'passport-auth0'
 import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
+import Home from 'components/home'
+import Login from 'components/login'
 import { renderToString } from 'react-dom/server'
 import { get } from 'koa-route'
 
@@ -48,21 +50,12 @@ app.use(c(get('/client.js', c(browserify(
 )))))
 
 // Render and error catcher
-app.use(async (ctx, next) => {
-  if (!ctx.session.passport) return next()
-  ctx.state.bootstrap = {}
-  ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
-  next()
-})
+app.use(c(get('/login', async (ctx, next) => {
+  ctx.state.child = Login
+})))
 app.use(async (ctx) => {
-  let title
-  if (ctx.state.user) {
-    title = `Hello ${ctx.state.user.displayName}`
-  } else {
-    title = `Plz log in`
-  }
   ctx.body = renderToString(Layout({
-    title,
+    child: ctx.state.child,
     bootstrap: ctx.state.bootstrap,
     user: ctx.state.user
   }))

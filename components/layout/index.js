@@ -1,6 +1,5 @@
 import React from 'react'
 import functional from 'react-functional'
-import Home from 'components/home'
 
 let { html, body, script, head, meta } = React.DOM
 
@@ -16,7 +15,7 @@ let render = (props) => (
           'user-scalable=no'
         ].join(', ')
       })),
-    body({}, Home(props),
+    body({}, props.child(props),
       script({ dangerouslySetInnerHTML: { __html: `
         var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
       ` }}),
