@@ -12,3 +12,9 @@ The original monolithic codebase for AdRhino
 * `npm run dev`
 
 Uses standard for linting, install the [Standard Format](https://packagecontrol.io/packages/StandardFormat) plugin for autocorrection.
+
+## TODOs
+
+* Write sharify for Koa
+* Write efficient browserify-dev-middleware
+* Wrap `convert` middleware in big lib

@@ -49,17 +49,27 @@ app.use(c(get('/client.js', c(browserify(
   { transform: ['babelify', 'envify'] }
 )))))
 
-// Render and error catcher
+// Render
+app.use(async (ctx, next) => {
+  if (!ctx.session.passport) return next()
+  ctx.state.bootstrap = {}
+  ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
+  ctx.state.user ? next() : ctx.redirect('/login')
+})
 app.use(c(get('/login', async (ctx, next) => {
-  ctx.state.child = Login
-})))
-app.use(async (ctx) => {
+  if (ctx.state.user) ctx.redirect('/')
   ctx.body = renderToString(Layout({
-    child: ctx.state.child,
+    body: Login,
     bootstrap: ctx.state.bootstrap,
     user: ctx.state.user
   }))
+})))
+app.use(async (ctx, next) => {
+  if (!ctx.state.user) return next()
+  ctx.body = `Hello ${ctx.state.user.displayName}`
 })
+
+// Error handler
 app.use(async (ctx, next) => {
   try {
     await next()

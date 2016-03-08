@@ -15,7 +15,7 @@ let render = (props) => (
           'user-scalable=no'
         ].join(', ')
       })),
-    body({}, props.child(props),
+    body({}, props.body(props),
       script({ dangerouslySetInnerHTML: { __html: `
         var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
       ` }}),
