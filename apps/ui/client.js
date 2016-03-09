@@ -1,4 +1,4 @@
-import Home from 'components/home'
+import Dashboard from 'components/dashboard'
 import Login from 'components/login'
 import { render } from 'react-dom'
 import Auth0Lock from 'auth0-lock'
@@ -13,5 +13,5 @@ let lock = new Auth0Lock(AUTH0_ID, AUTH0_DOMAIN)
 if (window.location.pathname === '/login' && !USER) {
   render(Login({ lock }), document.body)
 } else if (window.location.pathname === '/') {
-  render(Home({ title: 'Hi there. Plz log in...', lock }), document.body)
+  render(Dashboard({ title: 'Hi there. Plz log in...', lock }), document.body)
 }

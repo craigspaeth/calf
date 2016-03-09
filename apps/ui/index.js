@@ -8,7 +8,7 @@ import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
 import Login from 'components/login'
-import Home from 'components/home'
+import Dashboard from 'components/dashboard'
 import { renderToString } from 'react-dom/server'
 import { get } from 'koa-route'
 
@@ -46,7 +46,7 @@ app.use(c(get('/logout', (ctx) => {
 // Browserify setup
 app.use(c(get('/client.js', c(browserify(
   __dirname + '/client.js',
-  { transform: ['babelify', 'envify'] }
+  { transform: ['babelify', 'envify', 'brfs'] }
 )))))
 
 // Render
@@ -69,7 +69,7 @@ app.use(c(get('/callback', async (ctx, next) => {
 app.use(c(get('/', async (ctx, next) => {
   if (!ctx.state.user) return ctx.redirect('/login')
   ctx.body = renderToString(Layout({
-    body: Home,
+    body: Dashboard,
     bootstrap: ctx.state.bootstrap,
     user: ctx.state.user
   }))
