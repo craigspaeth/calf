@@ -11,6 +11,7 @@ import Login from 'components/login'
 import Dashboard from 'components/dashboard'
 import { renderToString } from 'react-dom/server'
 import { get } from 'koa-route'
+import rewire from 'rewire'
 
 let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
 let { PASSPORT_CALLBACK_PATH } = process.env
@@ -51,10 +52,10 @@ app.use(c(get('/client.js', c(browserify(
 
 // Render
 app.use(async (ctx, next) => {
-  if (!ctx.session.passport) return next()
+  if (!ctx.session.passport) return await next()
   ctx.state.bootstrap = {}
   ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
-  next()
+  await next()
 })
 app.use(c(get('/login', async (ctx, next) => {
   ctx.body = renderToString(Layout({
