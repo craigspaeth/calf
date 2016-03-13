@@ -46,7 +46,7 @@ app.use(c(get('/logout', (ctx) => {
 // Browserify setup
 app.use(c(get('/client.js', c(browserify(
   __dirname + '/client.js',
-  { transform: ['babelify', 'envify', 'brfs'] }
+  { transform: ['babelify', 'brfs', 'envify'] }
 )))))
 
 // Render
