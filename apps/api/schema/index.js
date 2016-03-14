@@ -1,7 +1,6 @@
 import User from './user'
 import { Campaign, Campaigns, CampaignSave, CampaignDelete } from './campaign'
 import {
-  GraphQLString,
   GraphQLSchema,
   GraphQLObjectType
 } from 'graphql'

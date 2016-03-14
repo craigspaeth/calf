@@ -1,5 +1,4 @@
 import Koa from 'koa'
-import Layout from 'components/layout'
 import browserify from 'koa-browserify-middleware'
 import c from 'koa-convert'
 import passport from 'passport'
@@ -7,11 +6,7 @@ import Auth0Strategy from 'passport-auth0'
 import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
-import Login from 'components/login'
-import Dashboard from 'components/dashboard'
-import { renderToString } from 'react-dom/server'
 import { get } from 'koa-route'
-import rewire from 'rewire'
 
 let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
 let { PASSPORT_CALLBACK_PATH } = process.env
@@ -58,22 +53,14 @@ app.use(async (ctx, next) => {
   await next()
 })
 app.use(c(get('/login', async (ctx, next) => {
-  ctx.body = renderToString(Layout({
-    body: Login,
-    bootstrap: ctx.state.bootstrap,
-    user: ctx.state.user
-  }))
+  ctx.render('components/layout', { body: 'components/login' })
 })))
 app.use(c(get('/callback', async (ctx, next) => {
   ctx.redirect('/')
 })))
 app.use(c(get('/', async (ctx, next) => {
   if (!ctx.state.user) return ctx.redirect('/login')
-  ctx.body = renderToString(Layout({
-    body: Dashboard,
-    bootstrap: ctx.state.bootstrap,
-    user: ctx.state.user
-  }))
+  ctx.render('components/layout', { body: 'components/dashboard' })
 })))
 
 // Error handler

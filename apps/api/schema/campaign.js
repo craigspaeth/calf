@@ -9,7 +9,7 @@ import db from './db'
 let attrs = {
   _id: {
     description: 'ID of campaign',
-      type: GraphQLString
+    type: GraphQLString
   },
   name: {
     description: 'Name of campaign',

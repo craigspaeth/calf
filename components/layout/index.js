@@ -1,7 +1,9 @@
 import React from 'react'
 import functional from 'react-functional'
+import rewire from 'rewire'
+import reset from './reset'
 
-let { html, body, script, head, meta } = React.DOM
+let { html, body, script, head, meta, style } = React.DOM
 
 let render = (props) => (
   html({},
@@ -14,8 +16,9 @@ let render = (props) => (
           'maximum-scale=1.0',
           'user-scalable=no'
         ].join(', ')
-      })),
-    body({}, props.body(props),
+      }),
+      style({ dangerouslySetInnerHTML: { __html: reset } })),
+    body({}, rewire(require.resolve(props.body)).default(props),
       script({ dangerouslySetInnerHTML: { __html: `
         var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
       ` }}),
