@@ -42,9 +42,7 @@ export let Campaigns = {
     }
   },
   resolve: async (root, { userId }) => {
-    if (!userId) return []
-    let campaigns = await db.campaigns.find()
-    return campaigns
+    return await db.campaigns.find()
   }
 }
 

@@ -18,7 +18,7 @@ let schema = new GraphQLSchema({
     name: 'RootMutationType',
     fields: {
       saveCampaign: CampaignSave,
-      deleteCamapign: CampaignDelete
+      deleteCampaign: CampaignDelete
     }
   })
 })
