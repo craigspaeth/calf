@@ -1,12 +1,14 @@
 import React from 'react'
 import functional from 'react-functional'
 import Header from './header'
+import Home from './home'
 
 let { div } = React.DOM
 
 let render = (props) => (
-  Header({},
-    div({}, 'Welcome to AdRhino'))
+  div({},
+    Header({}),
+    Home({}))
 )
 
 export default (props) => React.createElement(functional({ render }), props)
