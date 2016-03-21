@@ -7,6 +7,7 @@ import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
 import { get } from 'koa-route'
+import Model from './models'
 
 let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
 let { PASSPORT_CALLBACK_PATH } = process.env
@@ -60,7 +61,12 @@ app.use(c(get('/callback', async (ctx, next) => {
 })))
 app.use(c(get('/', async (ctx, next) => {
   if (!ctx.state.user) return ctx.redirect('/login')
-  ctx.render('components/layout', { body: 'components/dashboard' })
+  console.log('mooo1', tree)
+  let tree = Model().init().tree
+  console.log('mooo', tree)
+  ctx.render('components/layout', {
+    body: 'components/dashboard'
+  })
 })))
 
 // Error handler
