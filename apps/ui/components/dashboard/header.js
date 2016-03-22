@@ -1,6 +1,6 @@
 import React from 'react'
 import functional from 'react-functional'
-import { lightGray, flatButton } from 'lib/style'
+import { lightGray, flatButton } from '../../../../lib/style'
 let fs = require('fs')
 
 let { div, nav, header, a, button } = React.DOM

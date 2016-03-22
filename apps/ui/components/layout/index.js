@@ -5,8 +5,9 @@ import reset from './reset'
 
 let { html, body, script, head, meta, style } = React.DOM
 
-let render = (props) => (
-  html({},
+let render = (props) => {
+  let path = require.resolve('../' + props.body)
+  return html({},
     head({},
       meta({
         name: 'viewport',
@@ -18,11 +19,11 @@ let render = (props) => (
         ].join(', ')
       }),
       style({ dangerouslySetInnerHTML: { __html: reset } })),
-    body({}, rewire(require.resolve(props.body)).default(props),
+    body({}, rewire(path).default(props),
       script({ dangerouslySetInnerHTML: { __html: `
         var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
       ` }}),
       script({ src: 'client.js' })))
-)
+}
 
 export default (props) => React.createElement(functional({ render }), props)

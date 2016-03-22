@@ -1,14 +1,15 @@
 import React from 'react'
 import functional from 'react-functional'
-import Header from './header'
-import Home from './home'
+import Empty from './empty'
+import List from './list'
 
 let { div } = React.DOM
 
 let render = (props) => (
   div({},
-    Header({}),
-    Home({}))
+    props.campaigns.length > 0
+    ? List({ campaigns: props.campaigns })
+    : Empty({}))
 )
 
 export default (props) => React.createElement(functional({ render }), props)

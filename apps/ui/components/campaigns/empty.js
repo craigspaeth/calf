@@ -1,15 +1,20 @@
 import React from 'react'
 import functional from 'react-functional'
-import { flatButton, type, mediumMargin } from 'lib/style'
+import Campaign from '../../models/campaign'
+import { flatButton, type, mediumMargin } from '../../../../lib/style'
 
 let { div, h1, p, button } = React.DOM
+
+let newCampaign = () => {
+  Campaign.create()
+}
 
 let render = (props) => (
   div({ style: styles.welcome },
     h1({ style: styles.h1 }, 'Welcome to AdRhino'),
     p({ style: styles.p }, `AdRhino is a platform for building beautiful ad units, worthy of your
       high quality content. To get started, try creating a new campaign.`),
-    button({ style: styles.button }, 'Create new ad campaign'))
+    button({ style: styles.button, onClick: newCampaign }, 'Create new ad campaign'))
 )
 
 let styles = {

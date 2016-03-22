@@ -7,7 +7,7 @@ import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
 import { get } from 'koa-route'
-import Campaigns from './models/campaigns'
+import Campaign from './models/campaign'
 
 let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
 let { PASSPORT_CALLBACK_PATH } = process.env
@@ -54,21 +54,18 @@ app.use(async (ctx, next) => {
   await next()
 })
 app.use(c(get('/login', async (ctx, next) => {
-  ctx.render('components/layout', { body: 'components/login' })
+  ctx.render('layout', { body: 'login' })
 })))
 app.use(c(get('/callback', async (ctx, next) => {
   ctx.redirect('/')
 })))
 app.use(async (ctxt, next) => {
-  let campaigns = await Campaigns.get()
-  ctxt.state.bootstrap.STATE = { campaigns: campaigns }
+  ctxt.state.campaigns = ctxt.state.bootstrap.CAMPAIGNS = await Campaign.get()
   await next()
 })
 app.use(c(get('/', async (ctx, next) => {
   if (!ctx.state.user) return ctx.redirect('/login')
-  ctx.render('components/layout', {
-    body: 'components/dashboard'
-  })
+  ctx.render('layout', { body: 'dashboard' })
 })))
 
 // Error handler
