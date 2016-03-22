@@ -5,9 +5,9 @@ export default () => {
   let tree = new Baobab({
     campaigns: []
   })
-  let init = () => {
-    let c = Campaigns.get()
-    tree.set({ campaigns: c })
+  let init = async () => {
+    let campaigns = await Campaigns.get()
+    tree.set({ campaigns: campaigns })
     return tree
   }
   return { tree: tree, init: init }

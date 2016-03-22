@@ -8,7 +8,8 @@ let get = async () => {
       userId
     }
   }`)
-  return res.json()
+  let body = await res.json()
+  return body.data.campaigns
 }
 
 export default {
