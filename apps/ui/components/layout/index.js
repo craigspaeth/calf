@@ -1,12 +1,9 @@
-import React from 'react'
-import functional from 'react-functional'
-import rewire from 'rewire'
+import { view, dom } from 'view'
 import reset from './reset'
 
-let { html, body, script, head, meta, style } = React.DOM
+let { html, body, script, head, meta, style } = dom
 
-let render = (props) => {
-  let path = require.resolve('../' + props.body)
+export default view((props) => {
   return html({},
     head({},
       meta({
@@ -19,11 +16,9 @@ let render = (props) => {
         ].join(', ')
       }),
       style({ dangerouslySetInnerHTML: { __html: reset } })),
-    body({}, rewire(path).default(props),
+    body({}, props.body(props),
       script({ dangerouslySetInnerHTML: { __html: `
-        var __BOOTSTRAP__ = ${JSON.stringify(props.bootstrap)};
+        var __TREE__ = ${JSON.stringify(props.tree)};
       ` }}),
       script({ src: 'client.js' })))
-}
-
-export default (props) => React.createElement(functional({ render }), props)
+})

@@ -7,13 +7,14 @@ import session from 'koa-generic-session'
 import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
 import { get } from 'koa-route'
-import Campaign from './models/campaign'
+import * as campaigns from './components/campaigns/controller'
+import render from 'render-server'
 
 let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
 let { PASSPORT_CALLBACK_PATH } = process.env
 let app = new Koa()
 
-// Passport setup
+// App setup
 let strategy = new Auth0Strategy({
   domain: AUTH0_DOMAIN,
   clientID: AUTH0_ID,
@@ -35,38 +36,28 @@ app.use(c(get(PASSPORT_CALLBACK_PATH, (ctx, next) => {
     next()
   })(ctx, next)
 })))
-app.use(c(get('/logout', (ctx) => {
-  ctx.logout()
-  ctx.redirect('/')
-})))
-
-// Browserify setup
 app.use(c(get('/client.js', c(browserify(
   __dirname + '/client.js',
   { transform: ['babelify', 'brfs', 'envify'] }
 )))))
+app.use(render({ views: __dirname + '/components', layout: 'layout' }))
 
-// Render
-app.use(async (ctx, next) => {
-  ctx.state.bootstrap = {}
-  if (!ctx.session.passport) return await next()
-  ctx.state.bootstrap.USER = ctx.state.user = ctx.session.passport.user
-  await next()
-})
+// Routes setup
 app.use(c(get('/login', async (ctx, next) => {
-  ctx.render('layout', { body: 'login' })
+  ctx.render('login')
+})))
+app.use(c(get('/logout', (ctx) => {
+  ctx.logout()
+  ctx.redirect('/')
 })))
 app.use(c(get('/callback', async (ctx, next) => {
   ctx.redirect('/')
 })))
-app.use(async (ctxt, next) => {
-  ctxt.state.campaigns = ctxt.state.bootstrap.CAMPAIGNS = await Campaign.get()
-  await next()
-})
 app.use(c(get('/', async (ctx, next) => {
-  // if (!ctx.state.user) return ctx.redirect('/login')
-  ctx.render('layout', { body: 'dashboard' })
+  ctx.state.user ? ctx.redirect('/campaigns') : ctx.redirect('/login')
 })))
+app.use(c(get('/campaigns', campaigns.indexRoute)))
+app.use(c(get('/campaigns/new', campaigns.newRoute)))
 
 // Error handler
 app.use(async (ctx, next) => {

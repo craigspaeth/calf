@@ -1,4 +1,4 @@
-import { newCampaign } from './controller'
+import { addCampaign } from './controller'
 import { flatButton, type, mediumMargin } from 'style'
 import { view, dom } from 'view'
 
@@ -33,6 +33,6 @@ export default view((props) => (
     `),
     button({
       style: styles.button,
-      onClick: newCampaign
+      onClick: addCampaign
     }, 'Create new ad campaign'))
 ))
