@@ -4,7 +4,7 @@
   "description": "The original monolithic codebase for AdRhino",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently 'mongod' 'npm run server' 'npm run lint'",
+    "start": "NODE_PATH=$NODE_PATH:./lib concurrently 'mongod' 'npm run server' 'npm run lint'",
     "server": "node -r dotenv/config -r babel-core/register index.js",
     "lint": "nodemon --exec 'standard | notify'"
   },
@@ -42,6 +42,7 @@
     "babelify": "^7.2.0",
     "baobab": "^2.3.3",
     "brfs": "^1.4.3",
+    "brfs-babel": "^1.0.0",
     "browserify": "^13.0.0",
     "debug": "^2.2.0",
     "graphiql": "^0.5.0",

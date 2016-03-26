@@ -21,10 +21,11 @@ let create = async () => {
     }
   }`)
   let body = await res.json()
-  let newCampaign = body.data.saveCampaign
+  return body
+  // let newCampaign = body.data.saveCampaign
   // Pushes to the campaigns part of the baobab tree
   // Root component listents to tree changes and re-renders
   //
 }
 
-export default { get }
+export default { get, create }

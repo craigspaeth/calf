@@ -1,14 +1,7 @@
-import React from 'react'
-import functional from 'react-functional'
-import { type, mediumMargin } from '../../../../lib/style'
+import { type, mediumMargin } from 'style'
+import { view, dom } from 'view'
 
-let { div, h1 } = React.DOM
-
-let render = (props) => (
-  div({ style: styles.welcome },
-    h1({ style: styles.h1 }, 'See Campaigns Below'),
-    props.campaigns.map((campaign) => div({}, campaign._id)))
-)
+let { div, h1 } = dom
 
 let styles = {
   welcome: {
@@ -22,4 +15,8 @@ let styles = {
   })
 }
 
-export default (props) => React.createElement(functional({ render }), props)
+export default view((props) => (
+  div({ style: styles.welcome },
+    h1({ style: styles.h1 }, 'See Campaigns Below'),
+    props.campaigns.map((campaign) => div({}, campaign._id)))
+))

@@ -1,25 +1,8 @@
-import React from 'react'
-import functional from 'react-functional'
-import { lightGray, flatButton } from '../../../../lib/style'
+import { lightGray, flatButton } from 'style'
+import { view, dom, svgfile } from 'view'
 let fs = require('fs')
 
-let { div, nav, header, a, button } = React.DOM
-let logo = fs.readFileSync(__dirname + '/logo.svg').toString()
-
-let render = (props) => (
-  header({ style: style.header },
-    div({
-      dangerouslySetInnerHTML: { __html: logo },
-      style: Object.assign({}, style.logo, style.logoLeftLabel)
-    }),
-    div({
-      style: Object.assign({}, style.leftLabel, style.logoLeftLabel)
-    }, 'Welcome to AdRhino'),
-    nav({ style: style.nav },
-      a({ style: style.navA }, 'Developers'),
-      a({ style: style.navA }, 'Campaigns'),
-      button({ style: style.logout }, 'Logout')))
-)
+let { div, nav, header, a, button } = dom
 
 let style = {
   header: {
@@ -50,4 +33,17 @@ let style = {
   }
 }
 
-export default (props) => React.createElement(functional({ render }), props)
+export default view((props) => (
+  header({ style: style.header },
+    svgfile({
+      src: fs.readFileSync(__dirname + '/logo.svg'),
+      style: Object.assign({}, style.logo, style.logoLeftLabel)
+    }),
+    div({
+      style: Object.assign({}, style.leftLabel, style.logoLeftLabel)
+    }, 'Welcome to AdRhino'),
+    nav({ style: style.nav },
+      a({ style: style.navA }, 'Developers'),
+      a({ style: style.navA }, 'Campaigns'),
+      button({ style: style.logout }, 'Logout')))
+))

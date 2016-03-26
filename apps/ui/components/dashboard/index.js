@@ -1,14 +1,11 @@
-import React from 'react'
-import functional from 'react-functional'
-import Header from './header'
-import Campaigns from '../campaigns'
+import header from './header'
+import campaigns from '../campaigns'
+import { view, dom } from 'view'
 
-let { div } = React.DOM
+let { div } = dom
 
-let render = (props) => (
+export default view((props) => (
   div({},
-    Header({}),
-    Campaigns({ campaigns: props.campaigns }))
-)
-
-export default (props) => React.createElement(functional({ render }), props)
+    header({}),
+    campaigns({ campaigns: props.campaigns }))
+))

@@ -1,15 +1,12 @@
-import React from 'react'
-import functional from 'react-functional'
-import Empty from './empty'
-import List from './list'
+import { view, dom } from 'view'
+import empty from './empty'
+import list from './list'
 
-let { div } = React.DOM
+let { div } = dom
 
-let render = (props) => (
+export default view((props) => (
   div({},
     props.campaigns.length > 0
-    ? List({ campaigns: props.campaigns })
-    : Empty({}))
-)
-
-export default (props) => React.createElement(functional({ render }), props)
+    ? list({ campaigns: props.campaigns })
+    : empty({}))
+))

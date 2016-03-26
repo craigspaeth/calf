@@ -64,7 +64,7 @@ app.use(async (ctxt, next) => {
   await next()
 })
 app.use(c(get('/', async (ctx, next) => {
-  if (!ctx.state.user) return ctx.redirect('/login')
+  // if (!ctx.state.user) return ctx.redirect('/login')
   ctx.render('layout', { body: 'dashboard' })
 })))
 
