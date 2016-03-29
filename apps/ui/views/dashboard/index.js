@@ -1,4 +1,4 @@
-import header from './header'
+import header from '../layout/header'
 import campaigns from '../campaigns'
 import { view, dom } from 'view'
 

@@ -1,4 +1,4 @@
-import { addCampaign } from './controller'
+import { addCampaign } from '../../controllers/campaigns'
 import { flatButton, type, mediumMargin } from 'style'
 import { view, dom } from 'view'
 

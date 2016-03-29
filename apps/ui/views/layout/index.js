@@ -16,9 +16,9 @@ export default view((props) => {
         ].join(', ')
       }),
       style({ dangerouslySetInnerHTML: { __html: reset } })),
-    body({}, props.body(props),
+    body({}, props.body ? props.body(props) : 'Blank',
       script({ dangerouslySetInnerHTML: { __html: `
         var __TREE__ = ${JSON.stringify(props.tree)};
       ` }}),
-      script({ src: 'client.js' })))
+      script({ src: '/client.js' })))
 })

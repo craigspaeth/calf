@@ -13,7 +13,7 @@
     "url": "git+https://github.com/adrhino/calf.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/adrhino/calf/issues"
   },
@@ -67,6 +67,7 @@
     "passport": "^0.3.2",
     "passport-auth0": "^0.5.1",
     "promised-mongo": "^1.2.0",
+    "radium": "^0.17.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-functional": "^1.2.0"

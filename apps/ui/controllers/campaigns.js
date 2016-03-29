@@ -10,8 +10,8 @@ let indexRoute = async (ctx, next) => {
     }
   }`)
   let data = await res.json()
-  if (!ctx.state.tree.get('campaigns')) {
-    ctx.state.tree.set('campaigns', data.data.campaigns)
+  if (!ctx.tree.get('campaigns')) {
+    ctx.tree.set('campaigns', data.data.campaigns)
   }
   ctx.render('dashboard')
 }
