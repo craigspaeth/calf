@@ -4,8 +4,8 @@ import { view, dom } from 'view'
 
 let { div } = dom
 
-export default view((props) => {
-  return div({},
+export default view(() => (
+  div({},
     header({}),
-    campaigns({ campaigns: props.tree.get('campaigns') }))
-})
+    campaigns({}))
+))

@@ -8,7 +8,9 @@ let style = {
   header: {
     width: '100%',
     borderBottom: `1px solid ${lightGray}`,
-    padding: '10px'
+    padding: '10px',
+    position: 'relative',
+    zIndex: 1
   },
   logo: {
     width: '40px',

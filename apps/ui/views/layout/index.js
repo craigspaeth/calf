@@ -1,7 +1,7 @@
 import { view, dom } from 'view'
 import reset from './reset'
 
-let { html, body, script, head, meta, style } = dom
+let { html, body, script, head, meta, style, div } = dom
 
 export default view((props) => {
   return html({},
@@ -16,7 +16,8 @@ export default view((props) => {
         ].join(', ')
       }),
       style({ dangerouslySetInnerHTML: { __html: reset } })),
-    body({}, props.body ? props.body(props) : 'Blank',
+    body({},
+      div({ id: 'layout' }, props.body ? props.body(props) : 'Blank'),
       script({ dangerouslySetInnerHTML: { __html: `
         var __TREE__ = ${JSON.stringify(props.tree)};
       ` }}),

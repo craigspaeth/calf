@@ -1,5 +1,7 @@
 import api from 'api'
 import page from 'page'
+import dashboard from '../views/dashboard'
+import newCampaign from '../views/campaigns/new'
 
 let indexRoute = async (ctx, next) => {
   let res = await api(`{
@@ -13,15 +15,19 @@ let indexRoute = async (ctx, next) => {
   if (!ctx.tree.get('campaigns')) {
     ctx.tree.set('campaigns', data.data.campaigns)
   }
-  ctx.render('dashboard')
+  ctx.render(dashboard)
 }
 
 let newRoute = (ctx) => {
-  ctx.render('campaigns/new')
+  ctx.render(newCampaign)
 }
 
 let addCampaign = () => {
   page('/campaigns/new')
 }
 
-export { addCampaign, indexRoute, newRoute }
+let newCampaignNext = (ctx) => {
+  console.log('next')
+}
+
+export { addCampaign, indexRoute, newRoute, newCampaignNext }
