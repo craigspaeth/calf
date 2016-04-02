@@ -1,5 +1,4 @@
 import api from 'api'
-import page from 'page'
 import dashboard from '../views/dashboard'
 import newCampaign from '../views/campaigns/new'
 
@@ -22,12 +21,8 @@ let newRoute = (ctx) => {
   ctx.render(newCampaign)
 }
 
-let addCampaign = () => {
-  page('/campaigns/new')
-}
-
 let newCampaignNext = (step) => {
   step.set(step + 1)
 }
 
-export { addCampaign, indexRoute, newRoute, newCampaignNext }
+export { indexRoute, newRoute, newCampaignNext }

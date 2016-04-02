@@ -37,10 +37,11 @@ let style = {
 
 export default view((props) => (
   header({ style: style.header },
-    svgfile({
-      src: fs.readFileSync(__dirname + '/logo.svg'),
-      style: Object.assign({}, style.logo, style.logoLeftLabel)
-    }),
+    a({ href: '/' },
+      svgfile({
+        src: fs.readFileSync(__dirname + '/logo.svg'),
+        style: Object.assign({}, style.logo, style.logoLeftLabel)
+      })),
     div({
       style: Object.assign({}, style.leftLabel, style.logoLeftLabel)
     }, 'Welcome to AdRhino'),

@@ -1,8 +1,7 @@
-import { addCampaign } from '../../controllers/campaigns'
 import { flatButton, type, mediumMargin } from 'style'
 import { view, dom } from 'view'
 
-let { div, h1, p, button } = dom
+let { div, h1, p, a } = dom
 
 let styles = {
   welcome: {
@@ -31,8 +30,8 @@ export default view((props) => (
       AdRhino is a platform for building beautiful ad units, worthy of your \
       high quality content. To get started, try creating a new campaign.
     `),
-    button({
+    a({
       style: styles.button,
-      onClick: addCampaign
+      href: '/campaigns/new'
     }, 'Create new ad campaign'))
 ))

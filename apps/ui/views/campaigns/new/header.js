@@ -1,4 +1,4 @@
-import { newCampaignNext } from '../../../controllers/campaigns'
+// import { newCampaignNext } from '../../../controllers/campaigns'
 import { view, dom } from 'view'
 import { lightGray, headerHeight, flatButton } from 'style'
 
@@ -59,6 +59,7 @@ export default view((props) => {
       button({
         style: style.next,
         onClick: () => {
+          console.log('click next', props.newCampaignStep.get())
           props.newCampaignStep.set((props.newCampaignStep.get() || 0) + 1)
         }
       }, 'Next')))
