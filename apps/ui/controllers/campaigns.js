@@ -26,8 +26,8 @@ let addCampaign = () => {
   page('/campaigns/new')
 }
 
-let newCampaignNext = (ctx) => {
-  console.log('next')
+let newCampaignNext = (step) => {
+  step.set(step + 1)
 }
 
 export { addCampaign, indexRoute, newRoute, newCampaignNext }

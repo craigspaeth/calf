@@ -15,8 +15,8 @@ let styles = {
   })
 }
 
-export default view((props, { tree }) => (
+export default view((props) => (
   div({ style: styles.welcome },
     h1({ style: styles.h1 }, 'See Campaigns Below'),
-    tree.get('campaigns').map((campaign) => div({}, campaign._id)))
+    props.campaigns.map((campaign) => div({}, campaign._id)))
 ))

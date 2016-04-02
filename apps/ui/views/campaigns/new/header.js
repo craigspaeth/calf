@@ -42,14 +42,24 @@ let style = {
   }
 }
 
-export default view((props) => (
-  header({ style: style.header },
+export default view((props) => {
+  return header({ style: style.header },
     h1({ style: style.h1 }, 'Building an ad campaign'),
     nav({ style: style.nav },
       ['Details', 'Assets', 'Targeting', 'Review'].map((label, i) =>
         a({ style: style.navA, key: label }, `${i + 1} ${label}`)
       )),
     div({ style: style.buttons },
-      button({ style: style.prev }, 'Previous'),
-      button({ style: style.next, onClick: newCampaignNext }, 'Next')))
-))
+      button({
+        style: style.prev,
+        onClick: () => {
+          props.newCampaignStep.set((props.newCampaignStep.get() || 0) - 1)
+        }
+      }, 'Previous'),
+      button({
+        style: style.next,
+        onClick: () => {
+          props.newCampaignStep.set((props.newCampaignStep.get() || 0) + 1)
+        }
+      }, 'Next')))
+})

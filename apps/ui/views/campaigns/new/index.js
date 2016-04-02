@@ -20,9 +20,10 @@ let style = {
   }
 }
 
-export default view((props, { tree }) => (
-  div({},
+export default view((props) => {
+  let step = steps[props.tree.get('newCampaignStep')]
+  return div({},
     mainheader({}),
-    newheader({}),
-    div({ style: style.step }, steps[tree.get('newCampaignStep') || 0]({})))
-))
+    newheader({ newCampaignStep: props.tree.select('newCampaignStep') }),
+    div({ style: style.step }, (step || step1)({})))
+})
