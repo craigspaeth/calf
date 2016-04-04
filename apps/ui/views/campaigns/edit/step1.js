@@ -29,7 +29,6 @@ const style = {
 }
 
 export default view(({ campaign }) => {
-  console.log(campaign.get(), 'moo')
   const inputField = (attr, placeholder, ...inputStyles) => (
     label({
       style: assign({}, style.label, ...inputStyles),
