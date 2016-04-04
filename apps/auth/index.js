@@ -9,12 +9,12 @@ import bodyParser from 'koa-bodyparser'
 import jwt from 'koa-jwt'
 import browserify from 'koa-browserify-middleware'
 
-let app = new Koa()
-let { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
-let { PASSPORT_CALLBACK_PATH } = process.env
+const app = new Koa()
+const { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
+const { PASSPORT_CALLBACK_PATH } = process.env
 
 // Set up Passport
-let strategy = new Auth0Strategy({
+const strategy = new Auth0Strategy({
   domain: AUTH0_DOMAIN,
   clientID: AUTH0_ID,
   clientSecret: AUTH0_SECRET,

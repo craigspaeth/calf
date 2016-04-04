@@ -1,9 +1,9 @@
 import { type, mediumMargin } from 'style'
 import { view, dom } from 'view'
 
-let { div, h1 } = dom
+const { div, h1 } = dom
 
-let styles = {
+const style = {
   welcome: {
     maxWidth: '500px',
     margin: 'auto',
@@ -16,7 +16,7 @@ let styles = {
 }
 
 export default view((props) => (
-  div({ style: styles.welcome },
-    h1({ style: styles.h1 }, 'See Campaigns Below'),
+  div({ style: style.welcome },
+    h1({ style: style.h1 }, 'See Campaigns Below'),
     props.campaigns.map((campaign) => div({}, campaign._id)))
 ))

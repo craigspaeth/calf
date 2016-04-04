@@ -1,7 +1,14 @@
 import { view, dom } from 'view'
 
-let { div } = dom
+const { div, label, input } = dom
 
 export default view((props) => (
-  div({}, 'STEP 3')
+  div({},
+    div({},
+      label({}, 'Channels',
+        input({ placeholder: 'Fashion or politics' })),
+      label({}, 'Location',
+        input({ placeholder: `\
+          Enter target state(s) or region(s) like “West coast” or “California”\
+        ` }))))
 ))

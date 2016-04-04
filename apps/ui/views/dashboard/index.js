@@ -2,7 +2,7 @@ import header from '../layout/header'
 import campaigns from '../campaigns'
 import { view, dom } from 'view'
 
-let { div } = dom
+const { div } = dom
 
 export default view((props) => (
   div({},

@@ -1,10 +1,10 @@
 import { lightGray, flatButton } from 'style'
 import { view, dom, svgfile } from 'view'
-let fs = require('fs')
+const fs = require('fs')
 
-let { div, nav, header, a, button } = dom
+const { div, nav, header, a, button } = dom
 
-let style = {
+const style = {
   header: {
     width: '100%',
     borderBottom: `1px solid ${lightGray}`,
@@ -19,7 +19,7 @@ let style = {
     borderRight: `1px solid ${lightGray}`,
     paddingRight: '10px'
   },
-  logout: flatButton(),
+  logout: flatButton('light'),
   nav: {
     display: 'inline-block',
     position: 'absolute',

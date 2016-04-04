@@ -2,7 +2,7 @@ import { view, dom } from 'view'
 import empty from './empty'
 import list from './list'
 
-let { div } = dom
+const { div } = dom
 
 export default view((props) => (
   div({},

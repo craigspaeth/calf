@@ -1,9 +1,9 @@
 import { flatButton, type, mediumMargin } from 'style'
 import { view, dom } from 'view'
 
-let { div, h1, p, a } = dom
+const { div, h1, p, a } = dom
 
-let styles = {
+const style = {
   welcome: {
     maxWidth: '500px',
     margin: 'auto',
@@ -17,21 +17,21 @@ let styles = {
     textAlign: 'center',
     margin: `${mediumMargin}px 0`
   }),
-  button: flatButton({
+  button: flatButton('light', {
     display: 'inline-block',
     padding: '13px 27px'
   })
 }
 
 export default view((props) => (
-  div({ style: styles.welcome },
-    h1({ style: styles.h1 }, 'Welcome to AdRhino'),
-    p({ style: styles.p }, `
+  div({ style: style.welcome },
+    h1({ style: style.h1 }, 'Welcome to AdRhino'),
+    p({ style: style.p }, `
       AdRhino is a platform for building beautiful ad units, worthy of your \
       high quality content. To get started, try creating a new campaign.
     `),
     a({
-      style: styles.button,
+      style: style.button,
       href: '/campaigns/new'
     }, 'Create new ad campaign'))
 ))

@@ -1,7 +1,7 @@
 import { view, dom } from 'view'
 import reset from './reset'
 
-let { html, body, script, head, meta, style, div } = dom
+const { html, body, script, head, meta, style, div } = dom
 
 export default view((props) => {
   return html({},

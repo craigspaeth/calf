@@ -5,7 +5,7 @@ import {
   GraphQLObjectType
 } from 'graphql'
 
-let schema = new GraphQLSchema({
+const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -17,7 +17,8 @@ let schema = new GraphQLSchema({
   mutation: new GraphQLObjectType({
     name: 'RootMutationType',
     fields: {
-      saveCampaign: CampaignSave,
+      createCampaign: CampaignSave,
+      updateCampaign: CampaignSave,
       deleteCampaign: CampaignDelete
     }
   })

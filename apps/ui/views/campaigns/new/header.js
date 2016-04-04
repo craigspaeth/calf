@@ -1,10 +1,12 @@
-// import { newCampaignNext } from '../../../controllers/campaigns'
+import {
+  newCampaignNext, newCampaignPrev
+} from '../../../controllers/campaigns'
 import { view, dom } from 'view'
 import { lightGray, headerHeight, flatButton } from 'style'
 
-let { h1, nav, div, button, a, header } = dom
+const { h1, nav, div, button, a, header } = dom
 
-let style = {
+const style = {
   header: {
     width: '100%',
     height: `${headerHeight}px`,
@@ -27,13 +29,10 @@ let style = {
     right: '10px',
     top: '9px'
   },
-  prev: flatButton({
+  prev: flatButton('light', {
     backgroundColor: 'transparent'
   }),
-  next: flatButton({
-    backgroundColor: 'black',
-    color: 'white'
-  }),
+  next: flatButton('dark'),
   h1: {
     position: 'absolute',
     left: '10px',
@@ -52,15 +51,10 @@ export default view((props) => {
     div({ style: style.buttons },
       button({
         style: style.prev,
-        onClick: () => {
-          props.newCampaignStep.set((props.newCampaignStep.get() || 0) - 1)
-        }
+        onClick: () => newCampaignNext(props.newCampaignStep)
       }, 'Previous'),
       button({
         style: style.next,
-        onClick: () => {
-          console.log('click next', props.newCampaignStep.get())
-          props.newCampaignStep.set((props.newCampaignStep.get() || 0) + 1)
-        }
+        onClick: () => newCampaignPrev(props.newCampaignStep)
       }, 'Next')))
 })

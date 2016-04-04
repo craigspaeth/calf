@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=$NODE_PATH:./lib concurrently 'mongod' 'npm run server' 'npm run lint'",
-    "server": "nodemon --exec 'node -r dotenv/config -r babel-core/register index.js'",
+    "server": "node -r dotenv/config -r babel-core/register index.js",
     "lint": "nodemon --exec 'standard | notify'"
   },
   "repository": {
@@ -41,9 +41,11 @@
     "babel-preset-stage-3": "^6.5.0",
     "babelify": "^7.2.0",
     "baobab": "^2.3.3",
+    "baobab-react": "^2.0.0-rc1",
     "brfs": "^1.4.3",
     "brfs-babel": "^1.0.0",
     "browserify": "^13.0.0",
+    "browserify-dev-middleware": "^1.0.0",
     "debug": "^2.2.0",
     "graphiql": "^0.5.0",
     "graphql": "^0.4.18",
@@ -63,6 +65,7 @@
     "koa-route": "^3.0.0",
     "koa-static": "^2.0.0",
     "lodash": "^4.7.0",
+    "moment": "^2.12.0",
     "npm": "^3.8.2",
     "page": "^1.7.1",
     "passport": "^0.3.2",

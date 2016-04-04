@@ -1,9 +1,11 @@
 import { flatInput } from 'style'
 import { view, dom } from 'view'
+import { updateAttr } from '../../../controllers/campaigns'
+import { capitalize, snakeCase, assign } from 'lodash'
 
-let { div, label, input } = dom
+const { div, label, input } = dom
 
-let style = {
+const style = {
   form: {
     maxWidth: '500px',
     margin: 'auto',
@@ -26,27 +28,24 @@ let style = {
   }
 }
 
-export default view((props) => (
-  div({ style: style.form },
-    label({ style: style.label }, 'Name',
-      input({
-        style: style.input,
-        placeholder: "e.g. Tiffany's Winter Sale"
-      })),
+export default view(({ campaign, tree }) => {
+  const inputField = (attr, placeholder, ...inputStyles) => (
     label({
-      style: Object.assign({},
-        style.label, style.startEnd, { paddingRight: '10px' })
-    }, 'Start date',
+      style: assign({}, style.label, ...inputStyles),
+      key: attr
+    }, capitalize(snakeCase(attr).split('_')),
       input({
+        key: attr,
         style: style.input,
-        placeholder: 'e.g. 10/14/20'
-      })),
-    label({
-      style: Object.assign({},
-        style.label, style.startEnd, { paddingLeft: '10px' })
-    }, 'End date',
-      input({
-        style: style.input,
-        placeholder: 'e.g. 10/14/20'
-      })))
-))
+        placeholder: placeholder,
+        onChange: updateAttr(campaign, tree, attr),
+        defaultValue: campaign.get(attr)
+      }))
+  )
+  return div({ style: style.form },
+    inputField('name', "e.g. Tiffany's Winter Sale"),
+    inputField('startAt', 'e.g. 10/14/20',
+      style.startEnd, { paddingRight: '10px' }),
+    inputField('endAt', 'e.g. 10/14/20',
+      style.startEnd, { paddingLeft: '10px' }))
+})

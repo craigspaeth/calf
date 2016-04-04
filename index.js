@@ -6,9 +6,9 @@ import api from './apps/api'
 import auth from './apps/auth'
 import onerror from 'onerror'
 
-let debug = _debug('app')
-let app = new Koa()
-let { PORT } = process.env
+const debug = _debug('app')
+const app = new Koa()
+const { PORT } = process.env
 
 app.use(mount(auth))
 app.use(mount('/api', api))

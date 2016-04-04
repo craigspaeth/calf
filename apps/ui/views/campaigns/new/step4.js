@@ -1,6 +1,6 @@
 import { view, dom } from 'view'
 
-let { div } = dom
+const { div } = dom
 
 export default view((props) => (
   div({}, 'STEP 4')
