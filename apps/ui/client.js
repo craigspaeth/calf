@@ -1,6 +1,6 @@
 import page from 'page'
 import render from 'render-client'
-import router from './router'
+import routes from './routes'
 
 document.addEventListener('click', (e) => {
   const target = e.target || e.srcElement
@@ -14,4 +14,4 @@ document.addEventListener('click', (e) => {
 })
 
 page(render())
-router()()
+routes()()

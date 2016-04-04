@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=$NODE_PATH:./lib concurrently 'mongod' 'npm run server' 'npm run lint'",
-    "server": "node -r dotenv/config -r babel-core/register index.js",
+    "server": "forever -c 'node -r dotenv/config -r babel-core/register' index.js",
     "lint": "nodemon --exec 'standard | notify'"
   },
   "repository": {
@@ -47,6 +47,7 @@
     "browserify": "^13.0.0",
     "browserify-dev-middleware": "^1.0.0",
     "debug": "^2.2.0",
+    "forever": "^0.15.1",
     "graphiql": "^0.5.0",
     "graphql": "^0.4.18",
     "install": "^0.6.1",
@@ -63,6 +64,7 @@
     "koa-mount": "git://github.com/coderhaoxin/koa-mount.git#next-by-promise",
     "koa-passport": "^2.0.1",
     "koa-route": "^3.0.0",
+    "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
     "lodash": "^4.7.0",
     "moment": "^2.12.0",

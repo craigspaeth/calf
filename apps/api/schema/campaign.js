@@ -3,6 +3,7 @@ import {
   GraphQLObjectType,
   GraphQLList
 } from 'graphql'
+import { assign } from 'lodash'
 import moment from 'moment'
 import { ObjectId } from 'promised-mongo'
 import db from './db'
@@ -32,6 +33,11 @@ const attrs = {
   }
 }
 
+const toQuery = (opts) =>
+  assign({}, opts, {
+    _id: ObjectId(opts._id)
+  })
+
 export const CampaignType = new GraphQLObjectType({
   name: 'Campaign',
   description: 'A campaign',
@@ -41,7 +47,9 @@ export const CampaignType = new GraphQLObjectType({
 export const Campaign = {
   type: CampaignType,
   args: attrs,
-  resolve: async (root, opts) => await db.campaigns.findOne(opts)
+  resolve: async (root, opts) => {
+    return await db.campaigns.findOne(toQuery(opts))
+  }
 }
 
 export const Campaigns = {
@@ -74,6 +82,6 @@ export const CampaignDelete = {
   type: CampaignType,
   args: attrs,
   resolve: async (root, opts) => {
-    return await db.campaigns.remove(opts)
+    return await db.campaigns.remove(toQuery(opts))
   }
 }

@@ -1,5 +1,5 @@
 import {
-  newCampaignNext, newCampaignPrev
+  editCampaignNext, editCampaignPrev
 } from '../../../controllers/campaigns'
 import { view, dom } from 'view'
 import { lightGray, headerHeight, flatButton } from 'style'
@@ -51,10 +51,10 @@ export default view((props) => {
     div({ style: style.buttons },
       button({
         style: style.prev,
-        onClick: () => newCampaignNext(props.newCampaignStep)
+        onClick: () => editCampaignNext(props.editCampaignStep)
       }, 'Previous'),
       button({
         style: style.next,
-        onClick: () => newCampaignPrev(props.newCampaignStep)
+        onClick: () => editCampaignPrev(props.editCampaignStep)
       }, 'Next')))
 })

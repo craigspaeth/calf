@@ -28,7 +28,8 @@ const style = {
   }
 }
 
-export default view(({ campaign, tree }) => {
+export default view(({ campaign }) => {
+  console.log(campaign.get(), 'moo')
   const inputField = (attr, placeholder, ...inputStyles) => (
     label({
       style: assign({}, style.label, ...inputStyles),
@@ -38,7 +39,7 @@ export default view(({ campaign, tree }) => {
         key: attr,
         style: style.input,
         placeholder: placeholder,
-        onChange: updateAttr(campaign, tree, attr),
+        onChange: updateAttr(campaign, attr),
         defaultValue: campaign.get(attr)
       }))
   )
