@@ -13,7 +13,7 @@ import step4 from './step4'
 
 const { div, button } = dom
 const steps = [step1, step2, step3, step4]
-const style = {
+const styles = {
   step: {
     width: '100%',
     height: '100%',
@@ -32,18 +32,17 @@ const style = {
 export default view(({ tree }) => {
   const editCampaignStep = tree.select('editCampaignStep')
   const step = steps[editCampaignStep.get()]
+  const campaign = tree.select('editCampaign')
   return div({},
     mainheader({}),
     newheader({ editCampaignStep }),
-    div({ style: style.step }, (step || step1)({
-      campaign: tree.select('editCampaign')
-    })),
-    div({ style: style.bottomButtons },
+    div({ style: styles.step }, (step || step1)({ campaign })),
+    div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),
         onClick: () => saveAndQuitCampaign(tree)
       }, 'Save & Quit'),
-      button({
+      campaign.get() && campaign.get()._id && button({
         style: flatButton('light', {
           backgroundColor: 'transparent',
           color: darkGray

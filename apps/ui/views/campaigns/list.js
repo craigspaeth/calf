@@ -7,7 +7,7 @@ import moment from 'moment'
 
 const { div, h1, h2, h3, a } = dom
 
-const style = {
+const styles = {
   container: {
     maxWidth: `${containerMaxWidth}px`,
     margin: 'auto',
@@ -44,25 +44,25 @@ const style = {
 }
 
 export default view(({ campaigns }) => (
-  div({ style: style.container },
+  div({ style: styles.container },
     a({
-      style: style.addButton,
+      style: styles.addButton,
       href: '/campaigns/new'
     }, 'Create new ad campaign'),
-    h1({ style: style.h1 }, 'Upcomming ad campaigns'),
+    h1({ style: styles.h1 }, 'Upcomming ad campaigns'),
     campaigns.map((campaign) => (
-      div({ style: style.item, key: campaign._id },
-        div({ style: style.itemLeft },
-          h2({ style: style.itemH2 }, campaign.name),
-          h3({ style: style.itemH3 },
+      div({ style: styles.item, key: campaign._id },
+        div({ style: styles.itemLeft },
+          h2({ style: styles.itemH2 }, campaign.name),
+          h3({ style: styles.itemH3 },
             moment(campaign.startAt).format('MMM. Do') + ' - ' +
             moment(campaign.endAt).format('MMM. Do')),
           a({
-            style: style.itemEdit,
+            style: styles.itemEdit,
             href: `/campaigns/${campaign._id}/edit`
           }, 'Edit'),
           a({
-            style: style.itemPreview,
+            style: styles.itemPreview,
             href: `/campaigns/${campaign._id}/preview`
           }, 'Preview'))))))
 ))

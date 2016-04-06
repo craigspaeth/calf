@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const { div, nav, header, a, button } = dom
 
-const style = {
+const styles = {
   header: {
     width: '100%',
     borderBottom: `1px solid ${lightGray}`,
@@ -36,17 +36,17 @@ const style = {
 }
 
 export default view((props) => (
-  header({ style: style.header },
+  header({ style: styles.header },
     a({ href: '/' },
       svgfile({
         src: fs.readFileSync(__dirname + '/logo.svg'),
-        style: Object.assign({}, style.logo, style.logoLeftLabel)
+        style: Object.assign({}, styles.logo, styles.logoLeftLabel)
       })),
     div({
-      style: Object.assign({}, style.leftLabel, style.logoLeftLabel)
+      style: Object.assign({}, styles.leftLabel, styles.logoLeftLabel)
     }, 'Welcome to AdRhino'),
-    nav({ style: style.nav },
-      a({ style: style.navA }, 'Developers'),
-      a({ style: style.navA }, 'Campaigns'),
-      button({ style: style.logout }, 'Logout')))
+    nav({ style: styles.nav },
+      a({ style: styles.navA }, 'Developers'),
+      a({ style: styles.navA }, 'Campaigns'),
+      button({ style: styles.logout }, 'Logout')))
 ))

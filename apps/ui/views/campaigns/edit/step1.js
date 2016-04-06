@@ -1,22 +1,19 @@
-import { flatInput } from 'style'
+import { flatInput, flatLabel } from 'style'
 import { view, dom } from 'view'
 import { updateAttr } from '../../../controllers/campaigns'
 import { capitalize, snakeCase, assign } from 'lodash'
 
 const { div, label, input } = dom
 
-const style = {
+const styles = {
   form: {
     maxWidth: '500px',
     margin: 'auto',
     position: 'relative'
   },
-  label: {
-    display: 'block',
-    paddingBottom: '10px',
-    fontWeight: 'bold',
+  label: flatLabel({
     marginBottom: '10px'
-  },
+  }),
   input: flatInput({
     display: 'block',
     marginTop: '5px',
@@ -31,21 +28,21 @@ const style = {
 export default view(({ campaign }) => {
   const inputField = (attr, placeholder, ...inputStyles) => (
     label({
-      style: assign({}, style.label, ...inputStyles),
+      style: assign({}, styles.label, ...inputStyles),
       key: attr
     }, capitalize(snakeCase(attr).split('_')),
       input({
         key: attr,
-        style: style.input,
+        style: styles.input,
         placeholder: placeholder,
         onChange: updateAttr(campaign, attr),
         defaultValue: campaign.get(attr)
       }))
   )
-  return div({ style: style.form },
+  return div({ style: styles.form },
     inputField('name', "e.g. Tiffany's Winter Sale"),
     inputField('startAt', 'e.g. 10/14/20',
-      style.startEnd, { paddingRight: '10px' }),
+      styles.startEnd, { paddingRight: '10px' }),
     inputField('endAt', 'e.g. 10/14/20',
-      style.startEnd, { paddingLeft: '10px' }))
+      styles.startEnd, { paddingLeft: '10px' }))
 })

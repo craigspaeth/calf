@@ -6,7 +6,7 @@ import { lightGray, headerHeight, flatButton } from 'style'
 
 const { h1, nav, div, button, a, header } = dom
 
-const style = {
+const styles = {
   header: {
     width: '100%',
     height: `${headerHeight}px`,
@@ -42,19 +42,19 @@ const style = {
 }
 
 export default view(({ editCampaignStep }) => {
-  return header({ style: style.header },
-    h1({ style: style.h1 }, 'Building an ad campaign'),
-    nav({ style: style.nav },
+  return header({ style: styles.header },
+    h1({ style: styles.h1 }, 'Building an ad campaign'),
+    nav({ style: styles.nav },
       ['Details', 'Assets', 'Targeting', 'Review'].map((label, i) =>
-        a({ style: style.navA, key: label }, `${i + 1} ${label}`)
+        a({ style: styles.navA, key: label }, `${i + 1} ${label}`)
       )),
-    div({ style: style.buttons },
+    div({ style: styles.buttons },
       button({
-        style: style.prev,
+        style: styles.prev,
         onClick: () => editCampaignNext(editCampaignStep)
       }, 'Previous'),
       button({
-        style: style.next,
+        style: styles.next,
         onClick: () => editCampaignPrev(editCampaignStep)
       }, 'Next')))
 })

@@ -3,7 +3,7 @@ import { view, dom } from 'view'
 
 const { div, h1, p, a } = dom
 
-const style = {
+const styles = {
   welcome: {
     maxWidth: '500px',
     margin: 'auto',
@@ -24,14 +24,14 @@ const style = {
 }
 
 export default view((props) => (
-  div({ style: style.welcome },
-    h1({ style: style.h1 }, 'Welcome to AdRhino'),
-    p({ style: style.p }, `
+  div({ style: styles.welcome },
+    h1({ style: styles.h1 }, 'Welcome to AdRhino'),
+    p({ style: styles.p }, `
       AdRhino is a platform for building beautiful ad units, worthy of your \
       high quality content. To get started, try creating a new campaign.
     `),
     a({
-      style: style.button,
+      style: styles.button,
       href: '/campaigns/new'
     }, 'Create new ad campaign'))
 ))
