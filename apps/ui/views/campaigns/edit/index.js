@@ -30,10 +30,11 @@ const style = {
 }
 
 export default view(({ tree }) => {
-  const step = steps[tree.get('editCampaignStep')]
+  const editCampaignStep = tree.select('editCampaignStep')
+  const step = steps[editCampaignStep.get()]
   return div({},
     mainheader({}),
-    newheader({ editCampaignStep: tree.select('editCampaignStep') }),
+    newheader({ editCampaignStep }),
     div({ style: style.step }, (step || step1)({
       campaign: tree.select('editCampaign')
     })),

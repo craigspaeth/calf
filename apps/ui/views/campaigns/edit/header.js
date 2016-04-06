@@ -41,7 +41,7 @@ const style = {
   }
 }
 
-export default view((props) => {
+export default view(({ editCampaignStep }) => {
   return header({ style: style.header },
     h1({ style: style.h1 }, 'Building an ad campaign'),
     nav({ style: style.nav },
@@ -51,10 +51,10 @@ export default view((props) => {
     div({ style: style.buttons },
       button({
         style: style.prev,
-        onClick: () => editCampaignNext(props.editCampaignStep)
+        onClick: () => editCampaignNext(editCampaignStep)
       }, 'Previous'),
       button({
         style: style.next,
-        onClick: () => editCampaignPrev(props.editCampaignStep)
+        onClick: () => editCampaignPrev(editCampaignStep)
       }, 'Next')))
 })
