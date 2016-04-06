@@ -1,7 +1,8 @@
 import Koa from 'koa'
 import graphqlHTTP from 'koa-graphql'
-import schema from './schema'
+// import schema from './schema'
 import c from 'koa-convert'
+import { schema } from 'model'
 // import jwt from 'koa-jwt'
 
 const app = new Koa()
