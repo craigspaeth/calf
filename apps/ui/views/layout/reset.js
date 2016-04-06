@@ -1,3 +1,4 @@
+import { type } from 'style'
 export default `
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -26,6 +27,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
+  font-size: ${type('mediumSansSerif').fontSize};
+  line-height: ${type('mediumSansSerif').lineHeight};
+  font-family: ${type('mediumSansSerif').fontFamily};
 }
 ol, ul {
   list-style: none;

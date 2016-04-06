@@ -4,8 +4,8 @@
   "description": "The original monolithic codebase for AdRhino",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently 'mongod' 'npm run server' 'npm run lint'",
-    "server": "NODE_PATH=$NODE_PATH:. node -r dotenv/config -r babel-core/register -r cache-require-paths index.js",
+    "start": "NODE_PATH=$NODE_PATH:./lib concurrently 'mongod' 'npm run server' 'npm run lint'",
+    "server": "forever -c 'node -r dotenv/config -r babel-core/register' index.js",
     "lint": "nodemon --exec 'standard | notify'"
   },
   "repository": {
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/adrhino/calf.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/adrhino/calf/issues"
   },
@@ -31,6 +31,7 @@
     ]
   },
   "dependencies": {
+    "auth0-lock": "^9.0.0",
     "babel": "^6.5.2",
     "babel-cli": "^6.5.1",
     "babel-eslint": "^5.0.0",
@@ -38,16 +39,22 @@
     "babel-polyfill": "^6.6.1",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
+    "babelify": "^7.2.0",
+    "baobab": "^2.3.3",
+    "baobab-react": "git://github.com/Yomguithereal/baobab-react.git",
     "brfs": "^1.4.3",
+    "brfs-babel": "^1.0.0",
+    "browserify": "^13.0.0",
+    "browserify-dev-middleware": "^1.0.0",
     "debug": "^2.2.0",
+    "forever": "^0.15.1",
     "graphiql": "^0.5.0",
     "graphql": "^0.4.18",
+    "install": "^0.6.1",
+    "isomorphic-fetch": "^2.2.1",
     "joi": "^8.0.3",
     "koa": "^2.0.0-alpha.3",
     "koa-bodyparser": "^3.0.0",
-    "auth0-lock": "^9.0.0",
-    "babelify": "^7.2.0",
-    "browserify": "^13.0.0",
     "koa-browserify-middleware": "^1.0.0",
     "koa-connect": "https://github.com/lourd/koa-connect.git",
     "koa-convert": "^1.2.0",
@@ -57,10 +64,16 @@
     "koa-mount": "git://github.com/coderhaoxin/koa-mount.git#next-by-promise",
     "koa-passport": "^2.0.1",
     "koa-route": "^3.0.0",
+    "koa-router": "^7.0.1",
     "koa-static": "^2.0.0",
+    "lodash": "^4.7.0",
+    "moment": "^2.12.0",
+    "npm": "^3.8.2",
+    "page": "^1.7.1",
     "passport": "^0.3.2",
     "passport-auth0": "^0.5.1",
     "promised-mongo": "^1.2.0",
+    "radium": "^0.17.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-functional": "^1.2.0"

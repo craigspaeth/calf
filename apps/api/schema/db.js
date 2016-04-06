@@ -1,7 +1,7 @@
 import mongojs from 'promised-mongo'
 
-let { MONGOHQ_URL } = process.env
+const { MONGOHQ_URL } = process.env
 
-let db = mongojs(MONGOHQ_URL, ['campaigns'])
+const db = mongojs(MONGOHQ_URL, ['campaigns'])
 
 export default db

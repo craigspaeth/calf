@@ -4,7 +4,7 @@ import {
   GraphQLNonNull
 } from 'graphql'
 
-let UserType = new GraphQLObjectType({
+const UserType = new GraphQLObjectType({
   name: 'User',
   description: 'A user',
   fields: {
@@ -17,7 +17,7 @@ let UserType = new GraphQLObjectType({
   }
 })
 
-let User = {
+const User = {
   type: UserType,
   args: {
     email: {

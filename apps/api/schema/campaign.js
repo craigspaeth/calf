@@ -3,10 +3,12 @@ import {
   GraphQLObjectType,
   GraphQLList
 } from 'graphql'
+import { assign } from 'lodash'
+import moment from 'moment'
 import { ObjectId } from 'promised-mongo'
 import db from './db'
 
-let attrs = {
+const attrs = {
   _id: {
     description: 'ID of campaign',
     type: GraphQLString
@@ -18,22 +20,39 @@ let attrs = {
   userId: {
     description: 'ID of user associated to campaign',
     type: GraphQLString
+  },
+  startAt: {
+    description: 'Start at date in moment.js acceptable string form',
+    type: GraphQLString,
+    resolve: (str) => moment(str).toDate()
+  },
+  endAt: {
+    description: 'End at date in moment.js acceptable string form',
+    type: GraphQLString,
+    resolve: (str) => moment(str).toDate()
   }
 }
 
-export let CampaignType = new GraphQLObjectType({
+const toQuery = (opts) =>
+  assign({}, opts, {
+    _id: ObjectId(opts._id)
+  })
+
+export const CampaignType = new GraphQLObjectType({
   name: 'Campaign',
   description: 'A campaign',
   fields: attrs
 })
 
-export let Campaign = {
+export const Campaign = {
   type: CampaignType,
   args: attrs,
-  resolve: async (root, opts) => await db.campaigns.findOne(opts)
+  resolve: async (root, opts) => {
+    return await db.campaigns.findOne(toQuery(opts))
+  }
 }
 
-export let Campaigns = {
+export const Campaigns = {
   type: new GraphQLList(CampaignType),
   description: 'A list of ad campaigns',
   args: {
@@ -46,11 +65,11 @@ export let Campaigns = {
   }
 }
 
-export let CampaignSave = {
+export const CampaignSave = {
   type: CampaignType,
   args: attrs,
   resolve: async (root, opts) => {
-    let data = {
+    const data = {
       name: opts.name,
       userId: opts.userId
     }
@@ -59,10 +78,10 @@ export let CampaignSave = {
   }
 }
 
-export let CampaignDelete = {
+export const CampaignDelete = {
   type: CampaignType,
   args: attrs,
   resolve: async (root, opts) => {
-    return await db.campaigns.remove(opts)
+    return await db.campaigns.remove(toQuery(opts))
   }
 }
