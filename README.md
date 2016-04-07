@@ -10,3 +10,4 @@ The original monolithic codebase for AdRhino
 * Copy env vars, get sensitive from Craig`cp .env.example .env`
 * `npm install`
 * `npm start`
+* Pro tip: Install standard sublime plugin
