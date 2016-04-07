@@ -14,8 +14,13 @@ const app = new Koa()
 
 model('Campaign', {
   name: $.string().description('Name of campaign'),
-  startAt: $.string().description('Start at date'),
-  endAt: $.string().description('End at date')
+  startAt: $.date().description('Start at date'),
+  endAt: $.date().description('End at date')
+})
+
+model('User', {
+  name: $.string().description('Name of user'),
+  email: $.string().email().description('User email')
 })
 
 app.use(async (ctx, next) => {
