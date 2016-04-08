@@ -15,7 +15,9 @@ const app = new Koa()
 model('Campaign', {
   name: $.string().description('Name of campaign'),
   startAt: $.date().description('Start at date'),
-  endAt: $.date().description('End at date')
+  endAt: $.date().description('End at date'),
+  channels: $.array().items($.string())
+    .description('Channels to filter campaign to, like tags.')
 })
 
 model('User', {

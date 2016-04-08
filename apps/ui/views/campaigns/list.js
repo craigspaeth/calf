@@ -5,7 +5,7 @@ import {
 import { view, dom } from 'view'
 import moment from 'moment'
 
-const { div, h1, h2, h3, a } = dom
+const { div, h1, h2, h3, h4, a } = dom
 
 const styles = {
   container: {
@@ -57,6 +57,7 @@ export default view(({ campaigns }) => (
           h3({ style: styles.itemH3 },
             moment(campaign.startAt).format('MMM. Do') + ' - ' +
             moment(campaign.endAt).format('MMM. Do')),
+          h4({}, (campaign.channels || []).join(', ')),
           a({
             style: styles.itemEdit,
             href: `/campaigns/${campaign._id}/edit`

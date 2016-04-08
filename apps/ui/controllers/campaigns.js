@@ -5,7 +5,7 @@ import page from 'page'
 import { compact, map } from 'lodash'
 
 const totalSteps = 4
-const campaignAttrs = ['_id', 'name', 'startAt', 'endAt']
+const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels']
 
 export const indexRoute = async (ctx, next) => {
   const res = await api(`{ campaigns { ${campaignAttrs.join(' ')} } }`)
@@ -42,7 +42,7 @@ export const saveAndQuitCampaign = async (tree) => {
     mutation {
       createCampaign(${
         compact(map(tree.get('editCampaign'), (val, key) =>
-          val ? `${key}: "${val}"` : null
+          val ? `${key}: ${JSON.stringify(val)}` : null
         )).join(' ')
       }) { _id }
     }
@@ -65,4 +65,9 @@ export const deleteCampaign = async (tree) => {
 export const updateAttr = (campaign, attr) => (event) => {
   if (!campaign.get()) campaign.set({})
   campaign.set(attr, event.target.value)
+}
+
+export const onChangeChannels = (campaign, channels) => {
+  console.log(channels)
+  campaign.set('channels', channels)
 }
