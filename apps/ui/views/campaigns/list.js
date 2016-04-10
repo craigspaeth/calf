@@ -35,7 +35,10 @@ const styles = {
     marginBottom: '5px'
   }),
   itemH3: type('mediumSansSerif', {
-    margin: `10px 0 ${mediumMargin}px 0`
+    marginTop: '10px'
+  }),
+  itemH4: type('mediumSansSerif', {
+    margin: `${smallMargin} 0`
   }),
   itemEdit: flatButton('light', {
     marginRight: '10px'
@@ -57,7 +60,8 @@ export default view(({ campaigns }) => (
           h3({ style: styles.itemH3 },
             moment(campaign.startAt).format('MMM. Do') + ' - ' +
             moment(campaign.endAt).format('MMM. Do')),
-          h4({}, (campaign.channels || []).join(', ')),
+          h4({ style: styles.itemH4 },
+            `Channels: ${campaign.channels.join(', ')}`),
           a({
             style: styles.itemEdit,
             href: `/campaigns/${campaign._id}/edit`

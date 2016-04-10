@@ -22,18 +22,18 @@ export const editRoute = async (ctx, next) => {
   const res = await api(`query {
     campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
   }`)
-  const data = await res.json()
-  ctx.tree.set('editCampaign', data.data.campaign)
+  const { data } = await res.json()
+  ctx.tree.set('editCampaign', data.campaign)
   ctx.render(editCampaign)
 }
 
 export const editCampaignNext = (step) => {
-  const curStep = step.get() || 0
+  const curStep = step.get()
   if (curStep !== 0) step.set(curStep - 1)
 }
 
 export const editCampaignPrev = (step) => {
-  const curStep = step.get() || 0
+  const curStep = step.get()
   if (curStep < totalSteps - 1) step.set(curStep + 1)
 }
 
@@ -65,9 +65,4 @@ export const deleteCampaign = async (tree) => {
 export const updateAttr = (campaign, attr) => (event) => {
   if (!campaign.get()) campaign.set({})
   campaign.set(attr, event.target.value)
-}
-
-export const onChangeChannels = (campaign, channels) => {
-  console.log(channels)
-  campaign.set('channels', channels)
 }

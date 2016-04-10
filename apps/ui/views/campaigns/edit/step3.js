@@ -1,12 +1,9 @@
-import React from 'react'
 import { view, dom } from 'view'
-import { onChangeChannels } from '../../../controllers/campaigns'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
-import TagsInput from 'react-tagsinput'
+import tagsinput from '../../tagsinput'
 
-const tagsinput = (props) => React.createElement(TagsInput, props)
 const { div, label, input } = dom
 
 const styles = {
@@ -37,8 +34,8 @@ export default view(({ campaign }) => (
     div({ style: styles.left },
       label({ style: styles.label }, 'Channels',
         tagsinput({
-          value: campaign.get('channels') || [],
-          onChange: (channels) => onChangeChannels(campaign, channels),
+          style: styles.input,
+          tags: campaign.select('channels'),
           placeholder: 'Fashion or politics'
         })),
       label({ style: styles.label }, 'Location',

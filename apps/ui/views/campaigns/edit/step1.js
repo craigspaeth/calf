@@ -31,7 +31,7 @@ export default view(({ campaign }) => {
     label({
       style: assign({}, styles.label, ...inputStyles),
       key: attr
-    }, capitalize(snakeCase(attr).split('_')),
+    }, capitalize(snakeCase(attr).split('_').join(' ')),
       input({
         key: attr,
         style: styles.input,

@@ -36,7 +36,7 @@ export default view(({ tree }) => {
   return div({},
     mainheader({}),
     newheader({ editCampaignStep }),
-    div({ style: styles.step }, (step || step1)({ campaign })),
+    div({ style: styles.step }, step({ campaign })),
     div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),
