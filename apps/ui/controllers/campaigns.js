@@ -1,30 +1,40 @@
 import api from 'api'
-import dashboard from '../views/dashboard'
-import editCampaign from '../views/campaigns/edit'
+import campaigns from '../views/campaigns'
+import editCampaign from '../views/edit-campaign'
 import page from 'page'
 import { compact, map } from 'lodash'
 
 const totalSteps = 4
-const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels']
+const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels', 'regions']
 
 export const indexRoute = async (ctx, next) => {
   const res = await api(`{ campaigns { ${campaignAttrs.join(' ')} } }`)
   const data = await res.json()
   ctx.tree.set('campaigns', data.data.campaigns)
-  ctx.render(dashboard)
+  ctx.render(campaigns)
+}
+
+const renderEdit = (ctx) => {
+  ctx.render(editCampaign)
+  document.querySelector('.foobarbaz').focus()
 }
 
 export const newRoute = (ctx) => {
-  ctx.render(editCampaign)
+  renderEdit(ctx)
 }
 
 export const editRoute = async (ctx, next) => {
+  console.log('focus')
   const res = await api(`query {
+    regions
+    channels
     campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
   }`)
   const { data } = await res.json()
+  ctx.tree.set('regions', data.regions)
+  ctx.tree.set('channels', data.channels)
   ctx.tree.set('editCampaign', data.campaign)
-  ctx.render(editCampaign)
+  renderEdit(ctx)
 }
 
 export const editCampaignNext = (step) => {
@@ -38,16 +48,18 @@ export const editCampaignPrev = (step) => {
 }
 
 export const saveAndQuitCampaign = async (tree) => {
+  const campaign = tree.get('editCampaign')
   await api(`
     mutation {
-      createCampaign(${
-        compact(map(tree.get('editCampaign'), (val, key) =>
+      ${campaign._id ? 'updateCampaign' : 'createCampaign'}(${
+        compact(map(campaign, (val, key) =>
           val ? `${key}: ${JSON.stringify(val)}` : null
         )).join(' ')
       }) { _id }
     }
   `)
-  tree.set('editCampaign', {})
+  tree.set('editCampaignStep', 0)
+  tree.set('editCampaign', { campaigns: [] })
   page('/')
 }
 

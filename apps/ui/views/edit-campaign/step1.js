@@ -1,6 +1,6 @@
 import { flatInput, flatLabel } from 'style'
 import { view, dom } from 'view'
-import { updateAttr } from '../../../controllers/campaigns'
+import { updateAttr } from '../../controllers/campaigns'
 import { capitalize, snakeCase, assign } from 'lodash'
 import moment from 'moment'
 
@@ -36,6 +36,7 @@ export default view(({ campaign }) => {
         key: attr,
         style: styles.input,
         placeholder: placeholder,
+        className: attr === 'name' ? 'foobarbaz' : null,
         onChange: updateAttr(campaign, attr),
         defaultValue: attr === 'startAt' || attr === 'endAt'
           ? moment(campaign.get(attr)).format('MM/DD/YYYY')

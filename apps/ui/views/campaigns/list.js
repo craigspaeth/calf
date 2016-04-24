@@ -1,5 +1,5 @@
 import {
-  type, mediumMargin, smallMargin, flatButton, lightGray, containerMaxWidth,
+  type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
   largeMargin
 } from 'style'
 import { view, dom } from 'view'
@@ -13,8 +13,8 @@ const styles = {
     margin: 'auto',
     padding: `0 ${largeMargin}px`
   },
-  h1: type('largeSansSerif', {
-    borderBottom: `1px solid ${lightGray}`,
+  h1: type('mediumHeader', {
+    borderBottom: `1px solid ${softGray}`,
     paddingBottom: smallMargin,
     margin: `${mediumMargin}px 0`
   }),
@@ -29,15 +29,15 @@ const styles = {
   item: {
     paddingBottom: mediumMargin,
     marginBottom: mediumMargin,
-    borderBottom: `1px solid ${lightGray}`
+    borderBottom: `1px solid ${softGray}`
   },
-  itemH2: type('largeSansSerif', {
+  itemH2: type('mediumHeader', {
     marginBottom: '5px'
   }),
-  itemH3: type('mediumSansSerif', {
+  itemH3: type('mediumBody', {
     marginTop: '10px'
   }),
-  itemH4: type('mediumSansSerif', {
+  itemH4: type('mediumBody', {
     margin: `${smallMargin} 0`
   }),
   itemEdit: flatButton('light', {

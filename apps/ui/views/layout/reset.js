@@ -27,9 +27,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
-  font-size: ${type('mediumSansSerif').fontSize};
-  line-height: ${type('mediumSansSerif').lineHeight};
-  font-family: ${type('mediumSansSerif').fontFamily};
+  font-size: ${type('mediumBody').fontSize};
+  line-height: ${type('mediumBody').lineHeight};
+  font-family: ${type('mediumBody').fontFamily};
 }
 ol, ul {
   list-style: none;
@@ -46,18 +46,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-a {
-  color: black;
-}
 * {
   box-sizing: border-box;
-}
-body {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-}
-svg {
-  width: 100%;
-  height: 100%;
 }
 `

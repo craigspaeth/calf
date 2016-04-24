@@ -1,6 +1,7 @@
 export default {
   editCampaign: {
-    channels: []
+    channels: [],
+    regions: []
   },
   campaigns: [],
   editCampaignStep: 0

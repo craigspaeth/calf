@@ -1,7 +1,14 @@
-import { view, dom } from 'view'
+import { view, dom, style as rstyle } from 'view'
+import { deepOcean, lato } from 'style'
 import reset from './reset'
 
-const { html, body, script, head, meta, style, div } = dom
+const { html, body, script, head, meta, style, div, link } = dom
+const rules = {
+  body: {
+    color: deepOcean,
+    fontFamily: lato
+  }
+}
 
 export default view((props) => {
   return html({},
@@ -15,7 +22,16 @@ export default view((props) => {
           'user-scalable=no'
         ].join(', ')
       }),
+      link({
+        href: (
+          'https://fonts.googleapis.com/css' +
+          '?family=Montserrat:400,700|Lato:400,700,400italic'
+        ),
+        rel: 'stylesheet',
+        type: 'text/css'
+      }),
       style({ dangerouslySetInnerHTML: { __html: reset } })),
+      rstyle({ rules: rules }),
     body({},
       div({ id: 'layout' }, props.body ? props.body(props) : 'Blank'),
       script({ dangerouslySetInnerHTML: { __html: `

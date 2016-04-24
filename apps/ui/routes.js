@@ -7,7 +7,7 @@ import state from './state'
 export default () => {
   const routes = router()
   const { shared } = routes
-  shared.use(render({ layout: layout, state: state }))
+  shared.use(render({ layout, state }))
   shared.get('/', (ctx) => ctx.redirect('/campaigns'))
   shared.get('/campaigns', campaigns.indexRoute)
   shared.get('/campaigns/new', campaigns.newRoute)
