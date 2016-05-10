@@ -33,7 +33,7 @@ export default view(({ body: inner }, { tree }) => {
       style({ dangerouslySetInnerHTML: { __html: reset } })),
       rstyle({ rules: rules }),
     body({},
-      div({ id: 'layout' }, inner ? inner({}) : 'Blank'),
+      div({ id: 'body' }, inner ? inner({}) : 'Blank'),
       script({ dangerouslySetInnerHTML: { __html: `
         var __TREE__ = ${JSON.stringify(tree)};
       ` }}),

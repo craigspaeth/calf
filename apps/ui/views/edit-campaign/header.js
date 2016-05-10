@@ -1,4 +1,4 @@
-import { editCampaignNext, editCampaignPrev } from '../../controllers/campaigns'
+import { editCampaignNext, editCampaignPrev } from '../../controller'
 import {
   headerHeight, flatButton, type, smallMargin, deepOcean, darkSlate, softGray
 } from 'style'

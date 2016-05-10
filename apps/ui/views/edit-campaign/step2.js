@@ -16,7 +16,9 @@ const styles = {
     color: 'white',
     display: 'block',
     backgroundColor: 'transparent',
-    border: 0
+    border: 0,
+    cursor: '-webkit-grab',
+    outline: 'none'
   }
 }
 
