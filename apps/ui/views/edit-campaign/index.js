@@ -1,11 +1,10 @@
-import { headerHeight, mediumMargin, flatButton, darkGray } from 'style'
+import { mediumMargin, flatButton, deepOcean } from 'style'
 import {
   saveAndQuitCampaign,
   deleteCampaign
-} from '../../../controllers/campaigns'
+} from '../../controllers/campaigns'
 import { view, dom } from 'view'
-import newheader from './header'
-import mainheader from '../../layout/header'
+import header from './header'
 import step1 from './step1'
 import step2 from './step2'
 import step3 from './step3'
@@ -19,7 +18,6 @@ const styles = {
     height: '100%',
     backgroundColor: 'white',
     position: 'absolute',
-    top: `${headerHeight * 2 + mediumMargin}px`,
     left: '0'
   },
   bottomButtons: {
@@ -29,24 +27,24 @@ const styles = {
   }
 }
 
-export default view(({ tree }) => {
-  const editCampaignStep = tree.select('editCampaignStep')
-  const step = steps[editCampaignStep.get()]
-  const campaign = tree.select('editCampaign')
+export default view((_, { tree }) => {
+  const campaign = tree.select('campaign')
   return div({},
-    mainheader({}),
-    newheader({ editCampaignStep }),
-    div({ style: styles.step }, (step || step1)({ campaign })),
+    header({}),
+    div({ style: styles.step },
+      steps[tree.get('editCampaignStep')]({})),
     div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),
-        onClick: () => saveAndQuitCampaign(tree)
+        onClick: () => saveAndQuitCampaign(tree),
+        key: 'quit'
       }, 'Save & Quit'),
       campaign.get() && campaign.get()._id && button({
         style: flatButton('light', {
           backgroundColor: 'transparent',
-          color: darkGray
+          color: deepOcean
         }),
-        onClick: () => deleteCampaign(tree)
+        onClick: () => deleteCampaign(tree),
+        key: 'delete'
       }, 'Delete')))
 })

@@ -1,27 +1,10 @@
 import Koa from 'koa'
 import graphqlHTTP from 'koa-graphql'
 import c from 'koa-convert'
-import { model, schema, $ } from 'model'
-// import schema from './schema'
-// import jwt from 'koa-jwt'
-// const { AUTH0_SECRET, AUTH0_ID } = process.env
-// app.use(c(jwt({
-//   secret: new Buffer(AUTH0_SECRET, 'base64'),
-//   audience: AUTH0_ID
-// })))
+import './models'
+import { schema } from 'model'
 
 const app = new Koa()
-
-model('Campaign', {
-  name: $.string().description('Name of campaign'),
-  startAt: $.date().description('Start at date'),
-  endAt: $.date().description('End at date')
-})
-
-model('User', {
-  name: $.string().description('Name of user'),
-  email: $.string().email().description('User email')
-})
 
 app.use(async (ctx, next) => {
   return c(graphqlHTTP({

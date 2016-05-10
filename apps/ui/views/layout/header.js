@@ -1,50 +1,34 @@
-import { lightGray, flatButton } from 'style'
-import { view, dom, svgfile } from 'view'
-const fs = require('fs')
+import {
+  flatButton, headerHeight, type, smallMargin, darkSlate
+} from 'style'
+import { view, dom } from 'view'
+import logo from './logo'
 
-const { div, nav, header, a, button } = dom
+const { nav, header, a, button } = dom
 
 const styles = {
   header: {
+    height: headerHeight,
     width: '100%',
-    borderBottom: `1px solid ${lightGray}`,
+    backgroundColor: 'white',
+    color: darkSlate,
     padding: '10px',
     position: 'relative',
     zIndex: 1
   },
-  logo: {
-    width: '40px',
-    height: '30px',
-    marginRight: '10px',
-    borderRight: `1px solid ${lightGray}`,
-    paddingRight: '10px'
-  },
-  logout: flatButton('light'),
+  logout: flatButton('dark'),
   nav: {
     display: 'inline-block',
     position: 'absolute',
-    right: '10px',
+    right: '15px',
     top: '10px'
   },
-  navA: {
-    marginRight: '10px'
-  },
-  logoLeftLabel: {
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  }
+  navA: [{ marginRight: smallMargin }, type('smallCaps')]
 }
 
 export default view((props) => (
   header({ style: styles.header },
-    a({ href: '/' },
-      svgfile({
-        src: fs.readFileSync(__dirname + '/logo.svg'),
-        style: Object.assign({}, styles.logo, styles.logoLeftLabel)
-      })),
-    div({
-      style: Object.assign({}, styles.leftLabel, styles.logoLeftLabel)
-    }, 'Welcome to AdRhino'),
+    logo(),
     nav({ style: styles.nav },
       a({ style: styles.navA }, 'Developers'),
       a({ style: styles.navA }, 'Campaigns'),

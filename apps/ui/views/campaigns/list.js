@@ -1,11 +1,11 @@
 import {
-  type, mediumMargin, smallMargin, flatButton, lightGray, containerMaxWidth,
+  type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
   largeMargin
 } from 'style'
 import { view, dom } from 'view'
 import moment from 'moment'
 
-const { div, h1, h2, h3, a } = dom
+const { div, h1, h2, h3, h4, a } = dom
 
 const styles = {
   container: {
@@ -13,8 +13,8 @@ const styles = {
     margin: 'auto',
     padding: `0 ${largeMargin}px`
   },
-  h1: type('largeSansSerif', {
-    borderBottom: `1px solid ${lightGray}`,
+  h1: type('mediumHeader', {
+    borderBottom: `1px solid ${softGray}`,
     paddingBottom: smallMargin,
     margin: `${mediumMargin}px 0`
   }),
@@ -29,13 +29,16 @@ const styles = {
   item: {
     paddingBottom: mediumMargin,
     marginBottom: mediumMargin,
-    borderBottom: `1px solid ${lightGray}`
+    borderBottom: `1px solid ${softGray}`
   },
-  itemH2: type('largeSansSerif', {
+  itemH2: type('mediumHeader', {
     marginBottom: '5px'
   }),
-  itemH3: type('mediumSansSerif', {
-    margin: `10px 0 ${mediumMargin}px 0`
+  itemH3: type('mediumBody', {
+    marginTop: '10px'
+  }),
+  itemH4: type('mediumBody', {
+    margin: `${smallMargin} 0`
   }),
   itemEdit: flatButton('light', {
     marginRight: '10px'
@@ -57,12 +60,16 @@ export default view(({ campaigns }) => (
           h3({ style: styles.itemH3 },
             moment(campaign.startAt).format('MMM. Do') + ' - ' +
             moment(campaign.endAt).format('MMM. Do')),
+          h4({ style: styles.itemH4 },
+            `Channels: ${campaign.channels.join(', ')}`),
           a({
             style: styles.itemEdit,
-            href: `/campaigns/${campaign._id}/edit`
+            href: `/campaigns/${campaign._id}/edit`,
+            key: 'edit'
           }, 'Edit'),
           a({
             style: styles.itemPreview,
-            href: `/campaigns/${campaign._id}/preview`
+            href: `/campaigns/${campaign._id}/preview`,
+            key: 'preview'
           }, 'Preview'))))))
 ))

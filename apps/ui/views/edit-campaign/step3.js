@@ -2,8 +2,9 @@ import { view, dom } from 'view'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
+import tagsinput from '../tagsinput'
 
-const { div, label, input } = dom
+const { div, label } = dom
 
 const styles = {
   container: {
@@ -28,14 +29,21 @@ const styles = {
   })
 }
 
-export default view((props) => (
+export default view(({ campaign, channels }) => (
   div({ style: styles.container },
     div({ style: styles.left },
       label({ style: styles.label }, 'Channels',
-        input({ style: styles.input, placeholder: 'Fashion or politics' })),
-      label({ style: styles.label }, 'Location',
-        input({
+        tagsinput({
           style: styles.input,
+          tags: campaign.select('channels'),
+          suggestions: channels.get(),
+          placeholder: 'Fashion or politics'
+        })),
+      label({ style: styles.label }, 'Location',
+        tagsinput({
+          style: styles.input,
+          tags: campaign.select('regions'),
+          suggestions: channels.get(),
           placeholder: (
             'Enter target state(s) or region(s) like ' +
             '“West coast” or “California”'

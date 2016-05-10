@@ -1,53 +1,68 @@
 import api from 'api'
-import dashboard from '../views/dashboard'
-import editCampaign from '../views/campaigns/edit'
+import campaigns from '../views/campaigns'
+import editCampaign from '../views/edit-campaign'
 import page from 'page'
 import { compact, map } from 'lodash'
 
 const totalSteps = 4
-const campaignAttrs = ['_id', 'name', 'startAt', 'endAt']
+const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels', 'regions']
 
 export const indexRoute = async (ctx, next) => {
   const res = await api(`{ campaigns { ${campaignAttrs.join(' ')} } }`)
   const data = await res.json()
   ctx.tree.set('campaigns', data.data.campaigns)
-  ctx.render(dashboard)
+  ctx.render(campaigns)
+}
+
+const renderEdit = (ctx) => {
+  ctx.render(editCampaign)
+  if (ctx.browser) document.querySelector('.foobarbaz').focus()
 }
 
 export const newRoute = (ctx) => {
-  ctx.render(editCampaign)
+  renderEdit(ctx)
 }
 
 export const editRoute = async (ctx, next) => {
+  console.log('focus')
   const res = await api(`query {
+    regions
+    channels
     campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
   }`)
-  const data = await res.json()
-  ctx.tree.set('editCampaign', data.data.campaign)
-  ctx.render(editCampaign)
+  const { data } = await res.json()
+  ctx.tree.set('regions', data.regions)
+  ctx.tree.set('channels', data.channels)
+  ctx.tree.set('editCampaign', data.campaign)
+  renderEdit(ctx)
 }
 
-export const editCampaignNext = (step) => {
-  const curStep = step.get() || 0
-  if (curStep !== 0) step.set(curStep - 1)
+export const editCampaignPrev = (tree) => {
+  const curStep = tree.get('editCampaignStep')
+  if (curStep !== 0) tree.select('editCampaignStep').set(curStep - 1)
 }
 
-export const editCampaignPrev = (step) => {
-  const curStep = step.get() || 0
-  if (curStep < totalSteps - 1) step.set(curStep + 1)
+export const editCampaignNext = (tree) => {
+  const curStep = tree.get('editCampaignStep')
+  if (!tree.get('enableNextStep')) return
+  if (curStep >= totalSteps - 1) return
+  tree.select('editCampaignStep').set(curStep + 1)
+  tree.set('enableNextStep', false)
 }
 
 export const saveAndQuitCampaign = async (tree) => {
+  const campaign = tree.get('editCampaign')
   await api(`
     mutation {
-      createCampaign(${
-        compact(map(tree.get('editCampaign'), (val, key) =>
-          val ? `${key}: "${val}"` : null
+      ${campaign._id ? 'updateCampaign' : 'createCampaign'}(${
+        compact(map(campaign, (val, key) =>
+          val ? `${key}: ${JSON.stringify(val)}` : null
         )).join(' ')
       }) { _id }
     }
   `)
-  tree.set('editCampaign', {})
+  tree.set('editCampaignStep', 0)
+  tree.set('editCampaign', { campaigns: [] })
   page('/')
 }
 
@@ -62,7 +77,15 @@ export const deleteCampaign = async (tree) => {
   page('/')
 }
 
-export const updateAttr = (campaign, attr) => (event) => {
+export const updateAttr = (tree, attr) => (event) => {
+  const campaign = tree.select('campaign')
   if (!campaign.get()) campaign.set({})
   campaign.set(attr, event.target.value)
+  if (
+    campaign.get('name') &&
+    campaign.get('startAt') &&
+    campaign.get('endAt')
+  ) {
+    tree.select('enableNextStep').set(true)
+  }
 }
