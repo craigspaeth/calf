@@ -2,7 +2,7 @@ import { mediumMargin, flatButton, deepOcean } from 'style'
 import {
   saveAndQuitCampaign,
   deleteCampaign
-} from '../../controllers/campaigns'
+} from '../../controller'
 import { view, dom } from 'view'
 import header from './header'
 import step1 from './step1'

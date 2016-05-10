@@ -1,6 +1,6 @@
 import api from 'api'
-import campaigns from '../views/campaigns'
-import editCampaign from '../views/edit-campaign'
+import campaigns from './views/campaigns'
+import editCampaign from './views/edit-campaign'
 import page from 'page'
 import { compact, map } from 'lodash'
 

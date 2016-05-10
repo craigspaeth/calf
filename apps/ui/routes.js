@@ -1,8 +1,16 @@
-import * as campaigns from './controllers/campaigns'
+import * as campaigns from './controller'
 import router from 'router'
 import render from 'render'
 import layout from './views/layout'
-import state from './state'
+
+const state = {
+  editCampaign: {
+    channels: [],
+    regions: []
+  },
+  campaigns: [],
+  editCampaignStep: 1
+}
 
 export default () => {
   const routes = router()

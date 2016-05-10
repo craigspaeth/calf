@@ -5,11 +5,11 @@ import header from '../layout/header'
 
 const { div } = dom
 
-export default view(({ tree }) => (
-  div({},
+export default view((_, { tree }) => {
+  return div({},
     header({}),
     div({},
       tree.get('campaigns').length > 0
-      ? list({ campaigns: tree.get('campaigns') })
-      : empty({})))
-))
+      ? list()
+      : empty()))
+})

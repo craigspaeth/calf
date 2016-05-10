@@ -1,6 +1,6 @@
 import { flatInput, flatLabel, headerHeight, mediumMargin } from 'style'
 import { view, dom } from 'view'
-import { updateAttr } from '../../controllers/campaigns'
+import { updateAttr } from '../../controller'
 import { capitalize, snakeCase, assign } from 'lodash'
 import moment from 'moment'
 

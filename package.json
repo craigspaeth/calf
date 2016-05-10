@@ -4,8 +4,9 @@
   "description": "The original monolithic codebase for AdRhino",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=$NODE_PATH:./lib concurrently 'mongod' 'npm run server' 'npm run lint'",
-    "server": "forever -c 'node -r dotenv/config -r babel-core/register' index.js",
+    "start": "concurrently 'mongod' 'npm run server' 'npm run lint'",
+    "server": "forever -c 'npm run node' index.js",
+    "node": "NODE_PATH=$NODE_PATH:./lib node -r dotenv/config -r babel-core/register -r bluebird-register",
     "lint": "nodemon --exec 'standard | notify'"
   },
   "repository": {
@@ -42,6 +43,7 @@
     "babelify": "^7.2.0",
     "baobab": "^2.3.3",
     "baobab-react": "git://github.com/Yomguithereal/baobab-react.git",
+    "bluebird": "^3.3.5",
     "brfs": "^1.4.3",
     "brfs-babel": "^1.0.0",
     "browserify": "^13.0.0",
@@ -83,12 +85,9 @@
     "react-functional": "^1.2.0",
     "react-tag-input": "^2.2.5",
     "react-tagsinput": "^3.4.1",
-    "standard-format": "^2.1.1"
-  },
-  "devDependencies": {
+    "standard-format": "^2.1.1",
     "concurrently": "^2.0.0",
     "dotenv": "^2.0.0",
-    "cache-require-paths": "^0.2.0",
     "envify": "^3.4.0",
     "foreman": "^1.4.1",
     "node-notifier": "^4.5.0",
