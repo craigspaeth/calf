@@ -1,8 +1,6 @@
+import { editCampaignNext, editCampaignPrev } from '../../controllers/campaigns'
 import {
-  editCampaignNext, editCampaignPrev
-} from '../../controllers/campaigns'
-import {
-  softGray, headerHeight, flatButton, type, smallMargin, deepOcean
+  headerHeight, flatButton, type, smallMargin, deepOcean, darkSlate, softGray
 } from 'style'
 import { view, dom } from 'view'
 import logo from '../layout/logo'
@@ -15,8 +13,9 @@ const styles = {
   header: {
     width: '100%',
     height: `${headerHeight}px`,
-    borderBottom: `1px solid ${softGray}`,
     backgroundColor: 'white',
+    borderBottom: `1px solid ${softGray}`,
+    color: deepOcean,
     textAlign: 'center',
     position: 'relative',
     zIndex: 1
@@ -30,7 +29,7 @@ const styles = {
     type('label'),
     {
       paddingRight: smallMargin,
-      color: highlighted ? deepOcean : softGray,
+      color: highlighted ? darkSlate : softGray,
       transition: 'color 0.2s ease-in-out'
     }
   ],
@@ -40,19 +39,25 @@ const styles = {
     top: '9px'
   },
   prev: flatButton('light', {
-    borderColor: 'transparent'
+    borderColor: 'transparent',
+    color: softGray
   }),
-  next: flatButton('dark'),
-  h1: [type('label'), {
-    position: 'absolute',
-    left: '150px',
-    top: `${navPadding}px`,
-    borderLeft: `1px solid ${softGray}`,
-    paddingLeft: '15px'
-  }]
+  next: (enabled) => flatButton(enabled ? 'hot' : 'darkDisabled'),
+  h1: [
+    type('label'),
+    {
+      position: 'absolute',
+      left: '150px',
+      top: `${navPadding}px`,
+      borderLeft: `1px solid ${darkSlate}`,
+      paddingLeft: '15px',
+      color: darkSlate
+    }
+  ]
 }
 
-export default view(({ editCampaignStep }) => {
+export default view((_, { tree }) => {
+  const editCampaignStep = tree.select('editCampaignStep')
   return header({ style: styles.header },
     logo(),
     h1({ style: styles.h1 }, 'Building an ad campaign'),
@@ -66,10 +71,12 @@ export default view(({ editCampaignStep }) => {
     div({ style: styles.buttons },
       button({
         style: styles.prev,
-        onClick: () => editCampaignNext(editCampaignStep)
-      }, 'Previous'),
+        onClick: () => editCampaignPrev(tree),
+        key: 'prev'
+      }, arrow({ dir: 'left' }), 'Previous'),
       button({
-        style: styles.next,
-        onClick: () => editCampaignPrev(editCampaignStep)
-      }, 'Next', arrow())))
+        style: styles.next(tree.get('enableNextStep')),
+        onClick: () => editCampaignNext(tree),
+        key: 'next'
+      }, 'Next', arrow({ fill: tree.get('enableNextStep') ? 'white' : '' }))))
 })

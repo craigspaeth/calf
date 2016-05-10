@@ -1,4 +1,4 @@
-import { flatInput, flatLabel } from 'style'
+import { flatInput, flatLabel, headerHeight, mediumMargin } from 'style'
 import { view, dom } from 'view'
 import { updateAttr } from '../../controllers/campaigns'
 import { capitalize, snakeCase, assign } from 'lodash'
@@ -10,7 +10,8 @@ const styles = {
   form: {
     maxWidth: '500px',
     margin: 'auto',
-    position: 'relative'
+    position: 'relative',
+    top: `${headerHeight * 2 + mediumMargin}px`
   },
   label: flatLabel({
     marginBottom: '10px'
@@ -26,9 +27,11 @@ const styles = {
   }
 }
 
-export default view(({ campaign }) => {
-  const inputField = (attr, placeholder, ...inputStyles) => (
-    label({
+export default view((_, { tree }) => {
+  const campaign = tree.select('campaign')
+  const inputField = (attr, placeholder, ...inputStyles) => {
+    const val = campaign.get(attr)
+    return label({
       style: assign({}, styles.label, ...inputStyles),
       key: attr
     }, capitalize(snakeCase(attr).split('_').join(' ')),
@@ -37,12 +40,12 @@ export default view(({ campaign }) => {
         style: styles.input,
         placeholder: placeholder,
         className: attr === 'name' ? 'foobarbaz' : null,
-        onChange: updateAttr(campaign, attr),
+        onChange: updateAttr(tree, attr),
         defaultValue: attr === 'startAt' || attr === 'endAt'
-          ? moment(campaign.get(attr)).format('MM/DD/YYYY')
-          : campaign.get(attr)
+          ? val && moment(val).format('MM/DD/YYYY')
+          : val
       }))
-  )
+  }
   return div({ style: styles.form },
     inputField('name', "e.g. Tiffany's Winter Sale"),
     inputField('startAt', 'e.g. 10/14/20',

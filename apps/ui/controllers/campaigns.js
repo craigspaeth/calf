@@ -16,7 +16,7 @@ export const indexRoute = async (ctx, next) => {
 
 const renderEdit = (ctx) => {
   ctx.render(editCampaign)
-  document.querySelector('.foobarbaz').focus()
+  if (ctx.browser) document.querySelector('.foobarbaz').focus()
 }
 
 export const newRoute = (ctx) => {
@@ -37,14 +37,17 @@ export const editRoute = async (ctx, next) => {
   renderEdit(ctx)
 }
 
-export const editCampaignNext = (step) => {
-  const curStep = step.get()
-  if (curStep !== 0) step.set(curStep - 1)
+export const editCampaignPrev = (tree) => {
+  const curStep = tree.get('editCampaignStep')
+  if (curStep !== 0) tree.select('editCampaignStep').set(curStep - 1)
 }
 
-export const editCampaignPrev = (step) => {
-  const curStep = step.get()
-  if (curStep < totalSteps - 1) step.set(curStep + 1)
+export const editCampaignNext = (tree) => {
+  const curStep = tree.get('editCampaignStep')
+  if (!tree.get('enableNextStep')) return
+  if (curStep >= totalSteps - 1) return
+  tree.select('editCampaignStep').set(curStep + 1)
+  tree.set('enableNextStep', false)
 }
 
 export const saveAndQuitCampaign = async (tree) => {
@@ -74,7 +77,15 @@ export const deleteCampaign = async (tree) => {
   page('/')
 }
 
-export const updateAttr = (campaign, attr) => (event) => {
+export const updateAttr = (tree, attr) => (event) => {
+  const campaign = tree.select('campaign')
   if (!campaign.get()) campaign.set({})
   campaign.set(attr, event.target.value)
+  if (
+    campaign.get('name') &&
+    campaign.get('startAt') &&
+    campaign.get('endAt')
+  ) {
+    tree.select('enableNextStep').set(true)
+  }
 }

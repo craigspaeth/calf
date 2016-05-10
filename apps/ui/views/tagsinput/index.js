@@ -2,7 +2,7 @@ import React from 'react'
 import { view, dom } from 'view'
 import ReactTags from 'react-tag-input'
 import { Style } from 'radium'
-import { flatButton, flatInput, softGray, type } from 'style'
+import { flatButton, flatInput, softGray, type, coolBlue, orange } from 'style'
 import { uniqueId } from 'lodash'
 
 const { div } = dom
@@ -18,18 +18,32 @@ const rules = (placeholder, className) => ({
   }),
   '.ReactTags__tagInput': {
     display: 'inline-block',
-    marginRight: '10px'
+    marginRight: '10px',
+    marginLeft: '5px'
   },
   '.ReactTags__tagInput input': flatInput({
     border: 0,
     padding: 0
   }),
   '.ReactTags__tag': flatButton('light', {
-    marginRight: '10px'
+    marginRight: '5px',
+    backgroundColor: coolBlue,
+    borderColor: coolBlue,
+    color: 'white'
   }),
   '.ReactTags__remove': {
-    marginLeft: '10px',
-    display: 'inline-block'
+    display: 'inline-block',
+    color: 'transparent',
+    position: 'relative',
+    left: '14px',
+    marginLeft: '8px'
+  },
+  '.ReactTags__remove:after': {
+    content: "'×'",
+    fontSize: '22px',
+    position: 'absolute',
+    right: '10px',
+    color: 'white'
   },
   '.ReactTags__suggestions ul': type('smallCaps', {
     position: 'absolute',
@@ -37,14 +51,22 @@ const rules = (placeholder, className) => ({
     width: 'calc(100% + 2px)',
     background: 'white',
     border: `1px solid ${softGray}`,
-    top: '50px'
+    top: '47px'
   }),
   '.ReactTags__suggestions li': {
     width: '100%',
     padding: '10px'
   },
+  '.ReactTags__suggestions li mark': {
+    background: 'transparent',
+    color: orange
+  },
   '.ReactTags__suggestions li.active': {
-    background: softGray
+    background: orange,
+    color: 'white'
+  },
+  '.ReactTags__suggestions li.active mark': {
+    color: 'white'
   }
 })
 

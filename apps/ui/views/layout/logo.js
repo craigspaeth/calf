@@ -1,5 +1,5 @@
 import { view, dom, svgfile } from 'view'
-import { deepOcean } from 'style'
+import { darkSlate } from 'style'
 const fs = require('fs')
 
 const { a } = dom
@@ -14,7 +14,7 @@ const styles = {
   },
   svgfile: {
     svg: { height: '100%' },
-    'svg *': { fill: deepOcean }
+    'svg *': { fill: darkSlate }
   }
 }
 

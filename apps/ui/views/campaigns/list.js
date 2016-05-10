@@ -64,10 +64,12 @@ export default view(({ campaigns }) => (
             `Channels: ${campaign.channels.join(', ')}`),
           a({
             style: styles.itemEdit,
-            href: `/campaigns/${campaign._id}/edit`
+            href: `/campaigns/${campaign._id}/edit`,
+            key: 'edit'
           }, 'Edit'),
           a({
             style: styles.itemPreview,
-            href: `/campaigns/${campaign._id}/preview`
+            href: `/campaigns/${campaign._id}/preview`,
+            key: 'preview'
           }, 'Preview'))))))
 ))

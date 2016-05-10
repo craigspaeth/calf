@@ -4,5 +4,5 @@ export default {
     regions: []
   },
   campaigns: [],
-  editCampaignStep: 0
+  editCampaignStep: 1
 }

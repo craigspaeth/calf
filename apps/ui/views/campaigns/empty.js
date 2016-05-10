@@ -1,5 +1,5 @@
 import {
-  flatButton, type, mediumMargin, headerHeight, centerOfParent
+  flatButton, type, mediumMargin, headerHeight, centerOfParent, blueGradient
 } from 'style'
 import { view, dom } from 'view'
 
@@ -14,7 +14,7 @@ const styles = {
     }
   ],
   container: {
-    background: 'radial-gradient(#0B1F65, #020613)',
+    background: blueGradient,
     height: `calc(100% - ${headerHeight}px)`,
     paddingTop: `${headerHeight}px`
   },
@@ -46,6 +46,7 @@ export default view((props) => (
       `),
       a({
         style: styles.button,
-        href: '/campaigns/new'
+        href: '/campaigns/new',
+        key: 'create'
       }, 'Create new ad campaign')))
 ))

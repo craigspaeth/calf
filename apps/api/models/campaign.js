@@ -17,8 +17,8 @@ const schema = {
 const saveSchema = assign({}, schema, {
   regions: schema.channels.default([]),
   channels: schema.channels.default([]),
-  startAt: schema.startAt.default(new Date()),
-  endAt: schema.endAt.default(new Date())
+  startAt: schema.startAt,
+  endAt: schema.endAt
 })
 
 query('regions', [

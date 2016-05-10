@@ -1,4 +1,6 @@
-import { softGray, flatButton, headerHeight, type, smallMargin } from 'style'
+import {
+  flatButton, headerHeight, type, smallMargin, darkSlate
+} from 'style'
 import { view, dom } from 'view'
 import logo from './logo'
 
@@ -8,12 +10,13 @@ const styles = {
   header: {
     height: headerHeight,
     width: '100%',
-    borderBottom: `1px solid ${softGray}`,
+    backgroundColor: 'white',
+    color: darkSlate,
     padding: '10px',
     position: 'relative',
     zIndex: 1
   },
-  logout: flatButton('light'),
+  logout: flatButton('dark'),
   nav: {
     display: 'inline-block',
     position: 'absolute',

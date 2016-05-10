@@ -10,7 +10,7 @@ const rules = {
   }
 }
 
-export default view((props) => {
+export default view(({ body: inner }, { tree }) => {
   return html({},
     head({},
       meta({
@@ -33,9 +33,9 @@ export default view((props) => {
       style({ dangerouslySetInnerHTML: { __html: reset } })),
       rstyle({ rules: rules }),
     body({},
-      div({ id: 'layout' }, props.body ? props.body(props) : 'Blank'),
+      div({ id: 'layout' }, inner ? inner({}) : 'Blank'),
       script({ dangerouslySetInnerHTML: { __html: `
-        var __TREE__ = ${JSON.stringify(props.tree)};
+        var __TREE__ = ${JSON.stringify(tree)};
       ` }}),
       script({ src: '/client.js' })))
 })
