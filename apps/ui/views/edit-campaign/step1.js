@@ -40,7 +40,9 @@ export default view((_, { tree }) => {
         style: styles.input,
         placeholder: placeholder,
         className: attr === 'name' ? 'foobarbaz' : null,
-        onChange: updateAttr(tree, attr),
+        onKeyUp: (e) => {
+          updateAttr(tree, attr, e.target.value)
+        },
         defaultValue: attr === 'startAt' || attr === 'endAt'
           ? val && moment(val).format('MM/DD/YYYY')
           : val

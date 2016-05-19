@@ -30,8 +30,8 @@ export default view(({ body: inner }, { tree }) => {
         rel: 'stylesheet',
         type: 'text/css'
       }),
-      style({ dangerouslySetInnerHTML: { __html: reset } })),
-      rstyle({ rules: rules }),
+      style({ dangerouslySetInnerHTML: { __html: reset } }),
+      rstyle({ rules: rules })),
     body({},
       div({ id: 'body' }, inner ? inner({}) : 'Blank'),
       script({ dangerouslySetInnerHTML: { __html: `

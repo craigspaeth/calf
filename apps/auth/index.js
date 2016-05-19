@@ -8,6 +8,7 @@ import kpassport from 'koa-passport'
 import bodyParser from 'koa-bodyparser'
 import jwt from 'koa-jwt'
 import browserify from 'koa-browserify-middleware'
+import path from 'path'
 
 const app = new Koa()
 const { AUTH0_ID, AUTH0_SECRET, AUTH0_DOMAIN, SESSION_SECRET } = process.env
@@ -57,7 +58,7 @@ app.use(c(get('/', async (ctx, next) => {
   ctx.state.user ? ctx.redirect('/campaigns') : ctx.redirect('/login')
 })))
 app.use(c(get('/login.js', c(browserify(
-  __dirname + '/client.js',
+  path.join(__dirname, 'client.js'),
   { transform: ['babelify', 'brfs', 'envify'] }
 )))))
 app.use(c(get('/login', async (ctx, next) => {

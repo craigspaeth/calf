@@ -19,7 +19,23 @@ const renderEdit = (ctx) => {
   if (ctx.browser) document.querySelector('.foobarbaz').focus()
 }
 
-export const newRoute = (ctx) => {
+export const detailsRoute = (ctx) => {
+  ctx.tree.set('editCampaignStep', 0)
+  renderEdit(ctx)
+}
+
+export const adbuilderRoute = (ctx) => {
+  ctx.tree.set('editCampaignStep', 1)
+  renderEdit(ctx)
+}
+
+export const targetingRoute = (ctx) => {
+  ctx.tree.set('editCampaignStep', 2)
+  renderEdit(ctx)
+}
+
+export const reviewRoute = (ctx) => {
+  ctx.tree.set('editCampaignStep', 3)
   renderEdit(ctx)
 }
 
@@ -34,7 +50,7 @@ export const editRoute = async (ctx, next) => {
   ctx.tree.set('regions', data.regions)
   ctx.tree.set('channels', data.channels)
   ctx.tree.set('editCampaign', data.campaign)
-  renderEdit(ctx)
+  ctx.redirect(`/campaigns/${data.campaign._id}/edit/details`)
 }
 
 export const editCampaignPrev = (tree) => {
@@ -77,10 +93,10 @@ export const deleteCampaign = async (tree) => {
   page('/')
 }
 
-export const updateAttr = (tree, attr) => (event) => {
+export const updateAttr = (tree, attr, val) => {
   const campaign = tree.select('campaign')
   if (!campaign.get()) campaign.set({})
-  campaign.set(attr, event.target.value)
+  campaign.set(attr, val)
   if (
     campaign.get('name') &&
     campaign.get('startAt') &&
