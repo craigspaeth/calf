@@ -18,7 +18,7 @@ const styles = {
     height: '100%',
     backgroundColor: 'white',
     position: 'absolute',
-    left: '0'
+    left: '0px'
   },
   bottomButtons: {
     position: 'absolute',

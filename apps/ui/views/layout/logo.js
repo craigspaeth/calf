@@ -1,6 +1,7 @@
 import { view, dom, svgfile } from 'view'
 import { darkSlate } from 'style'
-const fs = require('fs')
+import { join } from 'path'
+import { readFileSync } from 'fs'
 
 const { a } = dom
 
@@ -21,7 +22,7 @@ const styles = {
 export default view((props) => (
   a({ href: '/', style: styles.logo },
     svgfile({
-      src: fs.readFileSync(__dirname + '/logo.svg'),
+      src: readFileSync(join(__dirname, 'logo.svg'), 'utf8'),
       style: styles.svgfile
     }))
 ))

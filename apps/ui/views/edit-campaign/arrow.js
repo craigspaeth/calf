@@ -1,6 +1,7 @@
 import { view, dom, svgfile } from 'view'
 import { softGray } from 'style'
-const fs = require('fs')
+import { join } from 'path'
+import { readFileSync } from 'fs'
 
 const { span } = dom
 
@@ -22,13 +23,13 @@ export default view(({ dir, fill }) => (
     style: [
       styles.span,
       {
-        transform: `rotate(${dir === 'left' ? '180' : '0' }deg)`,
+        transform: `rotate(${dir === 'left' ? '180' : '0'}deg)`,
         left: dir === 'left' ? '-10px' : '3px'
       }
     ]
   },
     svgfile({
-      src: fs.readFileSync(__dirname + '/arrow.svg'),
+      src: readFileSync(join(__dirname, 'arrow.svg'), 'utf8'),
       style: styles.svgfile(fill || softGray)
     }))
 ))
