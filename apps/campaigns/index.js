@@ -5,6 +5,6 @@ import routes from './routes'
 const app = new Koa()
 
 app.use(browserify({ src: __dirname }))
-app.use(routes()())
+app.use(routes())
 
 export default app

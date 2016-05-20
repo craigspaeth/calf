@@ -1,17 +1,14 @@
 import { mediumMargin, flatButton, deepOcean } from 'style'
-import {
-  saveAndQuitCampaign,
-  deleteCampaign
-} from '../../controller'
+import { saveAndQuitCampaign, del } from '../controller'
 import { view, dom } from 'view'
 import header from './header'
-import step1 from './step1'
-import step2 from './step2'
-import step3 from './step3'
-import step4 from './step4'
+import details from './details'
+import targeting from './targeting'
+import review from './review'
+import adbuilder from './adbuilder'
 
 const { div, button } = dom
-const steps = [step1, step2, step3, step4]
+const steps = [details, adbuilder, targeting, review]
 const styles = {
   step: {
     width: '100%',
@@ -44,7 +41,7 @@ export default view((_, { tree }) => {
           backgroundColor: 'transparent',
           color: deepOcean
         }),
-        onClick: () => deleteCampaign(tree),
+        onClick: () => del(tree),
         key: 'delete'
       }, 'Delete')))
 })

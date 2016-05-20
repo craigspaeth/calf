@@ -16,7 +16,7 @@ const styles = {
     color: 'white',
     display: 'block',
     backgroundColor: 'transparent',
-    border: 0,
+    borderWidth: 0,
     cursor: '-webkit-grab',
     outline: 'none'
   }

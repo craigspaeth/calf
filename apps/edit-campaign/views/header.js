@@ -1,9 +1,9 @@
-import { editCampaignNext, editCampaignPrev } from '../../controller'
+import { next, prev } from '../controller'
 import {
   headerHeight, flatButton, type, smallMargin, deepOcean, darkSlate, softGray
 } from 'style'
 import { view, dom } from 'view'
-import logo from '../layout/logo'
+import logo from 'components/layout/logo'
 import arrow from './arrow'
 
 const { h1, nav, div, button, a, header } = dom
@@ -71,12 +71,12 @@ export default view((_, { tree }) => {
     div({ style: styles.buttons },
       button({
         style: styles.prev,
-        onClick: () => editCampaignPrev(tree),
+        onClick: () => prev(tree),
         key: 'prev'
       }, arrow({ dir: 'left' }), 'Previous'),
       button({
         style: styles.next(tree.get('enableNextStep')),
-        onClick: () => editCampaignNext(tree),
+        onClick: () => next(tree),
         key: 'next'
       }, 'Next', arrow({ fill: tree.get('enableNextStep') ? 'white' : '' }))))
 })

@@ -2,7 +2,7 @@ import { view, dom } from 'view'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
-import tagsinput from '../tagsinput'
+import tagsinput from './tagsinput'
 
 const { div, label } = dom
 
