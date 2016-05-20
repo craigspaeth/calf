@@ -1,7 +1,7 @@
 import { view, dom } from 'view'
 import empty from './empty'
 import list from './list'
-import header from '../layout/header'
+import header from 'components/layout/header'
 
 const { div } = dom
 
