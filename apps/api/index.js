@@ -15,3 +15,5 @@ app.use(async (ctx, next) => {
 })
 
 export default app
+app.listen(process.env.PORT)
+console.log('listening')
