@@ -4,6 +4,7 @@ import c from 'koa-convert'
 import './models'
 import { schema } from 'model'
 
+const { PORT } = process.env
 const app = new Koa()
 
 app.use(async (ctx, next) => {
@@ -15,5 +16,8 @@ app.use(async (ctx, next) => {
 })
 
 export default app
-app.listen(process.env.PORT)
-console.log('listening')
+
+if (require.main) {
+  app.listen(PORT)
+  console.log(`Listening ${PORT}`)
+}
