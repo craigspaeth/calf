@@ -1,7 +1,7 @@
 import { model, $, query } from 'model'
 import { assign } from 'lodash'
 
-const textBlockSchema = {
+const textBlockSchemaKeys = {
   type: $.string().valid('text')
     .description('Text block type'),
 
@@ -15,7 +15,7 @@ const textBlockSchema = {
     .description('Font size responsive unit')
 }
 
-const imageBlockSchema = {
+const imageBlockSchemaKeys = {
   type: $.string().valid('image')
     .description('Image block type'),
 
@@ -29,7 +29,7 @@ const imageBlockSchema = {
     .description('Font size responsive unit')
 }
 
-const buttonBlockSchema = {
+const buttonBlockSchemaKeys = {
   type: $.string().valid('buton')
     .description('Button block type'),
 
@@ -52,7 +52,7 @@ const buttonBlockSchema = {
     .description('Url button links to, or special string such as `frame2`')
 }
 
-const sectionSchema = {
+const sectionSchemaKeys = {
   horizontalAlign: $.string().valid('left', 'middle', 'right')
     .description('Align inner content horizontally'),
 
@@ -60,15 +60,15 @@ const sectionSchema = {
     .description('Align inner content vertically'),
 
   blocks: $.array().items([
-    $.object().keys(textBlockSchema),
-    $.object().keys(imageBlockSchema),
-    $.object().keys(buttonBlockSchema)
+    $.object().meta({ name: 'TextBlock' }).keys(textBlockSchemaKeys),
+    $.object().meta({ name: 'ImageBlock' }).keys(imageBlockSchemaKeys),
+    $.object().meta({ name: 'ButtonBlock' }).keys(buttonBlockSchemaKeys)
   ])
     .description('Content blocks for the frame')
 }
 
-const frameSchema = {
-  background: $.object().keys({
+const frameSchema = $.object().meta({ name: 'Frame' }).keys({
+  background: $.object().meta({ name: 'Background' }).keys({
     type: $.string().valid('image', 'video', 'color'),
     src: $.string().uri()
   })
@@ -82,15 +82,18 @@ const frameSchema = {
   )
     .description('Begin the next frame after a given action'),
 
-  firstSection: $.object().keys(sectionSchema)
+  firstSection: $.object().keys(sectionSchemaKeys)
+    .meta({ name: 'FirstSection' })
     .description('First section of ad unit’s frame content'),
 
-  middleSection: $.object().keys(sectionSchema)
+  middleSection: $.object().keys(sectionSchemaKeys)
+    .meta({ name: 'MiddleSection' })
     .description('Middle section of ad unit’s frame content'),
 
-  lastSection: $.object().keys(sectionSchema)
+  lastSection: $.object().keys(sectionSchemaKeys)
+    .meta({ name: 'LastSection' })
     .description('Last section of ad unit’s frame content')
-}
+})
 
 const schema = {
   name: $.string()
@@ -102,22 +105,15 @@ const schema = {
   endAt: $.date()
     .description('End date of campaign'),
 
-  channels: $.array().items($.string())
+  channels: $.array().items($.string()).default([])
     .description('Channels to target campaign to, like tags'),
 
-  regions: $.array().items($.string())
+  regions: $.array().items($.string()).default([])
     .description('Regions to target campaign to, like tags'),
 
-  frames: $.array().items($.object().keys(frameSchema))
+  frames: $.array().items(frameSchema)
     .description('Frames of content that make up the ad unit')
 }
-
-const saveSchema = assign({}, schema, {
-  regions: schema.channels.default([]),
-  channels: schema.channels.default([]),
-  startAt: schema.startAt,
-  endAt: schema.endAt
-})
 
 query('regions', [
   $.array().items($.string())
@@ -131,4 +127,4 @@ query('channels', [
   (db) => db.collection('campaigns').distinct('channels')
 ])
 
-model('Campaign', { schema, saveSchema })
+model('Campaign', { schema })
