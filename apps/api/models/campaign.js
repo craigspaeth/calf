@@ -1,5 +1,4 @@
 import { model, $, query } from 'model'
-import { assign } from 'lodash'
 
 const textBlockSchemaKeys = {
   type: $.string().valid('text')
