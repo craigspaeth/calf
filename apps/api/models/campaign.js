@@ -1,5 +1,4 @@
 import { model, $, query } from 'model'
-import { assign } from 'lodash'
 
 const textBlock = $.object().meta({ name: 'TextBlock' }).keys({
   type: $.string().valid('text')
