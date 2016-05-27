@@ -29,7 +29,7 @@ export default view((_, { tree }) => {
   return div({},
     header({}),
     div({ style: styles.step },
-      steps[tree.get('editCampaignStep')]({})),
+      steps[tree.get('campaignStep')]({})),
     div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),

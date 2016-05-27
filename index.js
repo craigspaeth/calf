@@ -11,10 +11,10 @@ const debug = _debug('app')
 const app = new Koa()
 const { PORT } = process.env
 
+app.use(onerror)
 app.use(mount(auth))
 app.use(mount('/api', api))
 app.use(mount(campaigns))
 app.use(mount(editCampaign))
-app.use(onerror)
 app.listen(PORT)
 debug(`Listening on ${PORT}`)

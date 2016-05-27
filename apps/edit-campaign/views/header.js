@@ -57,14 +57,14 @@ const styles = {
 }
 
 export default view((_, { tree }) => {
-  const editCampaignStep = tree.select('editCampaignStep')
+  const step = tree.select('campaignStep')
   return header({ style: styles.header },
     logo(),
     h1({ style: styles.h1 }, 'Building an ad campaign'),
     nav({ style: styles.nav },
       ['Details', 'Assets', 'Targeting', 'Review'].map((label, i) => (
         a({
-          style: styles.navA(editCampaignStep.get() === i),
+          style: styles.navA(step.get() === i),
           key: i
         }, `${i + 1}. ${label}`)
       ))),
