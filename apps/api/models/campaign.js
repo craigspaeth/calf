@@ -1,6 +1,6 @@
 import { model, $, query } from 'model'
 
-const textBlockSchemaKeys = {
+const textBlock = $.object().meta({ name: 'TextBlock' }).keys({
   type: $.string().valid('text')
     .description('Text block type'),
 
@@ -12,9 +12,9 @@ const textBlockSchemaKeys = {
 
   fontSize: $.number().integer()
     .description('Font size responsive unit')
-}
+})
 
-const imageBlockSchemaKeys = {
+const imageBlock = $.object().meta({ name: 'ImageBlock' }).keys({
   type: $.string().valid('image')
     .description('Image block type'),
 
@@ -26,9 +26,9 @@ const imageBlockSchemaKeys = {
 
   fontSize: $.number().integer()
     .description('Font size responsive unit')
-}
+})
 
-const buttonBlockSchemaKeys = {
+const buttonBlock = $.object().meta({ name: 'ButtonBlock' }).keys({
   type: $.string().valid('buton')
     .description('Button block type'),
 
@@ -49,24 +49,21 @@ const buttonBlockSchemaKeys = {
 
   link: $.string()
     .description('Url button links to, or special string such as `frame2`')
-}
+})
 
-const sectionSchemaKeys = {
-  horizontalAlign: $.string().valid('left', 'middle', 'right')
-    .description('Align inner content horizontally'),
+const section = () =>
+  $.object().meta({ name: 'Section' }).keys({
+    horizontalAlign: $.string().valid('left', 'middle', 'right')
+      .description('Align inner content horizontally'),
 
-  verticalAlign: $.string().valid('top', 'middle', 'right')
-    .description('Align inner content vertically'),
+    verticalAlign: $.string().valid('top', 'middle', 'right')
+      .description('Align inner content vertically'),
 
-  blocks: $.array().items([
-    $.object().meta({ name: 'TextBlock' }).keys(textBlockSchemaKeys),
-    $.object().meta({ name: 'ImageBlock' }).keys(imageBlockSchemaKeys),
-    $.object().meta({ name: 'ButtonBlock' }).keys(buttonBlockSchemaKeys)
-  ])
-    .description('Content blocks for the frame')
-}
+    blocks: $.array().items([textBlock, imageBlock, buttonBlock])
+      .description('Content blocks for the frame')
+  })
 
-const frameSchema = $.object().meta({ name: 'Frame' }).keys({
+const frame = $.object().meta({ name: 'Frame' }).keys({
   background: $.object().meta({ name: 'Background' }).keys({
     type: $.string().valid('image', 'video', 'color'),
     src: $.string().uri()
@@ -81,20 +78,17 @@ const frameSchema = $.object().meta({ name: 'Frame' }).keys({
   )
     .description('Begin the next frame after a given action'),
 
-  firstSection: $.object().keys(sectionSchemaKeys)
-    .meta({ name: 'FirstSection' })
+  firstSection: section()
     .description('First section of ad unit’s frame content'),
 
-  middleSection: $.object().keys(sectionSchemaKeys)
-    .meta({ name: 'MiddleSection' })
+  middleSection: section()
     .description('Middle section of ad unit’s frame content'),
 
-  lastSection: $.object().keys(sectionSchemaKeys)
-    .meta({ name: 'LastSection' })
+  lastSection: section()
     .description('Last section of ad unit’s frame content')
 })
 
-const schema = {
+const campaign = {
   name: $.string()
     .description('Name of campaign'),
 
@@ -110,7 +104,7 @@ const schema = {
   regions: $.array().items($.string()).default([])
     .description('Regions to target campaign to, like tags'),
 
-  frames: $.array().items(frameSchema)
+  frames: $.array().items(frame)
     .description('Frames of content that make up the ad unit')
 }
 
@@ -126,4 +120,4 @@ query('channels', [
   (db) => db.collection('campaigns').distinct('channels')
 ])
 
-model('Campaign', { schema })
+model('Campaign', { schema: campaign })
