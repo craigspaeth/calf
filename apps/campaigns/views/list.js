@@ -70,6 +70,7 @@ export default view((_, { tree }) => (
           a({
             style: styles.itemPreview,
             href: `/campaigns/${campaign._id}/preview`,
-            key: 'preview' + i
+            key: 'preview' + i,
+            target: '_blank'
           }, 'Preview'))))))
 ))
