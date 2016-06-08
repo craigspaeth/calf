@@ -18,11 +18,25 @@ const maybeEnableNextStep = (tree) => {
 
 const renderEdit = async (ctx) => {
   if (ctx.params.id) {
-    const data = await api(`{
+    const data2 = await api(`{
       regions
       channels
       campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
     }`)
+    const data = {
+      regions: [],
+      channels: [],
+      campaign:
+       {
+          _id: '5757815152116d7a2dae9a5d',
+         name: 'Foobar',
+         startAt: 'Fri Oct 24 2014 00:00:00 GMT-0400 (EDT)',
+         endAt: 'Sat Oct 24 2015 00:00:00 GMT-0400 (EDT)',
+         channels: [],
+         regions: []
+       }
+    }
+    console.log('moo', data, data2)
     ctx.tree.set('regions', data.regions)
     ctx.tree.set('channels', data.channels)
     ctx.tree.set('campaign', data.campaign)

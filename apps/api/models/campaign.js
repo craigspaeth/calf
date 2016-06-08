@@ -111,13 +111,13 @@ const campaign = {
 query('regions', [
   $.array().items($.string())
     .description('Returns all regions of all campaigns.'),
-  (db) => db.collection('campaigns').distinct('regions')
+  (db) => db.campaigns.distinct('regions')
 ])
 
 query('channels', [
   $.array().items($.string())
     .description('Returns all channels of all campaigns.'),
-  (db) => db.collection('campaigns').distinct('channels')
+  (db) => db.campaigns.distinct('channels')
 ])
 
 model('Campaign', { schema: campaign })
