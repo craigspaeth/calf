@@ -8,7 +8,7 @@ const state = { campaigns: [] }
 export default () => {
   const routes = router()
   const { shared } = routes
-  shared.use(render({ layout, state, bundle: 'campaigns/client.js' }))
+  shared.use(render({ layout, state, bundle: '/campaigns/client.js' }))
   shared.get('/', (ctx) => ctx.redirect('/campaigns'))
   shared.get('/campaigns', controller.indexRoute)
   return routes()
