@@ -53,7 +53,7 @@ export default view((_, { tree }) => (
       href: '/campaigns/new'
     }, 'Create new ad campaign'),
     h1({ style: styles.h1 }, 'Upcomming ad campaigns'),
-    tree.get('campaigns').map((campaign) => (
+    tree.get('campaigns').map((campaign, i) => (
       div({ style: styles.item, key: campaign._id },
         div({ style: styles.itemLeft },
           h2({ style: styles.itemH2 }, campaign.name),
@@ -65,11 +65,12 @@ export default view((_, { tree }) => (
           a({
             style: styles.itemEdit,
             href: `/campaigns/${campaign._id}/edit`,
-            key: 'edit'
+            key: 'edit' + i
           }, 'Edit'),
           a({
             style: styles.itemPreview,
             href: `/campaigns/${campaign._id}/preview`,
-            key: 'preview'
+            key: 'preview' + i,
+            target: '_blank'
           }, 'Preview'))))))
 ))
