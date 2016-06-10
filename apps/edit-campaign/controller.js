@@ -2,7 +2,6 @@ import api from 'api'
 import editCampaign from './views'
 import { compact, map } from 'lodash'
 
-const totalSteps = 4
 const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels', 'regions']
 
 const maybeEnableNextStep = (tree) => {
@@ -35,22 +34,30 @@ const renderEdit = async (ctx) => {
 }
 
 export const detailsRoute = async (ctx) => {
-  ctx.tree.set('campaignStep', 0)
+  ctx.tree.set('nextHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/adbuilder`)
   await renderEdit(ctx)
 }
 
 export const adbuilderRoute = async (ctx) => {
-  ctx.tree.set('campaignStep', 1)
+  ctx.tree.set('prevHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/details`)
+  ctx.tree.set('nextHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
 export const targetingRoute = async (ctx) => {
-  ctx.tree.set('campaignStep', 2)
+  ctx.tree.set('prevHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/adbuilder`)
+  ctx.tree.set('nextHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
 export const reviewRoute = async (ctx) => {
-  ctx.tree.set('campaignStep', 3)
+  ctx.tree.set('prevHref',
+    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
@@ -77,19 +84,6 @@ export const del = async (tree) => {
   `)
   tree.set('campaign', {})
   window.location.assign('/')
-}
-
-export const next = (tree) => {
-  const curStep = tree.get('campaignStep')
-  if (!tree.get('enableNextStep')) return
-  if (curStep >= totalSteps - 1) return
-  tree.select('campaignStep').set(curStep + 1)
-  tree.set('enableNextStep', false)
-}
-
-export const prev = (tree) => {
-  const curStep = tree.get('campaignStep')
-  if (curStep !== 0) tree.select('campaignStep').set(curStep - 1)
 }
 
 export const updateAttr = (tree, attr, val) => {

@@ -1,4 +1,3 @@
-import { next, prev } from '../controller'
 import {
   headerHeight, flatButton, type, smallMargin, deepOcean, darkSlate, softGray
 } from 'style'
@@ -57,26 +56,24 @@ const styles = {
 }
 
 export default view((_, { tree }) => {
-  const step = tree.select('campaignStep')
   return header({ style: styles.header },
     logo(),
     h1({ style: styles.h1 }, 'Building an ad campaign'),
     nav({ style: styles.nav },
-      ['Details', 'Assets', 'Targeting', 'Review'].map((label, i) => (
+      ['Details', 'AdBuilder', 'Targeting', 'Review'].map((label, i) => (
         a({
-          style: styles.navA(step.get() === i),
           key: i
         }, `${i + 1}. ${label}`)
       ))),
     div({ style: styles.buttons },
-      button({
+      tree.get('nextHref') && a({
+        href: tree.get('nextHref'),
         style: styles.prev,
-        onClick: () => prev(tree),
         key: 'prev'
       }, arrow({ dir: 'left' }), 'Previous'),
-      button({
+      tree.get('prevHref') && a({
+        href: tree.get('prevHref'),
         style: styles.next(tree.get('enableNextStep')),
-        onClick: () => next(tree),
         key: 'next'
       }, 'Next', arrow({ fill: tree.get('enableNextStep') ? 'white' : '' }))))
 })
