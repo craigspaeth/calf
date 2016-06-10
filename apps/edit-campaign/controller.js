@@ -18,25 +18,11 @@ const maybeEnableNextStep = (tree) => {
 
 const renderEdit = async (ctx) => {
   if (ctx.params.id) {
-    const data2 = await api(`{
+    const data = await api(`{
       regions
       channels
       campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
     }`)
-    const data = {
-      regions: [],
-      channels: [],
-      campaign:
-       {
-          _id: '5757815152116d7a2dae9a5d',
-         name: 'Foobar',
-         startAt: 'Fri Oct 24 2014 00:00:00 GMT-0400 (EDT)',
-         endAt: 'Sat Oct 24 2015 00:00:00 GMT-0400 (EDT)',
-         channels: [],
-         regions: []
-       }
-    }
-    console.log('moo', data, data2)
     ctx.tree.set('regions', data.regions)
     ctx.tree.set('channels', data.channels)
     ctx.tree.set('campaign', data.campaign)
@@ -48,24 +34,24 @@ const renderEdit = async (ctx) => {
   }
 }
 
-export const detailsRoute = (ctx) => {
+export const detailsRoute = async (ctx) => {
   ctx.tree.set('campaignStep', 0)
-  renderEdit(ctx)
+  await renderEdit(ctx)
 }
 
-export const adbuilderRoute = (ctx) => {
+export const adbuilderRoute = async (ctx) => {
   ctx.tree.set('campaignStep', 1)
-  renderEdit(ctx)
+  await renderEdit(ctx)
 }
 
-export const targetingRoute = (ctx) => {
+export const targetingRoute = async (ctx) => {
   ctx.tree.set('campaignStep', 2)
-  renderEdit(ctx)
+  await renderEdit(ctx)
 }
 
-export const reviewRoute = (ctx) => {
+export const reviewRoute = async (ctx) => {
   ctx.tree.set('campaignStep', 3)
-  renderEdit(ctx)
+  await renderEdit(ctx)
 }
 
 export const editRoute = (ctx, next) => {
