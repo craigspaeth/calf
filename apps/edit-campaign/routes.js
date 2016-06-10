@@ -8,13 +8,14 @@ const state = {
     channels: [],
     regions: []
   },
-  campaignStep: 1
+  step: 'details'
 }
 
 export default () => {
   const routes = router()
   const { shared } = routes
   shared.use(render({ layout, state, bundle: '/edit-campaign/client.js' }))
+  shared.get('/campaigns/:id/edit/:step', (ctx, next) => next())
   shared.get('/campaigns/:id/edit', controller.editRoute)
   shared.get('/campaigns/:id/edit/details', controller.detailsRoute)
   shared.get('/campaigns/:id/edit/adbuilder', controller.adbuilderRoute)
