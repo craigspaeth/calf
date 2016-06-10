@@ -4,14 +4,14 @@ import { compact, map } from 'lodash'
 
 const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels', 'regions']
 
-const maybeEnableNextStep = (tree) => {
-  const campaign = tree.select('campaign')
+const maybeEnableNextStep = (state) => {
+  const campaign = state.select('campaign')
   if (
     campaign.get('name') &&
     campaign.get('startAt') &&
     campaign.get('endAt')
   ) {
-    tree.select('enableNextStep').set(true)
+    state.select('enableNextStep').set(true)
   }
 }
 
@@ -22,42 +22,41 @@ const renderEdit = async (ctx) => {
       channels
       campaign(_id: "${ctx.params.id}") { ${campaignAttrs.join(' ')} }
     }`)
-    ctx.tree.set('regions', data.regions)
-    ctx.tree.set('channels', data.channels)
-    ctx.tree.set('campaign', data.campaign)
+    ctx.state.set('regions', data.regions)
+    ctx.state.set('channels', data.channels)
+    ctx.state.set('campaign', data.campaign)
+    if (ctx.params.step) ctx.state.set('step', ctx.params.step)
   }
   ctx.render(editCampaign)
-  if (ctx.browser) {
-    maybeEnableNextStep(ctx.tree)
-    document.querySelector('.foobarbaz').focus()
-  }
+  if (ctx.browser) maybeEnableNextStep(ctx.state)
 }
 
 export const detailsRoute = async (ctx) => {
-  ctx.tree.set('nextHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/adbuilder`)
+  ctx.state.set('nextHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/adbuilder`)
   await renderEdit(ctx)
+  if (ctx.browser) document.querySelector('.foobarbaz').focus()
 }
 
 export const adbuilderRoute = async (ctx) => {
-  ctx.tree.set('prevHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/details`)
-  ctx.tree.set('nextHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
+  ctx.state.set('prevHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/details`)
+  ctx.state.set('nextHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
 export const targetingRoute = async (ctx) => {
-  ctx.tree.set('prevHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/adbuilder`)
-  ctx.tree.set('nextHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
+  ctx.state.set('prevHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/adbuilder`)
+  ctx.state.set('nextHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
 export const reviewRoute = async (ctx) => {
-  ctx.tree.set('prevHref',
-    `/campaigns/${ctx.tree.get('campaign')._id}/edit/targeting`)
+  ctx.state.set('prevHref',
+    `/campaigns/${ctx.state.get('campaign')._id}/edit/targeting`)
   await renderEdit(ctx)
 }
 
@@ -65,8 +64,8 @@ export const editRoute = (ctx, next) => {
   ctx.redirect(`/campaigns/${ctx.params.id}/edit/details`)
 }
 
-export const saveAndQuitCampaign = async (tree) => {
-  const campaign = tree.get('campaign')
+export const saveAndQuitCampaign = async (state) => {
+  const campaign = state.get('campaign')
   const args = compact(map(campaign, (val, key) =>
     val ? `${key}: ${JSON.stringify(val)}` : null
   )).join(' ')
@@ -75,19 +74,19 @@ export const saveAndQuitCampaign = async (tree) => {
   window.location.assign('/')
 }
 
-export const del = async (tree) => {
+export const del = async (state) => {
   if (!window.confirm('Are you sure you want to delete this campaign?')) return
   await api(`
     mutation {
-      deleteCampaign(_id: "${tree.get('campaign')._id}") { _id }
+      deleteCampaign(_id: "${state.get('campaign')._id}") { _id }
     }
   `)
-  tree.set('campaign', {})
+  state.set('campaign', {})
   window.location.assign('/')
 }
 
-export const updateAttr = (tree, attr, val) => {
-  const campaign = tree.select('campaign')
+export const updateAttr = (state, attr, val) => {
+  const campaign = state.select('campaign')
   campaign.set(attr, val)
-  maybeEnableNextStep(tree)
+  maybeEnableNextStep(state)
 }

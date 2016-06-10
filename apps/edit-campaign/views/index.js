@@ -8,7 +8,7 @@ import review from './review'
 import adbuilder from './adbuilder'
 
 const { div, button } = dom
-const steps = [details, adbuilder, targeting, review]
+const steps = { details, adbuilder, targeting, review }
 const styles = {
   step: {
     width: '100%',
@@ -24,16 +24,16 @@ const styles = {
   }
 }
 
-export default view((_, { tree }) => {
-  const campaign = tree.select('campaign')
+export default view((_, { state }) => {
+  const campaign = state.select('campaign')
   return div({},
     header({}),
     div({ style: styles.step },
-      steps[tree.get('campaignStep')]({})),
+      steps[state.get('step')]({})),
     div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),
-        onClick: () => saveAndQuitCampaign(tree),
+        onClick: () => saveAndQuitCampaign(state),
         key: 'quit'
       }, 'Save & Quit'),
       campaign.get() && campaign.get()._id && button({
@@ -41,7 +41,7 @@ export default view((_, { tree }) => {
           backgroundColor: 'transparent',
           color: deepOcean
         }),
-        onClick: () => del(tree),
+        onClick: () => del(state),
         key: 'delete'
       }, 'Delete')))
 })

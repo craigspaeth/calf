@@ -5,7 +5,7 @@ import { view, dom } from 'view'
 import logo from 'components/layout/logo'
 import arrow from './arrow'
 
-const { h1, nav, div, button, a, header } = dom
+const { h1, nav, div, a, header } = dom
 const navPadding = 18
 
 const styles = {
@@ -55,25 +55,26 @@ const styles = {
   ]
 }
 
-export default view((_, { tree }) => {
+export default view((_, { state }) => {
   return header({ style: styles.header },
     logo(),
     h1({ style: styles.h1 }, 'Building an ad campaign'),
     nav({ style: styles.nav },
       ['Details', 'AdBuilder', 'Targeting', 'Review'].map((label, i) => (
         a({
+          style: styles.navA(state.get('step') === label.toLowerCase()),
           key: i
         }, `${i + 1}. ${label}`)
       ))),
     div({ style: styles.buttons },
-      tree.get('nextHref') && a({
-        href: tree.get('nextHref'),
+      state.get('nextHref') && a({
+        href: state.get('nextHref'),
         style: styles.prev,
         key: 'prev'
       }, arrow({ dir: 'left' }), 'Previous'),
-      tree.get('prevHref') && a({
-        href: tree.get('prevHref'),
-        style: styles.next(tree.get('enableNextStep')),
+      state.get('prevHref') && a({
+        href: state.get('prevHref'),
+        style: styles.next(state.get('enableNextStep')),
         key: 'next'
-      }, 'Next', arrow({ fill: tree.get('enableNextStep') ? 'white' : '' }))))
+      }, 'Next', arrow({ fill: state.get('enableNextStep') ? 'white' : '' }))))
 })
