@@ -67,13 +67,13 @@ export default view((_, { state }) => {
         }, `${i + 1}. ${label}`)
       ))),
     div({ style: styles.buttons },
-      state.get('nextHref') && a({
-        href: state.get('nextHref'),
+      state.get('prevHref') && a({
+        href: state.get('prevHref'),
         style: styles.prev,
         key: 'prev'
       }, arrow({ dir: 'left' }), 'Previous'),
-      state.get('prevHref') && a({
-        href: state.get('prevHref'),
+      state.get('nextHref') && a({
+        href: state.get('nextHref'),
         style: styles.next(state.get('enableNextStep')),
         key: 'next'
       }, 'Next', arrow({ fill: state.get('enableNextStep') ? 'white' : '' }))))

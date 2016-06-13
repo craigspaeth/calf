@@ -28,7 +28,8 @@ const styles = {
     height: '400px',
     textAlign: 'center',
     lineHeight: '400px',
-    border: `3px dashed ${softGray}`
+    border: `3px dashed ${softGray}`,
+    color: softGray
   }]
 }
 
