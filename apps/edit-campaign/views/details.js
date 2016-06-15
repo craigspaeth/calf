@@ -27,8 +27,8 @@ const styles = {
   }
 }
 
-export default view((_, { state }) => {
-  const campaign = state.select('campaign')
+export default view((_, { tree }) => {
+  const campaign = tree.select('campaign')
   const inputField = (attr, placeholder, ...inputStyles) => {
     const val = campaign.get(attr)
     return label({
@@ -40,9 +40,7 @@ export default view((_, { state }) => {
         style: styles.input,
         placeholder: placeholder,
         className: attr === 'name' ? 'foobarbaz' : null,
-        onKeyUp: (e) => {
-          updateAttr(state, attr, e.target.value)
-        },
+        onKeyUp: (e) => updateAttr(tree, attr, e.target.value),
         defaultValue: attr === 'startAt' || attr === 'endAt'
           ? val && moment(val).format('MM/DD/YYYY')
           : val

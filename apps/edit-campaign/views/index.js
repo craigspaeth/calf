@@ -24,16 +24,16 @@ const styles = {
   }
 }
 
-export default view((_, { state }) => {
-  const campaign = state.select('campaign')
+export default view((_, { tree }) => {
+  const campaign = tree.select('campaign')
   return div({},
     header({}),
     div({ style: styles.step },
-      steps[state.get('step')]({})),
+      steps[tree.get('step')]({})),
     div({ style: styles.bottomButtons },
       button({
         style: flatButton('dark', { marginRight: '10px' }),
-        onClick: () => saveAndQuitCampaign(state),
+        onClick: () => saveAndQuitCampaign(tree),
         key: 'quit'
       }, 'Save & Quit'),
       campaign.get() && campaign.get()._id && button({
@@ -41,7 +41,7 @@ export default view((_, { state }) => {
           backgroundColor: 'transparent',
           color: deepOcean
         }),
-        onClick: () => del(state),
+        onClick: () => del(tree),
         key: 'delete'
       }, 'Delete')))
 })

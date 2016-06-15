@@ -3,7 +3,7 @@ import router from 'router'
 import render from 'render'
 import layout from 'components/layout'
 
-const state = {
+const initialState = {
   campaign: {
     channels: [],
     regions: []
@@ -14,7 +14,7 @@ const state = {
 export default () => {
   const routes = router()
   const { shared } = routes
-  shared.use(render({ layout, state, bundle: '/edit-campaign/client.js' }))
+  shared.use(render({ layout, initialState, bundle: '/edit-campaign/client.js' }))
   shared.get('/campaigns/:id/edit/:step', (ctx, next) => next())
   shared.get('/campaigns/:id/edit', controller.editRoute)
   shared.get('/campaigns/:id/edit/details', controller.detailsRoute)

@@ -3,12 +3,12 @@ import router from 'router'
 import render from 'render'
 import layout from 'components/layout'
 
-const state = { campaigns: [] }
+const initialState = { campaigns: [] }
 
 export default () => {
   const routes = router()
   const { shared } = routes
-  shared.use(render({ layout, state, bundle: '/campaigns/client.js' }))
+  shared.use(render({ layout, initialState, bundle: '/campaigns/client.js' }))
   shared.get('/', (ctx) => ctx.redirect('/campaigns'))
   shared.get('/campaigns', controller.indexRoute)
   return routes()

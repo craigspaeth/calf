@@ -1,7 +1,6 @@
 import { view, dom } from 'view'
-import {
-  darkSlate, smallMargin, deepOcean, type, centerOfParent, softGray
-} from 'style'
+import { darkSlate, smallMargin, deepOcean } from 'style'
+import dropzone from './dropzone'
 
 const { nav, button, div } = dom
 
@@ -22,15 +21,7 @@ const styles = {
     borderWidth: 0,
     cursor: '-webkit-grab',
     outline: 'none'
-  },
-  cta: [type('mediumHeader'), centerOfParent(), {
-    width: '100%',
-    height: '400px',
-    textAlign: 'center',
-    lineHeight: '400px',
-    border: `3px dashed ${softGray}`,
-    color: softGray
-  }]
+  }
 }
 
 export default view((props) => (
@@ -38,7 +29,7 @@ export default view((props) => (
     nav({ style: styles.toolbar },
       ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
         button({ style: styles.toolbarIcon }, char))),
-    div({ style: styles.cta },
+    dropzone({ style: styles.cta },
       'Drag and drop an image, video or color block to begin')
   )
 ))
