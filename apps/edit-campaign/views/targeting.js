@@ -29,8 +29,10 @@ const styles = {
   })
 }
 
-export default view(({ campaign, channels }) => (
-  div({ style: styles.container },
+export default view((_, { tree }) => {
+  const campaign = tree.select('campaign')
+  const channels = tree.select('channels')
+  return div({ style: styles.container },
     div({ style: styles.left },
       label({ style: styles.label }, 'Channels',
         tagsinput({
@@ -49,4 +51,4 @@ export default view(({ campaign, channels }) => (
             '“West coast” or “California”'
           )
         }))))
-))
+})

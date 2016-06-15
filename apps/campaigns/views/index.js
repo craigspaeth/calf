@@ -5,11 +5,11 @@ import header from 'components/layout/header'
 
 const { div } = dom
 
-export default view((_, { state }) => {
+export default view((_, { tree }) => {
   return div({},
     header({}),
     div({},
-      state.get('campaigns').length > 0
+      tree.get('campaigns').length > 0
       ? list()
       : empty()))
 })

@@ -29,7 +29,8 @@ const styles = {
     {
       paddingRight: smallMargin,
       color: highlighted ? darkSlate : softGray,
-      transition: 'color 0.2s ease-in-out'
+      transition: 'color 0.2s ease-in-out',
+      textDecoration: 'none'
     }
   ],
   buttons: {
@@ -55,26 +56,27 @@ const styles = {
   ]
 }
 
-export default view((_, { state }) => {
+export default view((_, { tree }) => {
   return header({ style: styles.header },
     logo(),
     h1({ style: styles.h1 }, 'Building an ad campaign'),
     nav({ style: styles.nav },
       ['Details', 'AdBuilder', 'Targeting', 'Review'].map((label, i) => (
         a({
-          style: styles.navA(state.get('step') === label.toLowerCase()),
-          key: i
+          style: styles.navA(tree.get('step') === label.toLowerCase()),
+          key: i,
+          href: `/campaigns/${tree.get('campaign')._id}/edit/${label.toLowerCase()}`
         }, `${i + 1}. ${label}`)
       ))),
     div({ style: styles.buttons },
-      state.get('prevHref') && a({
-        href: state.get('prevHref'),
+      tree.get('prevHref') && a({
+        href: tree.get('prevHref'),
         style: styles.prev,
         key: 'prev'
       }, arrow({ dir: 'left' }), 'Previous'),
-      state.get('nextHref') && a({
-        href: state.get('nextHref'),
-        style: styles.next(state.get('enableNextStep')),
+      tree.get('nextHref') && a({
+        href: tree.get('nextHref'),
+        style: styles.next(tree.get('enableNextStep')),
         key: 'next'
-      }, 'Next', arrow({ fill: state.get('enableNextStep') ? 'white' : '' }))))
+      }, 'Next', arrow({ fill: tree.get('enableNextStep') ? 'white' : '' }))))
 })
