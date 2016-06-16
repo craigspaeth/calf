@@ -1,8 +1,14 @@
 import { view, dom } from 'view'
-import { darkSlate, smallMargin, deepOcean } from 'style'
-import dropzone from './dropzone'
+import {
+  darkSlate, smallMargin, deepOcean, headerHeight, centerOfParent, type,
+  softGray
+} from 'style'
+import droppable from 'components/droppable'
+import draggable from 'components/draggable'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
-const { nav, button, div } = dom
+const { nav, button, div, span } = dom
 
 const styles = {
   toolbar: {
@@ -21,6 +27,23 @@ const styles = {
     borderWidth: 0,
     cursor: '-webkit-grab',
     outline: 'none'
+  },
+  cta: [type('mediumHeader'), centerOfParent(), {
+    width: '100%',
+    height: '400px',
+    textAlign: 'center',
+    lineHeight: '400px',
+    border: `3px dashed ${softGray}`,
+    color: softGray,
+    marginTop: `-${headerHeight}px`
+  }],
+  text: {
+    textAlign: 'center',
+    color: deepOcean,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%'
   }
 }
 
@@ -28,8 +51,10 @@ export default view((props) => (
   div({},
     nav({ style: styles.toolbar },
       ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
-        button({ style: styles.toolbarIcon }, char))),
-    dropzone({ style: styles.cta },
-      'Drag and drop an image, video or color block to begin')
-  )
-))
+        draggable(({ isDragging }) =>
+          button({ style: styles.toolbarIcon }, char)))),
+    div({ style: styles.cta },
+      droppable(({ isActive }) =>
+        span({ style: styles.text },
+          'Drag and drop an image, video or color block to begin'))))
+), { decorators: [DragDropContext(HTML5Backend)] })
