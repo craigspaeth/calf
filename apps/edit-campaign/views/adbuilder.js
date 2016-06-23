@@ -3,10 +3,7 @@ import {
   darkSlate, smallMargin, deepOcean, headerHeight, centerOfParent, type,
   softGray
 } from 'style'
-import droppable from 'components/droppable'
-import draggable from 'components/draggable'
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
+import { draggable, droppable, dndable } from 'components/dndable'
 
 const { nav, button, div, span } = dom
 
@@ -51,10 +48,12 @@ export default view((props) => (
   div({},
     nav({ style: styles.toolbar },
       ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
-        draggable(({ isDragging }) =>
-          button({ style: styles.toolbarIcon }, char)))),
+        button({ style: styles.toolbarIcon }, char))),
     div({ style: styles.cta },
-      droppable(({ isActive }) =>
-        span({ style: styles.text },
-          'Drag and drop an image, video or color block to begin'))))
-), { decorators: [DragDropContext(HTML5Backend)] })
+      span({ style: styles.text },
+        'Drag and drop an image, video or color block to begin')),
+    dndable({},
+      div({}, 'hi'),
+      droppable({ key: 'dndable' }, 'Drop Here'),
+      draggable({ key: 'dndable' }, 'Dragme')))
+))

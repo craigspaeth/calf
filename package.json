@@ -4,7 +4,7 @@
   "description": "The original monolithic codebase for AdRhino",
   "main": "index.js",
   "scripts": {
-    "start": "npm run server",
+    "start": "concurrently 'npm run server' 'mongod'",
     "server": "forever -c 'npm run node' index.js",
     "node": "NODE_PATH=$NODE_PATH:./lib node -r dotenv/config -r babel-core/register -r bluebird-register",
     "lint": "nodemon --exec 'standard | notify'"
