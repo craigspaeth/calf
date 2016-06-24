@@ -48,9 +48,9 @@ export default view((props) => (
   dndable({},
     nav({ style: styles.toolbar },
       ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
-        draggable({ key: 'dndable' },
+        draggable({ key: 'dndable', attrs: { type: char } },
           button({ style: styles.toolbarIcon }, char)))),
-    droppable({ key: 'dndable' },
+    droppable({ key: 'dndable', onDrop: console.log.bind(console) },
       div({ style: styles.cta },
         span({ style: styles.text },
           'Drag and drop an image, video or color block to begin'))))
