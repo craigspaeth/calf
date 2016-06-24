@@ -45,15 +45,13 @@ const styles = {
 }
 
 export default view((props) => (
-  div({},
+  dndable({},
     nav({ style: styles.toolbar },
       ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
-        button({ style: styles.toolbarIcon }, char))),
-    div({ style: styles.cta },
-      span({ style: styles.text },
-        'Drag and drop an image, video or color block to begin')),
-    dndable({},
-      div({}, 'hi'),
-      droppable({ key: 'dndable' }, 'Drop Here'),
-      draggable({ key: 'dndable' }, 'Dragme')))
+        draggable({ key: 'dndable' },
+          button({ style: styles.toolbarIcon }, char)))),
+    droppable({ key: 'dndable' },
+      div({ style: styles.cta },
+        span({ style: styles.text },
+          'Drag and drop an image, video or color block to begin'))))
 ))
