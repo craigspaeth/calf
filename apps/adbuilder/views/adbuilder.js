@@ -23,7 +23,8 @@ const styles = {
     backgroundColor: 'transparent',
     borderWidth: 0,
     cursor: '-webkit-grab',
-    outline: 'none'
+    outline: 'none',
+    textTransform: 'uppercase'
   },
   cta: [type('mediumHeader'), centerOfParent(), {
     width: '100%',
@@ -47,9 +48,12 @@ const styles = {
 export default view((props) => (
   dndable({},
     nav({ style: styles.toolbar },
-      ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
+      [
+        'text', 'button', 'video', 'image', 'icon', 'slideshow',
+        'color'
+      ].map((char) =>
         draggable({ key: 'dndable', attrs: { type: char } },
-          button({ style: styles.toolbarIcon }, char)))),
+          button({ style: styles.toolbarIcon }, char[0])))),
     droppable({ key: 'dndable', onDrop: console.log.bind(console) },
       div({ style: styles.cta },
         span({ style: styles.text },
