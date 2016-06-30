@@ -1,9 +1,19 @@
 import router from 'router'
 import render from 'render'
 import layout from 'components/layout'
-import initialState from 'components/edit-campaign/initial-state'
+import editCampaignState from 'components/edit-campaign/initial-state'
 import { render as renderEdit } from 'components/edit-campaign/controller'
 import view from './views'
+import { assign } from 'lodash'
+
+const initialState = assign({
+  editor: {
+    x: 100,
+    y: 100,
+    type: 'color',
+    hidden: false
+  }
+}, editCampaignState)
 
 export default () => {
   const routes = router()
