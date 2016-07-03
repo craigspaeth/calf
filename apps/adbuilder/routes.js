@@ -7,11 +7,7 @@ import view from './views'
 import { assign } from 'lodash'
 
 const initialState = assign({
-  editor: {
-    x: 100,
-    y: 100,
-    type: 'color'
-  }
+  editor: null
 }, editCampaignState)
 
 export default () => {

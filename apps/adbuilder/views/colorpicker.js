@@ -12,9 +12,9 @@ const rules = {
   }
 }
 
-export default view(({ onChange }) => {
+export default view(({ onChange, color }) => {
   return div({},
     style({ rules }),
     div({ className: 'colorpicker' },
-      colorpicker({ type: 'chrome' })))
+      colorpicker({ type: 'chrome', color, onChange })))
 })

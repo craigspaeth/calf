@@ -3,6 +3,7 @@ import { deepOcean, centerOfParent, type, softGray } from 'style'
 import { droppable, dndable, draglayer } from 'components/dndable'
 import toolbar from './toolbar'
 import * as editors from './editors'
+import * as controller from '../controller'
 
 const { div, span } = dom
 
@@ -29,21 +30,27 @@ const styles = {
     left: 0,
     width: '100%'
   },
-  bgColor: (background) => ({
-    backgroundColor: background.get('color'),
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0
-  })
+  bgColor: (background) => {
+    console.log(background.get('color'))
+    return {
+      backgroundColor: background.get('color'),
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0
+    }
+  }
 }
 
 export default view((_, { tree }) => {
-  const background = tree.select('campaign').select('background')
+  const background = tree.select('campaign', 'frames', 0, 'background')
   const backgroundEl = background.get()
     ? div({ style: styles.bgColor(background) })
-    : droppable({ type: 'toolbaritem' })(({ connectDropTarget }) =>
+    : droppable({
+      type: 'toolbaritem',
+      drop: (_, monitor) => controller.onDropToolbarItem(tree, monitor)
+    })(({ connectDropTarget }) =>
         connectDropTarget(
           div({ style: styles.cta },
             span({ style: styles.text },
@@ -51,7 +58,11 @@ export default view((_, { tree }) => {
   return dndable({},
       draglayer({})(({ itemType, currentOffset }) => {
         if (itemType === 'editor') {
-          return editors.colorBlockPreview(currentOffset)
+          return editors.colorBlockPreview({
+            x: currentOffset.x,
+            y: currentOffset.y,
+            color: tree.get('editor').color
+          })
         }
         return null
       }),

@@ -64,7 +64,8 @@ const section = () =>
   })
 
 const background = $.object().meta({ name: 'Background' }).keys({
-  type: $.string().valid('image', 'video', 'color'),
+  type: $.string().valid('image', 'video', 'color')
+    .description('Type of background block'),
   color: $.string().hex()
     .description('Hex color value of background'),
   src: $.string().uri()

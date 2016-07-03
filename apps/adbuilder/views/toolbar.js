@@ -1,5 +1,4 @@
 import { view, dom } from 'view'
-import * as controller from '../controller'
 import { darkSlate, smallMargin, deepOcean, headerHeight } from 'style'
 import { draggable } from 'components/dndable'
 
@@ -33,12 +32,7 @@ export default view((_, { tree }) => {
     items.map((char) =>
       draggable({
         type: 'toolbaritem',
-        beginDrag: () => ({ type: char }),
-        endDrag: (_, monitor) => {
-          if (monitor.getDropResult()) {
-            controller.onDrop(tree, monitor.getItem())
-          }
-        }
+        beginDrag: () => ({ type: char })
       })(({ isDragging, connectDragSource }) =>
         connectDragSource(
           button({ style: styles.toolbarIcon }, char[0])))))
