@@ -14,9 +14,4 @@ export const onEndEditorDrag = (tree, monitor) => {
   const { x, y } = editor.get()
   editor.set('x', x + delta.x)
   editor.set('y', y + delta.y)
-  editor.set('hidden', false)
-}
-
-export const onBeginEditorDrag = (tree) => {
-  tree.select('editor').set('hidden', true)
 }

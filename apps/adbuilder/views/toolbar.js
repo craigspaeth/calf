@@ -32,7 +32,7 @@ export default view((_, { tree }) => {
   return nav({ style: styles.toolbar },
     items.map((char) =>
       draggable({
-        type: 'dndable',
+        type: 'toolbaritem',
         beginDrag: () => ({ type: char }),
         endDrag: (_, monitor) => {
           if (monitor.getDropResult()) {

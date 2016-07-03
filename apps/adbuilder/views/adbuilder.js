@@ -1,7 +1,7 @@
 import { view, dom } from 'view'
 import { deepOcean, centerOfParent, type, softGray } from 'style'
-import { droppable, dndable } from 'components/dndable'
-import nav from './nav'
+import { droppable, dndable, draglayer } from 'components/dndable'
+import toolbar from './toolbar'
 import * as editors from './editors'
 
 const { div, span } = dom
@@ -43,13 +43,19 @@ export default view((_, { tree }) => {
   const background = tree.select('campaign').select('background')
   const backgroundEl = background.get()
     ? div({ style: styles.bgColor(background) })
-    : droppable({ type: 'dndable' })(({ connectDropTarget }) =>
+    : droppable({ type: 'toolbaritem' })(({ connectDropTarget }) =>
         connectDropTarget(
           div({ style: styles.cta },
             span({ style: styles.text },
               'Drag and drop an image, video or color block to begin'))))
   return dndable({},
-      nav({}),
+      draglayer({})(({ itemType, currentOffset }) => {
+        if (itemType === 'editor') {
+          return editors.colorBlockPreview(currentOffset)
+        }
+        return null
+      }),
+      toolbar({}),
       tree.get('editor') && {
         color: editors.colorBlock({})
       }[tree.get('editor').type],

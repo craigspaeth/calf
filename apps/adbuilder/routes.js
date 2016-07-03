@@ -10,8 +10,7 @@ const initialState = assign({
   editor: {
     x: 100,
     y: 100,
-    type: 'color',
-    hidden: false
+    type: 'color'
   }
 }, editCampaignState)
 
