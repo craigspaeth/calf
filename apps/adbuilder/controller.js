@@ -9,14 +9,12 @@ export const onDrop = (tree, item) => {
 }
 
 export const onEndEditorDrag = (tree, monitor) => {
-  console.log('end')
   const editor = tree.select('editor')
   const delta = monitor.getDifferenceFromInitialOffset()
   const { x, y } = editor.get()
   editor.set('x', x + delta.x)
   editor.set('y', y + delta.y)
   editor.set('hidden', false)
-  console.log('moo', editor.get())
 }
 
 export const onBeginEditorDrag = (tree) => {

@@ -1,11 +1,9 @@
 import React from 'react'
-import { view, dom } from 'view'
+import { view, dom, style } from 'view'
 import { ChromePicker } from 'react-color'
-import { Style } from 'radium'
 
 const { div } = dom
 const colorpicker = (props) => React.createElement(ChromePicker, props)
-const style = (props) => React.createElement(Style, props)
 const rules = {
   '.colorpicker > div': {
     width: '100% !important',

@@ -43,14 +43,15 @@ export default view((_, { tree }) => {
   const background = tree.select('campaign').select('background')
   const backgroundEl = background.get()
     ? div({ style: styles.bgColor(background) })
-    : droppable({ key: 'dndable' },
-        div({ style: styles.cta },
-          span({ style: styles.text },
-            'Drag and drop an image, video or color block to begin')))
+    : droppable({ type: 'dndable' })(({ connectDropTarget }) =>
+        connectDropTarget(
+          div({ style: styles.cta },
+            span({ style: styles.text },
+              'Drag and drop an image, video or color block to begin'))))
   return dndable({},
-    nav({}),
-    tree.get('editor') && {
-      color: editors.colorBlock({})
-    }[tree.get('editor').type],
-    div({ style: styles.container }, backgroundEl))
+      nav({}),
+      tree.get('editor') && {
+        color: editors.colorBlock({})
+      }[tree.get('editor').type],
+      div({ style: styles.container }, backgroundEl))
 })

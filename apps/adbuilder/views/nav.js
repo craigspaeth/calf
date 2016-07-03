@@ -32,13 +32,14 @@ export default view((_, { tree }) => {
   return nav({ style: styles.toolbar },
     items.map((char) =>
       draggable({
-        key: 'dndable',
-        attrs: { type: char },
+        type: 'dndable',
+        beginDrag: () => ({ type: char }),
         endDrag: (_, monitor) => {
           if (monitor.getDropResult()) {
             controller.onDrop(tree, monitor.getItem())
           }
         }
-      },
-        button({ style: styles.toolbarIcon }, char[0]))))
+      })(({ isDragging, connectDragSource }) =>
+        connectDragSource(
+          button({ style: styles.toolbarIcon }, char[0])))))
 })

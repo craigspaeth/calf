@@ -6,7 +6,7 @@ import * as controller from '../controller'
 
 const { div, h3 } = dom
 const styles = {
-  container: ({ x, y, hidden }) => ({
+  container: ({ x, y }, hidden) => ({
     position: 'fixed',
     top: y,
     left: x,
@@ -15,7 +15,7 @@ const styles = {
     width: '300px',
     color: 'white',
     cursor: '-webkit-grab; -moz-grab',
-    opacity: hidden ? 1 : 1
+    opacity: hidden ? 0 : 1
   }),
   header: [type('smallCaps'), {
     textAlign: 'center',
@@ -30,14 +30,13 @@ const styles = {
 }
 
 export const colorBlock = view((_, { tree }) => {
-  return div({ style: styles.container(tree.get('editor')) },
-    draggable({
-      key: 'editor',
-      beginDrag: () => controller.onBeginEditorDrag(tree),
-      endDrag: (_, monitor) => controller.onEndEditorDrag(tree, monitor),
-      attrs: { name: 'editor' }
-    },
-      h3({ style: styles.header }, 'Color Block'),
-      div({ style: styles.inner },
-        colorpicker({}))))
+  return draggable({
+    type: 'editor',
+    beginDrag: () => ({ name: 'editor' }),
+    endDrag: (_, monitor) => controller.onEndEditorDrag(tree, monitor)
+  })(({ isDragging, connectDragSource }) =>
+    connectDragSource(
+      div({ style: styles.container(tree.get('editor'), isDragging) },
+        h3({ style: styles.header }, 'Color Block'),
+        div({ style: styles.inner }))))
 })
