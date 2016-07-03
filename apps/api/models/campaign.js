@@ -63,11 +63,17 @@ const section = () =>
       .description('Content blocks for the frame')
   })
 
+const background = $.object().meta({ name: 'Background' }).keys({
+  type: $.string().valid('image', 'video', 'color')
+    .description('Type of background block'),
+  color: $.string().hex()
+    .description('Hex color value of background'),
+  src: $.string().uri()
+    .description('Image or video source url')
+})
+
 const frame = $.object().meta({ name: 'Frame' }).keys({
-  background: $.object().meta({ name: 'Background' }).keys({
-    type: $.string().valid('image', 'video', 'color'),
-    src: $.string().uri()
-  })
+  background: background
     .description('Background image, video, or color block to the frame'),
 
   transition: $.string().valid('cut', 'disolve', 'fade', 'swipe')

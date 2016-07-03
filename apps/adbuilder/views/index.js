@@ -1,29 +1,12 @@
-import { view, dom } from 'view'
-import { darkSlate, smallMargin, deepOcean } from 'style'
+import { view } from 'view'
+import editCampaignLayout from 'components/edit-campaign/layout'
+import adbuilder from './adbuilder'
 
-const { nav, button } = dom
-
-const styles = {
-  toolbar: {
-    position: 'absolute',
-    top: smallMargin,
-    left: smallMargin,
-    backgroundColor: deepOcean
-  },
-  toolbarIcon: {
-    borderBottom: `1px solid ${darkSlate}`,
-    padding: `${smallMargin}px`,
-    color: 'white',
-    display: 'block',
-    backgroundColor: 'transparent',
-    border: 0,
-    cursor: '-webkit-grab',
-    outline: 'none'
-  }
-}
-
-export default view((props) => (
-  nav({ style: styles.toolbar },
-    ['T', 'B', 'V', 'I', 'P', 'S', 'C'].map((char) =>
-      button({ style: styles.toolbarIcon }, char)))
-))
+export default view((_, { tree }) => {
+  return editCampaignLayout({
+    step: 1,
+    child: adbuilder,
+    enableNextStep: tree.get('enableNextStep'),
+    campaign: tree.select('campaign')
+  })
+})
