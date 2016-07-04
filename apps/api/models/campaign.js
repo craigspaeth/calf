@@ -1,5 +1,13 @@
 import { model, $, query } from 'model'
 
+const colorBlock = $.object().meta({ name: 'ColorBlock' }).keys({
+  type: $.string().valid('color')
+    .description('Color block type'),
+
+  color: $.string().hex()
+    .description('Hex color value of background')
+})
+
 const textBlock = $.object().meta({ name: 'TextBlock' }).keys({
   type: $.string().valid('text')
     .description('Text block type'),
@@ -59,7 +67,7 @@ const section = () =>
     verticalAlign: $.string().valid('top', 'middle', 'right')
       .description('Align inner content vertically'),
 
-    blocks: $.array().items([textBlock, imageBlock, buttonBlock])
+    blocks: $.array().items([textBlock, imageBlock, buttonBlock, colorBlock])
       .description('Content blocks for the frame')
   })
 

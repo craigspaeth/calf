@@ -7,7 +7,8 @@ import view from './views'
 import { assign } from 'lodash'
 
 const initialState = assign({
-  editor: null
+  editor: null,
+  focusedSection: null
 }, editCampaignState)
 
 export default () => {
