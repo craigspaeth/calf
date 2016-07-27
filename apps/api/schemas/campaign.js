@@ -115,15 +115,3 @@ export const campaignMutation = object(campaignAttrs).meta({
   args: campaignAttrs,
   name: 'CampaignMutation'
 })
-
-// query('regions', [
-//   array().items(string())
-//     .description('Returns all regions of all campaigns.'),
-//   (db) => db.campaigns.distinct('regions')
-// ])
-
-// query('channels', [
-//   array().items(string())
-//     .description('Returns all channels of all campaigns.'),
-//   (db) => db.campaigns.distinct('channels')
-// ])
