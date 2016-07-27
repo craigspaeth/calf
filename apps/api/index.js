@@ -1,17 +1,12 @@
 import Koa from 'koa'
 import graphqlHTTP from 'koa-graphql'
 import c from 'koa-convert'
-import './models'
-import { schema } from 'model'
+import schema from './schemas'
 
 const app = new Koa()
 
 app.use(async (ctx, next) => {
-  return c(graphqlHTTP({
-    schema: schema(),
-    graphiql: true,
-    rootValue: ctx.state
-  }))(ctx, next)
+  return c(graphqlHTTP({ schema, graphiql: true }))(ctx, next)
 })
 
 export default app
