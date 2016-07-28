@@ -111,7 +111,7 @@ export const campaigns = array().items(object(campaignAttrs)).meta({
   name: 'Campaigns'
 })
 
-export const campaignMutation = object(campaignAttrs).meta({
+export const saveCampaign = object(campaignAttrs).meta({
   args: campaignAttrs,
   name: 'CampaignMutation'
 })
