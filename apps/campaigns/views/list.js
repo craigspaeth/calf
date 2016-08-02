@@ -2,6 +2,7 @@ import {
   type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
   largeMargin
 } from 'style'
+import { state } from '../controller'
 import { view, dom } from 'view'
 import moment from 'moment'
 
@@ -46,14 +47,14 @@ const styles = {
   itemPreview: flatButton('dark')
 }
 
-export default view((_, { tree }) => (
+export default view(() => (
   div({ style: styles.container },
     a({
       style: styles.addButton,
       href: '/campaigns/new'
     }, 'Create new ad campaign'),
     h1({ style: styles.h1 }, 'Upcomming ad campaigns'),
-    tree.get('campaigns').map((campaign, i) => (
+    state().get('campaigns').map((campaign, i) => (
       div({ style: styles.item, key: campaign._id },
         div({ style: styles.itemLeft },
           h2({ style: styles.itemH2 }, campaign.name),
