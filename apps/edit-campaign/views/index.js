@@ -3,12 +3,13 @@ import editCampaignLayout from 'components/edit-campaign/layout'
 import details from './details'
 import targeting from './targeting'
 import review from './review'
+import { state } from '../controller'
 
-export default view((_, { tree }) => {
+export default view(() => {
   return editCampaignLayout({
-    step: tree.get('step'),
-    child: [details, null, targeting, review][tree.get('step')],
-    enableNextStep: tree.get('enableNextStep'),
-    campaign: tree.select('campaign')
+    step: state.get('step'),
+    child: [details, null, targeting, review][state.get('step')],
+    enableNextStep: state.get('enableNextStep'),
+    campaign: state.select('campaign')
   })
 })

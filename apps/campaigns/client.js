@@ -1,3 +1,3 @@
-import routes from './routes'
+import router from './routes'
 
-routes()
+router.routes()

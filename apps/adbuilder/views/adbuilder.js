@@ -3,7 +3,7 @@ import { deepOcean, centerOfParent, type, softGray } from 'style'
 import { droppable, dndable, draglayer } from 'components/dndable'
 import toolbar from './toolbar'
 import * as editors from './editors'
-import { onDropBackground, onDropToolbarItem } from '../controller'
+import { onDropBackground, onDropToolbarItem, state } from '../controller'
 
 const { div, span } = dom
 
@@ -53,21 +53,22 @@ const styles = {
   })
 }
 
-export default view((_, { tree }) => {
-  const background = tree.select('campaign', 'frames', 0, 'background')
+export default view(() => {
+  const background = state.select('campaign', 'frames', 0, 'background')
   const dropzone = (index) => {
     const section = ['firstSection', 'middleSection', 'lastSection'][index]
-    const blocks = tree
+    const blocks = state
       .select('campaign', 'frames', 0, section)
       .select('blocks').get()
     return droppable({
       type: 'toolbaritem',
-      drop: (_, monitor) => onDropToolbarItem(tree, monitor, index)
+      drop: (_, monitor) => onDropToolbarItem(monitor, index)
     })(({ isOver, connectDropTarget }) =>
       connectDropTarget(
         div({ style: styles.dropzone({ isOver }) },
-          blocks.map((block) => div({ style: styles.block(block) })))))
+          blocks && blocks.map((block) => div({ style: styles.block(block) })))))
   }
+  console.log('rerend', background.get())
   const backgroundEl = background.get()
     ? div({},
         dropzone(0),
@@ -76,7 +77,7 @@ export default view((_, { tree }) => {
         div({ style: styles.bgColor(background) }))
     : droppable({
       type: 'toolbaritem',
-      drop: (_, monitor) => onDropBackground(tree, monitor)
+      drop: (_, monitor) => onDropBackground(monitor)
     })(({ connectDropTarget }) =>
         connectDropTarget(
           div({ style: styles.cta },
@@ -88,14 +89,14 @@ export default view((_, { tree }) => {
           return editors.colorBlockPreview({
             x: currentOffset.x,
             y: currentOffset.y,
-            color: tree.get('editor').color
+            color: state.get('editor').color
           })
         }
         return null
       }),
       toolbar({}),
-      tree.get('editor') && {
+      state.get('editor') && {
         color: editors.colorBlock({})
-      }[tree.get('editor').type],
+      }[state.get('editor').type],
       div({ style: styles.container }, backgroundEl))
 })

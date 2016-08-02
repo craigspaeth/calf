@@ -27,7 +27,7 @@ const styles = {
   }
 }
 
-export default view((_, { tree }) => {
+export default view(() => {
   return nav({ style: styles.toolbar },
     items.map((char) =>
       draggable({

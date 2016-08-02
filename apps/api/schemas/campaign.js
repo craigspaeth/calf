@@ -82,7 +82,7 @@ const frame = object({
     .description('Middle section of ad unit’s frame content'),
   lastSection: section()
     .description('Last section of ad unit’s frame content')
-}).meta({ name: 'Frame' })
+}).meta({ name: 'Frame' }).label('Frame')
 
 const campaignAttrs = {
   _id: objectid()
@@ -97,7 +97,7 @@ const campaignAttrs = {
     .description('Channels to target campaign to, like tags'),
   regions: array().items(string()).default([])
     .description('Regions to target campaign to, like tags'),
-  frames: array().items(frame)
+  frames: array().items(frame).default([])
     .description('Frames of content that make up the ad unit')
 }
 

@@ -1,21 +1,21 @@
-import router from 'router'
-import render from 'render'
-import layout from 'components/layout'
-import editCampaignState from 'components/edit-campaign/initial-state'
+import * as controller from './controller'
 import { render as renderEdit } from 'components/edit-campaign/controller'
-import view from './views'
-import { assign } from 'lodash'
+import unikoa from 'unikoa'
+import unikoaReactRender from 'unikoa-react-render'
+import unikoaBootstrap from 'unikoa-bootstrap'
+import head from 'components/layout/head'
+import body from './views/index'
 
-const initialState = assign({
-  editor: null,
-  focusedSection: null
-}, editCampaignState)
+const router = unikoa()
 
-export default () => {
-  const routes = router()
-  const { shared } = routes
-  shared.use(render({ layout, initialState, bundle: '/adbuilder/client.js' }))
-  shared.get('/campaigns/:id/edit/adbuilder', renderEdit(view, 1))
-  shared.get('/campaigns/new/adbuilder', renderEdit(view, 1))
-  return routes()
-}
+router.use(unikoaBootstrap)
+router.get('/campaigns/:id/edit/adbuilder', renderEdit(controller.state, 1))
+router.get('/campaigns/new/adbuilder', renderEdit(controller.state, 1))
+router.use(unikoaReactRender({
+  head: head,
+  body: body,
+  scripts: ['/adbuilder/client.js'],
+  subscribe: (cb) => controller.state.on('update', cb)
+}))
+
+export default router

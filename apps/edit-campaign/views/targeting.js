@@ -2,6 +2,7 @@ import { view, dom } from 'view'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
+import { state } from '../controller'
 import tagsinput from './tagsinput'
 
 const { div, label } = dom
@@ -29,9 +30,9 @@ const styles = {
   })
 }
 
-export default view((_, { tree }) => {
-  const campaign = tree.select('campaign')
-  const channels = tree.select('channels')
+export default view(() => {
+  const campaign = state.select('campaign')
+  const channels = state.select('channels')
   return div({ style: styles.container },
     div({ style: styles.left },
       label({ style: styles.label }, 'Channels',

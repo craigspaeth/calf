@@ -1,10 +1,15 @@
 import api from 'api'
-import campaigns from './views'
+import tree from 'universal-tree'
 
-const campaignAttrs = ['_id', 'name', 'startAt', 'endAt', 'channels', 'regions']
+export const state = tree({
+  campaigns: [],
+  campaign: null
+})
 
 export const indexRoute = async (ctx, next) => {
-  const data = await api(`{ campaigns { ${campaignAttrs.join(' ')} } }`)
-  ctx.tree.set('campaigns', data.campaigns)
-  ctx.render(campaigns)
+  const data = await ctx.bootstrap(() =>
+    api('{ campaigns { _id name startAt endAt channels regions } }')
+  )
+  state.set({ campaigns: data.campaigns })
+  next()
 }
