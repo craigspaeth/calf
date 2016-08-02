@@ -7,9 +7,9 @@ export const state = tree({
 })
 
 export const indexRoute = async (ctx, next) => {
-  const data = await api(`{
-    campaigns { _id name startAt endAt channels regions }
-  }`)
+  const data = await ctx.bootstrap(() =>
+    api('{ campaigns { _id name startAt endAt channels regions } }')
+  )
   state.set({ campaigns: data.campaigns })
   next()
 }
