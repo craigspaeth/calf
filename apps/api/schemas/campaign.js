@@ -82,7 +82,7 @@ const frame = object({
     .description('Middle section of ad unit’s frame content'),
   lastSection: section()
     .description('Last section of ad unit’s frame content')
-}).meta({ name: 'Frame' })
+}).meta({ name: 'Frame' }).label('Frame')
 
 const campaignAttrs = {
   _id: objectid()
