@@ -7,12 +7,9 @@ export const state = tree({
 })
 
 export const indexRoute = async (ctx, next) => {
-  console.log('getting')
   const data = await api(`{
     campaigns { _id name startAt endAt channels regions }
   }`)
-  console.log('setting state')
   state.set({ campaigns: data.campaigns })
-  console.log('set state')
   next()
 }
