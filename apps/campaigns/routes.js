@@ -1,15 +1,19 @@
 import * as controller from './controller'
-import router from 'router'
-import render from 'render'
-import layout from 'components/layout'
+import unikoa from 'unikoa'
+import unikoaReactRender from 'unikoa-react-render'
+import unikoaBootstrap from 'unikoa-bootstrap'
+import head from 'components/layout/head'
+import body from './views/index'
 
-const initialState = { campaigns: [] }
+const router = unikoa()
 
-export default () => {
-  const routes = router()
-  const { shared } = routes
-  shared.use(render({ layout, initialState, bundle: '/campaigns/client.js' }))
-  shared.get('/', (ctx) => ctx.redirect('/campaigns'))
-  shared.get('/campaigns', controller.indexRoute)
-  return routes()
-}
+router.use(unikoaBootstrap)
+router.get('/', (ctx) => ctx.redirect('/campaigns'))
+router.get('/campaigns', controller.indexRoute)
+router.use(unikoaReactRender({
+  head: head,
+  body: body(),
+  scripts: ['/campaigns/client.js']
+}))
+
+export default router

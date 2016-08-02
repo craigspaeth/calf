@@ -47,6 +47,7 @@
     "brfs-babel": "^1.0.0",
     "browserify": "^13.0.1",
     "browserify-dev-middleware": "^1.0.0",
+    "cheerio": "^0.20.0",
     "concurrently": "^2.1.0",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",

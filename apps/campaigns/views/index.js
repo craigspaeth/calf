@@ -10,7 +10,7 @@ export default view(() => {
   return div({},
     header({}),
     div({},
-      state().get('campaigns').length > 0
+      state.get('campaigns').length > 0
       ? list()
       : empty()))
 })

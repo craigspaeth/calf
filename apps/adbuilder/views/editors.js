@@ -3,7 +3,7 @@ import { deepOcean, darkSlate, coolBlue, smallMargin, type } from 'style'
 import colorpicker from './colorpicker'
 import { draggable } from 'components/dndable'
 import {
-  onChangeEditorColor, onCancelEditor, onSaveEditor, onEndEditorDrag
+  onChangeEditorColor, onCancelEditor, onSaveEditor, onEndEditorDrag, state
 } from '../controller'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 
@@ -69,21 +69,21 @@ export const colorBlockPreview = ({ x, y, color, onChange, onCancel, onSave }) =
         onClick: onSave
       }, 'Save'))
 
-export const colorBlock = view((_, { tree }) => {
+export const colorBlock = view(() => {
   return draggable({
     type: 'editor',
     beginDrag: () => ({ name: 'editor' }),
-    endDrag: (_, monitor) => onEndEditorDrag(tree, monitor)
+    endDrag: (_, monitor) => onEndEditorDrag(monitor)
   })(({ isDragging, connectDragSource, connectDragPreview }) => {
     if (typeof window !== 'undefined') connectDragPreview(getEmptyImage())
     if (isDragging) return null
     return connectDragSource(colorBlockPreview({
-      x: tree.get('editor').x,
-      y: tree.get('editor').y,
-      color: tree.get('editor').color,
-      onCancel: () => onCancelEditor(tree),
-      onSave: () => onSaveEditor(tree),
-      onChange: (color) => onChangeEditorColor(tree, color)
+      x: state.get('editor').x,
+      y: state.get('editor').y,
+      color: state.get('editor').color,
+      onCancel: () => onCancelEditor(state),
+      onSave: () => onSaveEditor(state),
+      onChange: (color) => onChangeEditorColor(color)
     }))
   })
 })

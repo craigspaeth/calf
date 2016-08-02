@@ -54,7 +54,7 @@ export default view(() => (
       href: '/campaigns/new'
     }, 'Create new ad campaign'),
     h1({ style: styles.h1 }, 'Upcomming ad campaigns'),
-    state().get('campaigns').map((campaign, i) => (
+    state.get('campaigns').map((campaign, i) => (
       div({ style: styles.item, key: campaign._id },
         div({ style: styles.itemLeft },
           h2({ style: styles.itemH2 }, campaign.name),
