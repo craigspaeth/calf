@@ -1,51 +1,60 @@
-import { headerHeight, smallMargin } from 'style'
+import tree from 'universal-tree'
 import api from 'api'
+import { headerHeight, smallMargin } from 'style'
+import editCampaignState from 'components/edit-campaign/initial-state'
+import { assign } from 'lodash'
 
-export const onDropToolbarItem = (tree, monitor, index) => {
+export const state = tree(assign({
+  editor: null,
+  focusedSection: null
+}, editCampaignState))
+
+export const onDropToolbarItem = (monitor, index) => {
   const { x } = monitor.getClientOffset()
   const section = ['firstSection', 'middleSection', 'lastSection'][index]
   if (monitor.getItem().type === 'color') {
-    tree.set('editor', {
+    state.set('editor', {
       x: x + 20,
       y: headerHeight + smallMargin,
       type: 'color',
       color: '#A812B8'
     })
-    tree.set('focusedSection', section)
+    state.set('focusedSection', section)
   }
 }
 
-export const onDropBackground = (tree, monitor) => {
+export const onDropBackground = (monitor) => {
   const { x } = monitor.getClientOffset()
   if (monitor.getItem().type === 'color') {
-    tree.set('editor', {
+    state.set('editor', {
       x: x + 20,
       y: headerHeight + smallMargin,
       type: 'color',
       color: '#A812B8'
     })
-    tree.select('campaign', 'frames', 0, 'background')
+    state.select('campaign', 'frames', 0, 'background')
       .set({ type: 'color', color: '#A812B8' })
+    console.log(state.select('campaign', 'frames', 0, 'background').get())
   }
 }
 
-export const onEndEditorDrag = (tree, monitor) => {
-  const editor = tree.select('editor')
+export const onEndEditorDrag = (monitor) => {
+  const editor = state.select('editor')
   const delta = monitor.getDifferenceFromInitialOffset()
   const { x, y } = editor.get()
   editor.set('x', x + delta.x)
   editor.set('y', y + delta.y)
 }
 
-export const onChangeEditorColor = async (tree, color) => {
-  const background = tree.select('campaign', 'frames', 0, 'background')
-  tree.select('editor').set('color', color.hex)
+export const onChangeEditorColor = async (color) => {
+  const background = state.select('campaign', 'frames', 0, 'background')
+  state.select('editor').set('color', color.hex)
   if (background.get()) {
     await api(`
       mutation {
         updateCampaign(
           frames: [{
-            ${tree.get('focusedSection')}: {
+            ${state.get('focusedSection')}: {
               blocks: [{
                 color: "${color.hex.replace('#', '')}"
               }]
@@ -55,20 +64,20 @@ export const onChangeEditorColor = async (tree, color) => {
       }
     `)
     tree
-      .select('campaign', 'frames', 0, tree.get('focusedSection'))
+      .select('campaign', 'frames', 0, state.get('focusedSection'))
       .select('blocks', 0)
       .set('color', color.hex)
   } else background.set('color', color.hex)
 }
 
 export const onCancelEditor = (tree) => {
-  tree.select('editor').set(null)
-  tree.select('campaign', 'frames', 0, 'background')
+  state.select('editor').set(null)
+  state.select('campaign', 'frames', 0, 'background')
     .set(null)
 }
 
 export const onSaveEditor = async (tree) => {
-  const col = tree.select('campaign', 'frames', 0, 'background')
+  const col = state.select('campaign', 'frames', 0, 'background')
     .get('color').replace('#', '')
   await api(`
     mutation {
@@ -77,5 +86,5 @@ export const onSaveEditor = async (tree) => {
       }
     }
   `)
-  tree.set('editor', null)
+  state.set('editor', null)
 }

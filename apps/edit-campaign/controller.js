@@ -1,12 +1,16 @@
-// import api from 'api'
-// import editCampaign from './views'
+import tree from 'universal-tree'
+import { maybeEnableNextStep } from 'components/edit-campaign/controller'
+import editCampaignState from 'components/edit-campaign/initial-state'
+
+export const state = tree(editCampaignState)
 
 export const redirect = (ctx, next) => {
-  ctx.redirect(`/campaigns/${ctx.params.id}/edit/details`)
+  if (ctx.params.id) ctx.redirect(`/campaigns/${ctx.params.id}/edit/details`)
+  else ctx.redirect('/campaigns/new/details')
 }
 
-export const updateAttr = (tree, attr, val) => {
-  const campaign = tree.select('campaign')
+export const updateAttr = (attr, val) => {
+  const campaign = state.select('campaign')
   campaign.set(attr, val)
-  // maybeEnableNextStep(tree)
+  maybeEnableNextStep(state)
 }

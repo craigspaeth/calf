@@ -1,6 +1,6 @@
 import { flatInput, flatLabel, headerHeight, mediumMargin } from 'style'
 import { view, dom } from 'view'
-import { updateAttr } from '../controller'
+import { updateAttr, state } from '../controller'
 import { capitalize, snakeCase, assign } from 'lodash'
 import moment from 'moment'
 
@@ -27,8 +27,8 @@ const styles = {
   }
 }
 
-export default view((_, { tree }) => {
-  const campaign = tree.select('campaign')
+export default view(() => {
+  const campaign = state.select('campaign')
   const inputField = (attr, placeholder, ...inputStyles) => {
     const val = campaign.get(attr)
     return label({
@@ -40,7 +40,7 @@ export default view((_, { tree }) => {
         style: styles.input,
         placeholder: placeholder,
         className: attr === 'name' ? 'foobarbaz' : null,
-        onKeyUp: (e) => updateAttr(tree, attr, e.target.value),
+        onKeyUp: (e) => updateAttr(attr, e.target.value),
         defaultValue: attr === 'startAt' || attr === 'endAt'
           ? val && moment(val).format('MM/DD/YYYY')
           : val

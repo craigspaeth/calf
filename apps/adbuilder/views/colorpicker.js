@@ -3,7 +3,9 @@ import { view, dom, style } from 'view'
 import { ChromePicker } from 'react-color'
 
 const { div } = dom
+
 const colorpicker = (props) => React.createElement(ChromePicker, props)
+
 const rules = {
   '.colorpicker > div': {
     width: '100% !important',

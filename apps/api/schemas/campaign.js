@@ -97,7 +97,7 @@ const campaignAttrs = {
     .description('Channels to target campaign to, like tags'),
   regions: array().items(string()).default([])
     .description('Regions to target campaign to, like tags'),
-  frames: array().items(frame)
+  frames: array().items(frame).default([])
     .description('Frames of content that make up the ad unit')
 }
 
