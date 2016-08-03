@@ -1,19 +1,21 @@
-import { view, dom } from 'view'
+import rcomp from 'rcomp'
 import { deepOcean, centerOfParent, type, softGray } from 'style'
 import { droppable, dndable, draglayer } from 'components/dndable'
 import toolbar from './toolbar'
 import * as editors from './editors'
 import { onDropBackground, onDropToolbarItem, state } from '../controller'
+import { assign } from 'lodash'
 
-const { div, span } = dom
+const comp = rcomp()
+const { div, span } = comp.els()
 
 const styles = {
-  container: [centerOfParent(), {
+  container: assign(centerOfParent(), {
     width: '100%',
     height: '400px',
     position: 'absolute'
-  }],
-  cta: [type('mediumHeader'), {
+  }),
+  cta: assign(type('mediumHeader'), {
     width: '100%',
     height: '100%',
     position: 'absolute',
@@ -21,7 +23,7 @@ const styles = {
     lineHeight: '400px',
     border: `3px dashed ${softGray}`,
     color: softGray
-  }],
+  }),
   text: {
     textAlign: 'center',
     color: deepOcean,
@@ -53,7 +55,7 @@ const styles = {
   })
 }
 
-export default view(() => {
+comp.render(() => {
   const background = state.select('campaign', 'frames', 0, 'background')
   const dropzone = (index) => {
     const section = ['firstSection', 'middleSection', 'lastSection'][index]
@@ -99,3 +101,5 @@ export default view(() => {
       }[state.get('editor').type],
       div({ style: styles.container }, backgroundEl))
 })
+
+export default comp()

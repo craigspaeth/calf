@@ -1,10 +1,13 @@
-import React from 'react'
-import { view, dom, style } from 'view'
+import { Style } from 'radium'
+import rcomp from 'rcomp'
 import { ChromePicker } from 'react-color'
 
-const { div } = dom
+const comp = rcomp()
 
-const colorpicker = (props) => React.createElement(ChromePicker, props)
+const { div, colorpicker, style } = comp.els({
+  colorpicker: ChromePicker,
+  style: Style
+})
 
 const rules = {
   '.colorpicker > div': {
@@ -14,9 +17,11 @@ const rules = {
   }
 }
 
-export default view(({ onChange, color }) => {
+comp.render(({ onChange, color }) => {
   return div({},
     style({ rules }),
     div({ className: 'colorpicker' },
       colorpicker({ type: 'chrome', color, onChange })))
 })
+
+export default comp()

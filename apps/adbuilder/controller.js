@@ -51,7 +51,7 @@ export const onChangeEditorColor = async (color) => {
   if (background.get()) {
     await api(`
       mutation {
-        updateCampaign(
+        saveCampaign(
           frames: [{
             ${state.get('focusedSection')}: {
               blocks: [{
@@ -80,7 +80,7 @@ export const onSaveEditor = async (tree) => {
     .get('color').replace('#', '')
   await api(`
     mutation {
-      updateCampaign(frames: [{ background: { color: "${col}" } }]) {
+      saveCampaign(frames: [{ background: { color: "${col}" } }]) {
         _id
       }
     }
