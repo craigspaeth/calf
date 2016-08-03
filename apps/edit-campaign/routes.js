@@ -20,7 +20,8 @@ router.get('/campaigns/new/review', renderEdit(controller.state, 3))
 router.use(unikoaReactRender({
   head,
   body,
-  scripts: ['/edit-campaign/client.js']
+  scripts: ['/edit-campaign/client.js'],
+  subscribe: (cb) => controller.state.on('update', cb)
 }))
 
 export default router

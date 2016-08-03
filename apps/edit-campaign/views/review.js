@@ -1,7 +1,10 @@
-import { view, dom } from 'view'
+import rcomp from 'rcomp'
 
-const { div } = dom
+const comp = rcomp()
+const { div } = comp.els()
 
-export default view((props) => (
+comp.render((props) => (
   div({}, 'STEP 4')
 ))
+
+export default comp()

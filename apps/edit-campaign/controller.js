@@ -10,6 +10,7 @@ export const redirect = (ctx, next) => {
 }
 
 export const updateAttr = (attr, val) => {
+  console.log('up')
   const campaign = state.select('campaign')
   campaign.set(attr, val)
   maybeEnableNextStep(state)

@@ -1,13 +1,14 @@
-import { view, dom } from 'view'
+import rcomp from 'rcomp'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
 import { state } from '../controller'
 import tagsinput from './tagsinput'
 
-const { div, label } = dom
+const comp = rcomp()
+const { div, label } = comp.els()
 
-const styles = {
+comp.styles({
   container: {
     maxWidth: containerMaxWidth,
     margin: 'auto'
@@ -28,23 +29,21 @@ const styles = {
     display: 'block',
     width: '100%'
   })
-}
+})
 
-export default view(() => {
+comp.render(() => {
   const campaign = state.select('campaign')
   const channels = state.select('channels')
-  return div({ style: styles.container },
-    div({ style: styles.left },
-      label({ style: styles.label }, 'Channels',
-        tagsinput({
-          style: styles.input,
+  return div('.container',
+    div('.left',
+      label('.label', 'Channels',
+        tagsinput('.input', {
           tags: campaign.select('channels'),
           suggestions: channels.get(),
           placeholder: 'Fashion or politics'
         })),
-      label({ style: styles.label }, 'Location',
-        tagsinput({
-          style: styles.input,
+      label('.label', 'Location',
+        tagsinput('.input', {
           tags: campaign.select('regions'),
           suggestions: channels.get(),
           placeholder: (
@@ -53,3 +52,5 @@ export default view(() => {
           )
         }))))
 })
+
+export default comp()
