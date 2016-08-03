@@ -6,9 +6,10 @@ import {
 } from 'style'
 import { state } from '../controller'
 
-const { div, h1, h2, h3, h4, a } = componext.els()
+const comp = componext()
+const { div, h1, h2, h3, h4, a } = comp.els()
 
-const styles = {
+comp.styles({
   container: {
     maxWidth: `${containerMaxWidth}px`,
     margin: 'auto',
@@ -45,32 +46,30 @@ const styles = {
     marginRight: '10px'
   }),
   itemPreview: flatButton('dark')
-}
+})
 
-export default () =>
-  div({ style: styles.container },
-    a({
-      style: styles.addButton,
-      href: '/campaigns/new'
-    }, 'Create new ad campaign'),
-    h1({ style: styles.h1 }, 'Upcomming ad campaigns'),
+comp.render(() =>
+  div('.container',
+    a('.addButton', { href: '/campaigns/new' }, 'Create new ad campaign'),
+    h1('.h1', 'Upcomming ad campaigns'),
     state.get('campaigns').map((campaign, i) => (
-      div({ style: styles.item, key: campaign._id },
-        div({ style: styles.itemLeft },
-          h2({ style: styles.itemH2 }, campaign.name),
-          h3({ style: styles.itemH3 },
+      div('.item', { key: campaign._id },
+        div('.itemLeft',
+          h2('.itemH2', campaign.name),
+          h3('.itemH3',
             moment(campaign.startAt).format('MMM. Do') + ' - ' +
             moment(campaign.endAt).format('MMM. Do')),
-          h4({ style: styles.itemH4 },
+          h4('.itemH4',
             `Channels: ${campaign.channels.join(', ')}`),
-          a({
-            style: styles.itemEdit,
+          a('.itemEdit', {
             href: `/campaigns/${campaign._id}/edit`,
             key: 'edit' + i
           }, 'Edit'),
-          a({
-            style: styles.itemPreview,
+          a('.itemPreview', {
             href: `/campaigns/${campaign._id}/preview`,
             key: 'preview' + i,
             target: '_blank'
           }, 'Preview'))))))
+)
+
+export default comp()

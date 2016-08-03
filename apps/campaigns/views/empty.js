@@ -2,10 +2,14 @@ import componext from 'componext'
 import {
   flatButton, type, mediumMargin, headerHeight, centerOfParent, blueGradient
 } from 'style'
+import Radium from 'radium'
 
-const { div, h1, p, a } = componext.els()
+const comp = componext()
+const { div, h1, p, a } = comp.els()
 
-const styles = {
+comp.decorators(Radium)
+
+comp.styles({
   welcome: [
     centerOfParent(),
     {
@@ -34,18 +38,20 @@ const styles = {
     }),
     type('mediumCaps')
   ]
-}
+})
 
-export default () =>
-  div({ style: styles.container },
-    div({ style: styles.welcome },
-      h1({ style: styles.h1 }, 'Welcome to AdRhino'),
-      p({ style: styles.p }, `
+comp.render(() =>
+  div('.container',
+    div('.welcome',
+      h1('.h1', 'Welcome to AdRhino'),
+      p('.p', `
         AdRhino is a platform for building beautiful ad units, worthy of your \
         high quality content. To get started, try creating a new campaign.
       `),
-      a({
-        style: styles.button,
+      a('.button', {
         href: '/campaigns/new',
         key: 'create'
       }, 'Create new ad campaign')))
+)
+
+export default comp()
