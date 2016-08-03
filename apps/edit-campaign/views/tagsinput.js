@@ -1,13 +1,15 @@
-import React from 'react'
-import { view, dom } from 'view'
 import ReactTags from 'react-tag-input'
+import rcomp from 'rcomp'
 import { Style } from 'radium'
 import { flatButton, flatInput, softGray, type, coolBlue, orange } from 'style'
 import { uniqueId } from 'lodash'
 
-const { div } = dom
-const tagsinput = (props) => React.createElement(ReactTags.WithContext, props)
-const style = (props) => React.createElement(Style, props)
+const comp = rcomp()
+const { div, reacttags, style } = comp.els({
+  reacttags: ReactTags.WithContext,
+  style: Style
+})
+
 const rules = (placeholder, className) => ({
   [`.${className} input`]: {
     width: `${placeholder.length * 7}px`
@@ -70,11 +72,11 @@ const rules = (placeholder, className) => ({
   }
 })
 
-export default view(({ tags, placeholder, suggestions }) => {
+comp.render(({ tags, placeholder, suggestions }) => {
   const className = `tags-input-${uniqueId()}`
   return div({ className },
     style({ rules: rules(placeholder, className) }),
-    tagsinput({
+    reacttags({
       tags: tags.map((t) => ({ id: t.get(), text: t.get() })),
       placeholder,
       suggestions,
@@ -82,3 +84,5 @@ export default view(({ tags, placeholder, suggestions }) => {
       handleAddition: (tag) => tags.push(tag)
     }))
 })
+
+export default comp()

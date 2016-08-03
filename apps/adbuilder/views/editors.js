@@ -1,4 +1,4 @@
-import { view, dom } from 'view'
+import rcomp from 'rcomp'
 import { deepOcean, darkSlate, coolBlue, smallMargin, type } from 'style'
 import colorpicker from './colorpicker'
 import { draggable } from 'components/dndable'
@@ -6,8 +6,10 @@ import {
   onChangeEditorColor, onCancelEditor, onSaveEditor, onEndEditorDrag, state
 } from '../controller'
 import { getEmptyImage } from 'react-dnd-html5-backend'
+import { assign } from 'lodash'
 
-const { div, h3, button } = dom
+const comp = rcomp()
+const { div, h3, button } = comp.els()
 
 const styles = {
   container: ({ x, y }) => ({
@@ -20,17 +22,17 @@ const styles = {
     color: 'white',
     cursor: '-webkit-grab; -moz-grab'
   }),
-  header: [type('smallCaps'), {
+  header: assign(type('smallCaps'), {
     textAlign: 'center',
     color: coolBlue,
     padding: `${smallMargin}px 0`,
     marginBottom: smallMargin,
     borderBottom: `1px solid ${darkSlate}`
-  }],
+  }),
   inner: {
     padding: `0 ${smallMargin}px ${smallMargin}px ${smallMargin}px`
   },
-  button: [type('smallCaps'), {
+  button: assign(type('smallCaps'), {
     textAlign: 'center',
     width: '50%',
     backgroundColor: 'transparent',
@@ -50,7 +52,7 @@ const styles = {
       borderRight: 0,
       color: 'white'
     }
-  }]
+  })
 }
 
 export const colorBlockPreview = ({ x, y, color, onChange, onCancel, onSave }) =>
@@ -69,7 +71,7 @@ export const colorBlockPreview = ({ x, y, color, onChange, onCancel, onSave }) =
         onClick: onSave
       }, 'Save'))
 
-export const colorBlock = view(() => {
+comp.render(() => {
   return draggable({
     type: 'editor',
     beginDrag: () => ({ name: 'editor' }),
@@ -87,3 +89,5 @@ export const colorBlock = view(() => {
     }))
   })
 })
+
+export const colorBlock = comp()

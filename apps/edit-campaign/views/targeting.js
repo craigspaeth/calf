@@ -3,10 +3,12 @@ import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
 import { state } from '../controller'
-import tagsinput from './tagsinput'
+import TagsInput from './tagsinput'
 
+const campaign = state.select('campaign')
+const channels = state.select('channels')
 const comp = rcomp()
-const { div, label } = comp.els()
+const { div, label, tagsinput } = comp.els({ tagsinput: TagsInput })
 
 comp.styles({
   container: {
@@ -24,17 +26,15 @@ comp.styles({
   label: flatLabel({
     marginBottom: smallMargin
   }),
-  input: flatInput({
+  taginput: flatInput({
     marginTop: '5px',
     display: 'block',
     width: '100%'
   })
 })
 
-comp.render(() => {
-  const campaign = state.select('campaign')
-  const channels = state.select('channels')
-  return div('.container',
+comp.render(() =>
+  div('.container',
     div('.left',
       label('.label', 'Channels',
         tagsinput('.input', {
@@ -43,7 +43,7 @@ comp.render(() => {
           placeholder: 'Fashion or politics'
         })),
       label('.label', 'Location',
-        tagsinput('.input', {
+        tagsinput('.taginput', {
           tags: campaign.select('regions'),
           suggestions: channels.get(),
           placeholder: (
@@ -51,6 +51,6 @@ comp.render(() => {
             '“West coast” or “California”'
           )
         }))))
-})
+)
 
 export default comp()
