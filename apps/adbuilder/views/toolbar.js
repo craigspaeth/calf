@@ -1,12 +1,13 @@
-import { view, dom } from 'view'
+import rcomp from 'rcomp'
 import { darkSlate, smallMargin, deepOcean, headerHeight } from 'style'
 import { draggable } from 'components/dndable'
 
-const { nav, button } = dom
+const comp = rcomp()
+const { nav, button } = comp.els()
 
 const items = ['text', 'button', 'video', 'image', 'icon', 'slideshow', 'color']
 
-const styles = {
+comp.styles({
   toolbar: {
     position: 'absolute',
     top: smallMargin + headerHeight,
@@ -25,15 +26,17 @@ const styles = {
     outline: 'none',
     textTransform: 'uppercase'
   }
-}
+})
 
-export default view(() => {
-  return nav({ style: styles.toolbar },
-    items.map((char) =>
+comp.render(() => {
+  const navItems = items.map((char) =>
       draggable({
         type: 'toolbaritem',
         beginDrag: () => ({ type: char })
       })(({ isDragging, connectDragSource }) =>
         connectDragSource(
-          button({ style: styles.toolbarIcon }, char[0])))))
+          button('.toolbarIcon', char[0]))))
+  return nav('.toolbar', ...navItems)
 })
+
+export default comp()
