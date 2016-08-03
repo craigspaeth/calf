@@ -18,8 +18,8 @@ router.get('/campaigns/:id/edit/details', renderEdit(controller.state, 0))
 router.get('/campaigns/new/targeting', renderEdit(controller.state, 2))
 router.get('/campaigns/new/review', renderEdit(controller.state, 3))
 router.use(unikoaReactRender({
-  head: head,
-  body: body(),
+  head,
+  body,
   scripts: ['/edit-campaign/client.js']
 }))
 

@@ -68,7 +68,6 @@ export default view(() => {
         div({ style: styles.dropzone({ isOver }) },
           blocks && blocks.map((block) => div({ style: styles.block(block) })))))
   }
-  console.log('rerend', background.get())
   const backgroundEl = background.get()
     ? div({},
         dropzone(0),

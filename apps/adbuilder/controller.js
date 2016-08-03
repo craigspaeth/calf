@@ -34,7 +34,6 @@ export const onDropBackground = (monitor) => {
     })
     state.select('campaign', 'frames', 0, 'background')
       .set({ type: 'color', color: '#A812B8' })
-    console.log(state.select('campaign', 'frames', 0, 'background').get())
   }
 }
 
