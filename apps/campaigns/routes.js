@@ -10,10 +10,6 @@ const router = unikoa()
 router.use(unikoaBootstrap)
 router.get('/', (ctx) => ctx.redirect('/campaigns'))
 router.get('/campaigns', controller.indexRoute)
-router.use(unikoaReactRender({
-  head: head,
-  body: body(),
-  scripts: ['/campaigns/client.js']
-}))
+router.use(unikoaReactRender({ head, body, scripts: ['/campaigns/client.js'] }))
 
 export default router
