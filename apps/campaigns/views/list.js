@@ -1,4 +1,4 @@
-import componext from 'componext'
+import rcomp from 'rcomp'
 import moment from 'moment'
 import {
   type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
@@ -6,7 +6,7 @@ import {
 } from 'style'
 import { state } from '../controller'
 
-const comp = componext()
+const comp = rcomp()
 const { div, h1, h2, h3, h4, a } = comp.els()
 
 comp.styles({

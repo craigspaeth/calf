@@ -1,55 +1,64 @@
+import rcomp from 'rcomp'
 import { flatInput, flatLabel, headerHeight, mediumMargin } from 'style'
-import { view, dom } from 'view'
 import { updateAttr, state } from '../controller'
-import { capitalize, snakeCase, assign } from 'lodash'
+import { capitalize, snakeCase } from 'lodash'
 import moment from 'moment'
+import Radium from 'radium'
 
-const { div, label, input } = dom
+const comp = rcomp()
+const { div, label, input } = comp.els()
 
-const styles = {
+comp.decorators(Radium)
+
+comp.styles({
   form: {
     maxWidth: '500px',
     margin: 'auto',
     position: 'relative',
     top: `${headerHeight * 2 + mediumMargin}px`
   },
-  label: flatLabel({
-    marginBottom: '10px'
-  }),
   input: flatInput({
     display: 'block',
     marginTop: '5px',
     width: '100%'
   }),
-  startEnd: {
+  name: flatLabel({
+    marginBottom: '10px',
+    width: '100%'
+  }),
+  startAt: flatLabel({
+    marginBottom: '10px',
     width: '50%',
-    display: 'inline-block'
-  }
-}
+    display: 'inline-block',
+    paddingRight: '10px'
+  }),
+  endAt: flatLabel({
+    marginBottom: '10px',
+    width: '50%',
+    display: 'inline-block',
+    paddingLeft: '10px'
+  })
+})
 
-export default view(() => {
+comp.render(() => {
   const campaign = state.select('campaign')
-  const inputField = (attr, placeholder, ...inputStyles) => {
+  const inputField = (attr, placeholder, extraStyle) => {
     const val = campaign.get(attr)
-    return label({
-      style: assign({}, styles.label, ...inputStyles),
-      key: attr
-    }, capitalize(snakeCase(attr).split('_').join(' ')),
-      input({
+    return label(`.${attr}`, { key: attr },
+      capitalize(snakeCase(attr).split('_').join(' ')),
+      input('.input', {
         key: attr,
-        style: styles.input,
         placeholder: placeholder,
-        className: attr === 'name' ? 'foobarbaz' : null,
         onKeyUp: (e) => updateAttr(attr, e.target.value),
         defaultValue: attr === 'startAt' || attr === 'endAt'
           ? val && moment(val).format('MM/DD/YYYY')
           : val
       }))
   }
-  return div({ style: styles.form },
+  return div('.form',
     inputField('name', "e.g. Tiffany's Winter Sale"),
-    inputField('startAt', 'e.g. 10/14/20',
-      styles.startEnd, { paddingRight: '10px' }),
-    inputField('endAt', 'e.g. 10/14/20',
-      styles.startEnd, { paddingLeft: '10px' }))
+    inputField('startAt', 'e.g. 10/14/20'),
+    inputField('endAt', 'e.g. 10/14/20'))
 })
+
+export default comp()

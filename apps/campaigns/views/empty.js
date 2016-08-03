@@ -1,15 +1,15 @@
-import componext from 'componext'
+import rcomp from 'rcomp'
 import {
   flatButton, type, mediumMargin, headerHeight, centerOfParent, blueGradient
 } from 'style'
 import Radium from 'radium'
 
-const comp = componext()
-const { div, h1, p, a } = comp.els()
+const view = rcomp()
+const { div, h1, p, a } = view.els()
 
-comp.decorators(Radium)
+view.decorators(Radium)
 
-comp.styles({
+view.styles({
   welcome: [
     centerOfParent(),
     {
@@ -40,7 +40,7 @@ comp.styles({
   ]
 })
 
-comp.render(() =>
+view.render(() =>
   div('.container',
     div('.welcome',
       h1('.h1', 'Welcome to AdRhino'),
@@ -54,4 +54,4 @@ comp.render(() =>
       }, 'Create new ad campaign')))
 )
 
-export default comp()
+export default view()
