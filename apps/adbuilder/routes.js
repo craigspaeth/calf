@@ -12,8 +12,8 @@ router.use(unikoaBootstrap)
 router.get('/campaigns/:id/edit/adbuilder', renderEdit(controller.state, 1))
 router.get('/campaigns/new/adbuilder', renderEdit(controller.state, 1))
 router.use(unikoaReactRender({
-  head: head,
-  body: body,
+  head,
+  body,
   scripts: ['/adbuilder/client.js'],
   subscribe: (cb) => controller.state.on('update', cb)
 }))
