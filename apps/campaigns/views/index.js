@@ -1,16 +1,14 @@
-import { view, dom } from 'view'
-import empty from './empty'
-import list from './list'
-import header from 'components/layout/header'
+import componext from 'componext'
+import Empty from './empty'
+import List from './list'
 import { state } from '../controller'
 
-const { div } = dom
+const { div, list, empty } = componext.els({ list: List, empty: Empty })
 
-export default view(() => {
-  return div({},
-    header({}),
-    div({},
+export default () =>
+  div(
+    // header({}),
+    div(
       state.get('campaigns').length > 0
       ? list()
       : empty()))
-})

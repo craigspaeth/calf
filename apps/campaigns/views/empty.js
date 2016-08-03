@@ -1,9 +1,9 @@
+import componext from 'componext'
 import {
   flatButton, type, mediumMargin, headerHeight, centerOfParent, blueGradient
 } from 'style'
-import { view, dom } from 'view'
 
-const { div, h1, p, a } = dom
+const { div, h1, p, a } = componext.els()
 
 const styles = {
   welcome: [
@@ -36,7 +36,7 @@ const styles = {
   ]
 }
 
-export default view((props) => (
+export default () =>
   div({ style: styles.container },
     div({ style: styles.welcome },
       h1({ style: styles.h1 }, 'Welcome to AdRhino'),
@@ -49,4 +49,3 @@ export default view((props) => (
         href: '/campaigns/new',
         key: 'create'
       }, 'Create new ad campaign')))
-))

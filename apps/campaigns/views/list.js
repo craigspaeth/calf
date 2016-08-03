@@ -1,12 +1,12 @@
+import componext from 'componext'
+import moment from 'moment'
 import {
   type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
   largeMargin
 } from 'style'
 import { state } from '../controller'
-import { view, dom } from 'view'
-import moment from 'moment'
 
-const { div, h1, h2, h3, h4, a } = dom
+const { div, h1, h2, h3, h4, a } = componext.els()
 
 const styles = {
   container: {
@@ -47,7 +47,7 @@ const styles = {
   itemPreview: flatButton('dark')
 }
 
-export default view(() => (
+export default () =>
   div({ style: styles.container },
     a({
       style: styles.addButton,
@@ -74,4 +74,3 @@ export default view(() => (
             key: 'preview' + i,
             target: '_blank'
           }, 'Preview'))))))
-))
