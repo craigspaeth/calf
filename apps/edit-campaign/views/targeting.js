@@ -1,4 +1,4 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import {
   mediumMargin, smallMargin, containerMaxWidth, flatInput, flatLabel
 } from 'style'
@@ -7,10 +7,10 @@ import TagsInput from './tagsinput'
 
 const campaign = state.select('campaign')
 const channels = state.select('channels')
-const comp = rcomp()
-const { div, label, tagsinput } = comp.els({ tagsinput: TagsInput })
+const view = veact()
+const { div, label, tagsinput } = view.els({ tagsinput: TagsInput })
 
-comp.styles({
+view.styles({
   container: {
     maxWidth: containerMaxWidth,
     margin: 'auto'
@@ -33,7 +33,7 @@ comp.styles({
   })
 })
 
-comp.render(() =>
+view.render(() =>
   div('.container',
     div('.left',
       label('.label', 'Channels',
@@ -53,4 +53,4 @@ comp.render(() =>
         }))))
 )
 
-export default comp()
+export default view()

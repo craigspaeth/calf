@@ -1,4 +1,4 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import { deepOcean, centerOfParent, type, softGray } from 'style'
 import { droppable, dndable, draglayer } from 'components/dndable'
 import toolbar from './toolbar'
@@ -6,8 +6,8 @@ import * as editors from './editors'
 import { onDropBackground, onDropToolbarItem, state } from '../controller'
 import { assign } from 'lodash'
 
-const comp = rcomp()
-const { div, span } = comp.els()
+const view = veact()
+const { div, span } = view.els()
 
 const styles = {
   container: assign(centerOfParent(), {
@@ -55,7 +55,7 @@ const styles = {
   })
 }
 
-comp.render(() => {
+view.render(() => {
   const background = state.select('campaign', 'frames', 0, 'background')
   const dropzone = (index) => {
     const section = ['firstSection', 'middleSection', 'lastSection'][index]
@@ -102,4 +102,4 @@ comp.render(() => {
       div({ style: styles.container }, backgroundEl))
 })
 
-export default comp()
+export default view()

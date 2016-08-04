@@ -1,18 +1,18 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import Empty from './empty'
 import List from './list'
 import Header from 'components/layout/header'
 import { state } from '../controller'
 
-const comp = rcomp()
+const view = veact()
 
-const { div, list, empty, header } = comp.els({
+const { div, list, empty, header } = view.els({
   list: List,
   empty: Empty,
   header: Header
 })
 
-comp.render(() =>
+view.render(() =>
   div(
     header({}),
     div(
@@ -21,4 +21,4 @@ comp.render(() =>
       : empty()))
 )
 
-export default comp()
+export default view()

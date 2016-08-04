@@ -1,12 +1,12 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import EditCampaignLayout from 'components/edit-campaign/layout'
 import adbuilder from './adbuilder'
 import { state } from '../controller'
 
-const comp = rcomp()
-const { layout } = comp.els({ layout: EditCampaignLayout })
+const view = veact()
+const { layout } = view.els({ layout: EditCampaignLayout })
 
-comp.render(() => {
+view.render(() => {
   return layout({
     step: 1,
     child: adbuilder,
@@ -15,4 +15,4 @@ comp.render(() => {
   })
 })
 
-export default comp()
+export default view()

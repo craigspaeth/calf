@@ -1,13 +1,13 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import { darkSlate, smallMargin, deepOcean, headerHeight } from 'style'
 import { draggable } from 'components/dndable'
 
-const comp = rcomp()
-const { nav, button } = comp.els()
+const view = veact()
+const { nav, button } = view.els()
 
 const items = ['text', 'button', 'video', 'image', 'icon', 'slideshow', 'color']
 
-comp.styles({
+view.styles({
   toolbar: {
     position: 'absolute',
     top: smallMargin + headerHeight,
@@ -28,7 +28,7 @@ comp.styles({
   }
 })
 
-comp.render(() => {
+view.render(() => {
   const navItems = items.map((char) =>
       draggable({
         type: 'toolbaritem',
@@ -39,4 +39,4 @@ comp.render(() => {
   return nav('.toolbar', ...navItems)
 })
 
-export default comp()
+export default view()

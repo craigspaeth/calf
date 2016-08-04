@@ -1,4 +1,4 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import moment from 'moment'
 import {
   type, mediumMargin, smallMargin, flatButton, softGray, containerMaxWidth,
@@ -6,10 +6,10 @@ import {
 } from 'style'
 import { state } from '../controller'
 
-const comp = rcomp()
-const { div, h1, h2, h3, h4, a } = comp.els()
+const view = veact()
+const { div, h1, h2, h3, h4, a } = view.els()
 
-comp.styles({
+view.styles({
   container: {
     maxWidth: `${containerMaxWidth}px`,
     margin: 'auto',
@@ -48,7 +48,7 @@ comp.styles({
   itemPreview: flatButton('dark')
 })
 
-comp.render(() =>
+view.render(() =>
   div('.container',
     a('.addButton', { href: '/campaigns/new' }, 'Create new ad campaign'),
     h1('.h1', 'Upcomming ad campaigns'),
@@ -72,4 +72,4 @@ comp.render(() =>
           }, 'Preview'))))))
 )
 
-export default comp()
+export default view()

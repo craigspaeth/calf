@@ -1,10 +1,10 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 
-const comp = rcomp()
-const { div } = comp.els()
+const view = veact()
+const { div } = view.els()
 
-comp.render((props) => (
+view.render((props) => (
   div({}, 'STEP 4')
 ))
 
-export default comp()
+export default view()

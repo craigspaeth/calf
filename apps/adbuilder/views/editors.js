@@ -1,4 +1,4 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import { deepOcean, darkSlate, coolBlue, smallMargin, type } from 'style'
 import colorpicker from './colorpicker'
 import { draggable } from 'components/dndable'
@@ -8,8 +8,8 @@ import {
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import { assign } from 'lodash'
 
-const comp = rcomp()
-const { div, h3, button } = comp.els()
+const view = veact()
+const { div, h3, button } = view.els()
 
 const styles = {
   container: ({ x, y }) => ({
@@ -71,7 +71,7 @@ export const colorBlockPreview = ({ x, y, color, onChange, onCancel, onSave }) =
         onClick: onSave
       }, 'Save'))
 
-comp.render(() => {
+view.render(() => {
   return draggable({
     type: 'editor',
     beginDrag: () => ({ name: 'editor' }),
@@ -90,4 +90,4 @@ comp.render(() => {
   })
 })
 
-export const colorBlock = comp()
+export const colorBlock = view()

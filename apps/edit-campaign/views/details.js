@@ -1,16 +1,16 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import { flatInput, flatLabel, headerHeight, mediumMargin } from 'style'
 import { updateAttr, state } from '../controller'
 import { capitalize, snakeCase } from 'lodash'
 import moment from 'moment'
 import Radium from 'radium'
 
-const comp = rcomp()
-const { div, label, input } = comp.els()
+const view = veact()
+const { div, label, input } = view.els()
 
-comp.decorators(Radium)
+view.decorators(Radium)
 
-comp.styles({
+view.styles({
   form: {
     maxWidth: '500px',
     margin: 'auto',
@@ -40,7 +40,7 @@ comp.styles({
   })
 })
 
-comp.render(() => {
+view.render(() => {
   const campaign = state.select('campaign')
   const inputField = (attr, placeholder, extraStyle) => {
     const val = campaign.get(attr)
@@ -61,4 +61,4 @@ comp.render(() => {
     inputField('endAt', 'e.g. 10/14/20'))
 })
 
-export default comp()
+export default view()

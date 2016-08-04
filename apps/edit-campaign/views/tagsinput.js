@@ -1,11 +1,11 @@
 import ReactTags from 'react-tag-input'
-import rcomp from 'rcomp'
+import veact from 'veact'
 import { Style } from 'radium'
 import { flatButton, flatInput, softGray, type, coolBlue, orange } from 'style'
 import { uniqueId } from 'lodash'
 
-const comp = rcomp()
-const { div, reacttags, style } = comp.els({
+const view = veact()
+const { div, reacttags, style } = view.els({
   reacttags: ReactTags.WithContext,
   style: Style
 })
@@ -72,7 +72,7 @@ const rules = (placeholder, className) => ({
   }
 })
 
-comp.render(({ tags, placeholder, suggestions }) => {
+view.render(({ tags, placeholder, suggestions }) => {
   const className = `tags-input-${uniqueId()}`
   return div({ className },
     style({ rules: rules(placeholder, className) }),
@@ -85,4 +85,4 @@ comp.render(({ tags, placeholder, suggestions }) => {
     }))
 })
 
-export default comp()
+export default view()

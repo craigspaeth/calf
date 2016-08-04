@@ -1,10 +1,10 @@
-import rcomp from 'rcomp'
+import veact from 'veact'
 import {
   flatButton, type, mediumMargin, headerHeight, centerOfParent, blueGradient
 } from 'style'
 import Radium from 'radium'
 
-const view = rcomp()
+const view = veact()
 const { div, h1, p, a } = view.els()
 
 view.decorators(Radium)

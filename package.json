@@ -92,6 +92,14 @@
     "react-tag-input": "^3.0.1",
     "rewire": "^2.5.1",
     "standard": "^7.1.2",
-    "standard-format": "^2.2.1"
+    "standard-format": "^2.2.1",
+    "unikoa": "0.0.1",
+    "unikoa-bootstrap": "0.0.1",
+    "unikoa-react-render": "0.0.1",
+    "universal-tree": "0.0.1",
+    "veact": "0.0.2"
+  },
+  "devDependencies": {
+    "standard": "^7.1.2"
   }
 }
